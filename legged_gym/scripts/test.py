@@ -80,8 +80,6 @@ if viewer is None:
 
 asset_root = "resources/robots"
 asset_file = "bennett/bennett.urdf"
-# asset_file = "urdf/ball.urdf"
-# asset_file = "bennett/urdf/bennett.urdf"
 # asset_file = "a1/urdf/a1.urdf"
 
 assert_options = gymapi.AssetOptions()

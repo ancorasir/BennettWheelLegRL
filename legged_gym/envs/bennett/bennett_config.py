@@ -42,13 +42,13 @@ class BennettRoughCfg( LeggedRobotCfg ):
         episode_length_s = 20 # episode length in seconds
 
     class init_state( LeggedRobotCfg.init_state ):
-            pos = [0.0, 0.0, 0.2] # x,y,z [m]
+            pos = [0.0, 0.0, 0.3] # x,y,z [m]
             default_joint_angles = { # = target angles [rad] when action = 0.0
 
-                'FL-Single-Motor1_FL-Revolute_joint': 0.5,     # [rad]
-                'RL-Single-Motor1_RL-Revolute_joint': -0.5,   # [rad]
-                'FR-Single-Motor1_FR-Revolute_joint': -0.5,     # [rad]
-                'RR-Single-Motor1_RR-Revolute_joint': 0.5,
+                'FL-Single-Motor1_FL-Revolute_joint': 0.2,     # [rad]
+                'RL-Single-Motor1_RL-Revolute_joint': 0.2,   # [rad]
+                'FR-Single-Motor1_FR-Revolute_joint': 0.2,     # [rad]
+                'RR-Single-Motor1_RR-Revolute_joint': 0.2,
 
                 'FL-Double-Motor1_FL-Motor-Link1_joint': -0.,   # [rad]
                 'RL-Double-Motor1_RL-Motor-Link1_joint': -0.,   # [rad]
@@ -65,7 +65,6 @@ class BennettRoughCfg( LeggedRobotCfg ):
     class control( LeggedRobotCfg.control ):
         # PD Drive parameters:
         control_type = 'P'
-        # stiffness = {'_joint': 1.}  # [N*m/rad]
         stiffness = {                
                 'FL-Single-Motor1_FL-Revolute_joint': 20.,     
                 'RL-Single-Motor1_RL-Revolute_joint': 20.,   
@@ -98,10 +97,9 @@ class BennettRoughCfg( LeggedRobotCfg ):
                 'FR-leg-link11_FR-Link1-Link2_joint': 0.5,              
                 'RR-leg-link11_RR-Link1-Link2_joint': 0.5
         }     # [N*m*s/rad]
-        # action scale: target angle = actionScale * action + defaultAngle
-        action_scale = 0.25
-        # decimation: Number of control action updates @ sim DT per policy DT
-        decimation = 4
+        
+        action_scale = 0.25 # action scale: target angle = actionScale * action + defaultAngle
+        decimation = 4 # decimation: Number of control action updates @ sim DT per policy DT
 
     class asset( LeggedRobotCfg.asset ):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bennett/bennett.urdf'
@@ -111,6 +109,15 @@ class BennettRoughCfg( LeggedRobotCfg ):
         terminate_after_contacts_on = ["Basic_Body"]
         self_collisions = 1 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
+
+    class domain_rand:
+        randomize_friction = True
+        friction_range = [0.5, 1.25]
+        randomize_base_mass = False
+        added_mass_range = [-1., 1.]
+        push_robots = True
+        push_interval_s = 15
+        max_push_vel_xy = 0.5
 
     class rewards( LeggedRobotCfg.rewards ):
         soft_dof_pos_limit = 0.9
@@ -123,28 +130,28 @@ class BennettRoughCfg( LeggedRobotCfg ):
         base_height_target = 1.
         max_contact_force = 100. # forces above this value are penalized
         class scales( LeggedRobotCfg.rewards.scales ):
-            # torques = -0.0002
+            torques = -0.0002
             dof_pos_limits = -10.0 # Penalize dof positions too close to the limit
             termination = -0.0     # Terminal reward / penalty
             tracking_lin_vel = 1.0 # Tracking of linear velocity commands (xy axes)
             tracking_ang_vel = 0.5 # Tracking of angular velocity commands (yaw) 
-            lin_vel_z = -1.0       # Penalize z axis base linear velocity
-            ang_vel_xy = -0.0      # Penalize xy axes base angular velocity
+            lin_vel_z = -2.0       # Penalize z axis base linear velocity
+            ang_vel_xy = -0.05      # Penalize xy axes base angular velocity
             orientation = -0.      # Penalize non flat base orientation
             torques = -0.00001     # Penalize torques
             dof_vel = -0.          # Penalize dof velocities
             dof_acc = -2.5e-7      # Penalize dof accelerations
             base_height = -0.      # Penalize base height away from target
-            feet_air_time =  0.5   # Reward long steps
+            feet_air_time =  0.8   # Reward long steps
             collision = -0.1       # Penalize collisions on selected bodies
             feet_stumble = -0.0    # Penalize feet hitting vertical surfaces
             action_rate = -0.01    # Penalize changes in actions
-            stand_still = -0.1     # Penalize motion at zero commands
-           
+            stand_still = -0.     # Penalize motion at zero commands
+
     
     class terrain( LeggedRobotCfg.terrain ):
         vertical_scale = 0.0025 # [m]
-        # mesh_type = 'plane'
+        mesh_type = 'plane'
         measure_heights = True
     
     class commands:
@@ -155,8 +162,8 @@ class BennettRoughCfg( LeggedRobotCfg ):
         heading_command = True # if true: compute ang vel command from heading error
         class ranges:
             # for training
-            lin_vel_x = [-1.0, 1.0] # min max [m/s]
-            lin_vel_y = [-1.0, 1.0] # min max [m/s]
+            lin_vel_x = [-0.8, 0.8] # min max [m/s]
+            lin_vel_y = [-0.8, 0.8] # min max [m/s]
             ang_vel_yaw = [-1, 1]   # min max [rad/s]
             heading = [-3.14, 3.14]
 
