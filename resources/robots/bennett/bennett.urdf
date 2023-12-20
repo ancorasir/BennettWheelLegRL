@@ -8,7 +8,7 @@
         </inertial>
         <visual name="Body1_visual">
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-            <geometry>\
+            <geometry>
                 <mesh filename="meshes/Body1.stl" />
             </geometry>
         </visual>
@@ -489,16 +489,16 @@
         <parent link="FL-Single-Motor1" />
         <child link="FL-Double-Motor1" />
         <axis xyz="-1.0 0.0 7.806255641895643e-18" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
-        
+
     </joint>
     <joint name="FL-Double-Motor1_FL-Motor-Link1_joint" type="continuous">
         <origin xyz="-0.08225 0.031400000000000004 0.054386399999999994" rpy="-1.5707963267948968 1.0785207688568522e-32 5.551115123125783e-17" />
         <parent link="FL-Double-Motor1" />
         <child link="FL-leg-link11" />
         <axis xyz="2.775557561562891e-17 -0.8660250000000002 0.4999999999999999" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="FL-leg-link11_FL-Link1-Link2_joint" type="continuous">
@@ -506,7 +506,7 @@
         <parent link="FL-leg-link11" />
         <child link="FL-leg-link21" />
         <axis xyz="0.540447 -0.5649967029443643 -0.6234546347586148" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.2" upper="0.4" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <!-- <joint name="FL-Double-Motor1_FL-Motor-Link4" type="continuous">
@@ -537,7 +537,7 @@
         <parent link="RL-Single-Motor1" />
         <child link="RL-Double-Motor1" />
         <axis xyz="1.0 4.930380657631324e-32 -7.806255641895643e-18" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="RL-Double-Motor1_RL-Motor-Link1_joint" type="continuous">
@@ -545,7 +545,7 @@
         <parent link="RL-Double-Motor1" />
         <child link="RL-leg-link11" />
         <axis xyz="-1.3232510596358296e-31 -0.894624 0.4468199999999999" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="RL-leg-link11_RL-Link1-Link2_joint" type="continuous">
@@ -553,7 +553,7 @@
         <parent link="RL-leg-link11" />
         <child link="RL-leg-link21" />
         <axis xyz="0.664463 -0.594142937358092 -0.4533028228949145" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.2" upper="0.4" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <!-- <joint name="RL-Double-Motor1_RL-Motor-Link4" type="continuous">
@@ -584,7 +584,7 @@
         <parent link="FR-Single-Motor1" />
         <child link="FR-Double-Motor1" />
         <axis xyz="-1.0 -2.465190328815662e-32 7.806255641895643e-18" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="FR-Double-Motor1_FR-Motor-Link1_joint" type="continuous">
@@ -592,7 +592,7 @@
         <parent link="FR-Double-Motor1" />
         <child link="FR-leg-link11" />
         <axis xyz="-2.7755575615628914e-17 0.8660249999999999 0.5000000000000001" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="FR-leg-link11_FR-Link1-Link2_joint" type="continuous">
@@ -600,7 +600,7 @@
         <parent link="FR-leg-link11" />
         <child link="FR-leg-link21" />
         <axis xyz="0.47707499999999997 -0.5479299736736459 0.6871479851807744" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.2" upper="0.4" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <!-- <joint name="FR-Double-Motor1_FR-Motor-Link4" type="continuous">
@@ -631,16 +631,16 @@
         <parent link="RR-Single-Motor1" />
         <child link="RR-Double-Motor1" />
         <axis xyz="0.9999999999999999 -3.851859888774472e-34 0.0" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
-        
+
     </joint>
     <joint name="RR-Double-Motor1_RR-Motor-Link1_joint" type="continuous">
         <origin xyz="0.08224999999999998 0.031400000000000004 -0.05438639999999999" rpy="-1.5707963267948968 -4.9303806576313227e-32 6.07716335728627e-64" />
         <parent link="RR-Double-Motor1" />
         <child link="RR-leg-link11" />
         <axis xyz="-4.2698329090251674e-32 0.8660249999999999 0.5000000000000002" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="RR-leg-link11_RR-Link1-Link2_joint" type="continuous">
@@ -648,7 +648,7 @@
         <parent link="RR-leg-link11" />
         <child link="RR-leg-link21" />
         <axis xyz="0.652478 -0.6124768019806968 0.44625721092717185" />
-        <limit effort="12" lower="-1.570795" upper="1.570795" velocity="5"/>
+        <limit effort="20" lower="-1.2" upper="0.4" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
     <!-- <joint name="RR-Double-Motor1_Revolute_45" type="continuous">
@@ -669,4 +669,34 @@
         <child link="RR-leg-link31" />
         <axis xyz="0.693352140078903 0.20589499999999997 -0.6905576540796612" />
     </joint> -->
+
+
+<!-- 
+    <joint name="FR_foot_fixed" type="fixed" dont_collapse="true">
+    
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="RR-leg-link21"/>
+        <child link="FR_foot"/>
+    </joint>
+    <link name="FR_foot">
+        <visual>
+        
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.01"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.02"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.06"/>
+            <inertia ixx="9.6e-06" ixy="0.0" ixz="0.0" iyy="9.6e-06" iyz="0.0" izz="9.6e-06"/>
+        </inertial>
+    </link> -->
+
 </robot>

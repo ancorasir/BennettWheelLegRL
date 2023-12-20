@@ -116,9 +116,9 @@ for i in range(1):
 
     ahandle = gym.create_actor(env, asset, pose, None, collision_group, collision_filter)
     props = gym.get_actor_dof_properties(env, ahandle)
-    props["driveMode"].fill(gymapi.DOF_MODE_VEL)
-    props["stiffness"].fill(0.0)
-    props["damping"].fill(0.0)
+    props["driveMode"].fill(gymapi.DOF_MODE_POS)
+    # props["stiffness"].fill(0.0)
+    # props["damping"].fill(0.0)
     gym.set_actor_dof_properties(env, ahandle, props)
 
 gym.viewer_camera_look_at(viewer, None, gymapi.Vec3(20, 5, 20), gymapi.Vec3(0, 1, 0))
