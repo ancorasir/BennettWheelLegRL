@@ -58,3 +58,6 @@ runs
 *.egg-info
 __pycache__
 
+
+resources/robots/Quadruped-IsaacSim-with-foot
+resources/robots/bennett_foot

@@ -79,6 +79,7 @@ if viewer is None:
 
 
 asset_root = "resources/robots"
+# asset_file = "bennett_foot/bennett_foot.urdf"
 asset_file = "bennett/bennett.urdf"
 # asset_file = "a1/urdf/a1.urdf"
 
@@ -117,7 +118,7 @@ for i in range(1):
     ahandle = gym.create_actor(env, asset, pose, None, collision_group, collision_filter)
     props = gym.get_actor_dof_properties(env, ahandle)
     props["driveMode"].fill(gymapi.DOF_MODE_POS)
-    # props["stiffness"].fill(0.0)
+    # props["stiffness"].fill(1000000000.0)
     # props["damping"].fill(0.0)
     gym.set_actor_dof_properties(env, ahandle, props)
 

@@ -50,10 +50,10 @@ class BennettRoughCfg( LeggedRobotCfg ):
                 'FR-Single-Motor1_FR-Revolute_joint': -0.3,     # [rad]
                 'RR-Single-Motor1_RR-Revolute_joint': 0.3,
 
-                'FL-Double-Motor1_FL-Motor-Link1_joint': -0.2,   # [rad]
+                'FL-Double-Motor1_FL-Motor-Link1_joint': -0.,   # [rad]
                 'RL-Double-Motor1_RL-Motor-Link1_joint': -0.,   # [rad]
                 'FR-Double-Motor1_FR-Motor-Link1_joint': 0.,     # [rad]
-                'RR-Double-Motor1_RR-Motor-Link1_joint': -0.2,
+                'RR-Double-Motor1_RR-Motor-Link1_joint': -0.,
 
                 'FL-leg-link11_FL-Link1-Link2_joint': -0.,   # [rad]
                 'RL-leg-link11_RL-Link1-Link2_joint': -0.,    # [rad]               
