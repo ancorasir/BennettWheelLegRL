@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="planar_symmetric_horizontal">
+    <xacro:include filename="../module/planar_module_v2.xacro"/>
+
+    <link name="base">
+        <visual>
+            <geometry>
+                <mesh filename="./mesh/visual/frames/base_simplified.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <mesh filename="./mesh/collision/frames/quadruped_horizontal.obj" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="0.838"/>
+            <origin xyz="0 0 0.004575"/>
+           <inertia ixx="0.00440" iyy="0.00145"
+                    izz="0.00512"/>
+        </inertial>
+    </link>
+
+    <xacro:module_planar_left module_prefix="a1" parent_link="base">
+        <origin xyz="-0.03875 0.13540 0.0" rpy="${PI} ${PI/4.0} 0"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_planar_left>
+
+    <xacro:module_planar_right module_prefix="a3" parent_link="base">
+        <origin xyz="-0.03875 -0.13540 0.0" rpy="0 ${3*PI/-4.0} 0"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_planar_right>
+
+    <xacro:module_planar_right module_prefix="a2" parent_link="base">
+        <origin xyz="0.03875 0.13540 0.0" rpy="${PI} ${PI/-4.0} 0"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_planar_right>
+
+    <xacro:module_planar_left module_prefix="a4" parent_link="base">
+        <origin xyz="0.03875 -0.13540 0.0" rpy="0 ${3*PI/4.0} 0"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_planar_left>
+
+</robot>

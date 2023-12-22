@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="semisphere_with_frame">
+
+    <link name="semisphere">
+        <inertial>
+            <origin xyz="0.0 0.0 0.049" rpy="0 0 0"/>
+            <mass value="0.314"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.002"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/semisphere_with_frame/semisphere_with_frame.obj" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/semisphere_collision/semisphere_collision.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+</robot>

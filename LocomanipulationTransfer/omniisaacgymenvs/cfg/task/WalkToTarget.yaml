@@ -1,0 +1,315 @@
+name: WalkToTarget
+
+physics_engine: ${..physics_engine}
+
+# if given, will override the device setting in gym. 
+env:
+  numEnvs: ${resolve_default:1,${...num_envs}}
+  envSpacing: 3.0
+
+  clipObservations: 5.0
+  clipActions: 1.0
+  controlFrequencyInv: 1
+
+  terrain:
+    enable_terrain: False # Whether or not to use randomly generated terrain; 
+                          # set this to true will disable the default ground plane
+    side_length_per_env: 3.0
+    horizontal_scale: 0.05
+    vertical_scale: 0.005
+    min_height: -0.05
+    max_height: 0.05
+    step: 0.01
+    downsampled_scale: 0.2
+    slope_threshold: 1.5
+
+  default_robot_states:
+    # default_joint_positions: [-1.57, 1.57, 1.57, -1.57,
+    #                           -1.04, -2.09, 
+    #                           2.09, 1.04, 
+    #                           2.09, 1.04, 
+    #                           -1.04, -2.09, 
+    #                           1.37, -1.37, 
+    #                           1.37, -1.37, 
+    #                           1.37, -1.37, 
+    #                           1.37, -1.37]
+    default_joint_positions: [0.3, -0.3, -0.3, 0.3,
+                                -0.2, -0., 0.,0.2,
+                                0.2, 0., -0.,-0.2,
+                                0.0, 0.0, 0.0, 0.0, 
+                                0.0, 0.0, 0.0, 0.0]
+    default_base_positions: [0, 0, 0.5]
+    default_base_quaternions: [1.0, 0.0, 0.0, 0.0]
+
+  default_actuator_params:
+    # It determines control freqency of the task
+    control_decimal: 5 # 5 * 1/200s = 1/40s -> 40hz
+    control_kp: 4.5
+    control_kd: 0.2
+    action_scale: 0.3 # Determine how fast the joints can change its goal
+    joint_friction: 0.007 # Identified from friction identification experiment
+    joint_damping: 0.008 # Identified from friction identification experiment
+    max_torque: 1.5 # The maximum torque the joints can exert (the same as the real motor)
+    swing_extension: True # action for dof2-dof3 will be replaced with swing extension
+                          # To mitigate linkage collision issues
+    # Action latency is used for sim2real transfer, used to simulate motor's stick actions and latency
+    action_latency: False
+    action_probability: [0.2, 0.2, 0.2, 0.4] # [oldest, ..., newest]
+  
+  randomization:
+    randomize_init_joint_positions: False
+    rand_joint_position: 0.1 # Add random values (max to 0.2) to the initial joint angles
+
+    randomize_init_joint_velocities: False
+    rand_joint_velocities: 0.1 # Add random init joint velocities (max to 0.2)
+
+    randomize_init_base_positions: False
+    rand_xy_position: 0.1
+    rand_z_position: 0.1
+
+    randomize_init_base_quaternions: False
+    rand_max_roll: 0.1
+    rand_max_pitch: 0.1
+    rand_max_yaw: 3.14
+
+    randomize_init_base_velocities: False
+    rand_max_linear_vel: 0.1
+    rand_max_angular_vel: 0.1
+
+    # Control params randomization
+    randomize_interval: 400 # Every 400 step
+    randomize_friction: False
+    rand_friction_range: [1.6, 2.0] # Actual friction coeff is 0.8 ~ 1.0
+
+    randomize_control_params: False
+    rand_kp_scale_range: [0.8, 1.2]
+    rand_kd_scale_range: [0.8, 1.2]
+    rand_action_scale_range: [0.8, 1.2]
+    rand_max_torque_scale_range: [0.8, 1.2]
+
+  task:
+    loco_indicator_position: [0.0, 0.0, 0.2] # position of the marker
+
+    # Goal range
+    max_goal_distance: 0.8
+
+    # Goal-dependent episode length
+    max_episode_length: 600
+    min_episode_length: 300
+
+    obs:
+        use_symmetric_joint_obs: True # joint position and velocity observation will be in 
+        use_swing_extension_obs: True
+
+        include_joint_torques: False # Whether or not add joint torques to the observation vector
+
+        include_velocities: False # Whether or not add linear or angular velocities
+
+        include_tip_contact_forces: False # Whether or not add tip force senser values
+        # If false, the contact forces will be a binary value (1 for contact forces > threshold value)
+        # If true, the contact forces will be a N*3 vector with N the number of tips
+        full_contact_forces: True 
+        binary_force_threshold: 0.5 # In Newton
+
+    obs_scales:
+      position_scale: 0.5 # 1.0
+      quaternion_scale: 1.0
+      up_vec_scale: 1.0
+      linear_vel_scale: 1.0
+      angular_vel_scale: 0.2
+      joint_position_scale: 0.3
+      joint_velocity_scale: 0.1
+      contact_force_scale: 0.1
+      joint_torque_scale: 0.6
+
+    rew_scale:
+      position_error_penalty_scale: 1.0
+      position_eps: 0.1
+      heading_vel_rew: 0.5 # 2.5
+      deviation_distance_penalty_scale: -5.0
+      deviation_vel_penalty_scale: 0.0 # -0.2
+      angular_vel_penalty_scale: 0.0 # -0.05
+      rot_penalty_scale: -0.8
+      cosmetic_penalty: 0.0 # -0.4
+      joint_acc_scale: -0.00015
+      action_rate_scale: -0.02
+      success_reward: 400
+      fall_penalty: 0.0 # -200.0 # -600.0
+
+    clip_reward: False # Only positive reward for every timestep
+
+    success_conditions:
+      dist_thresh: 0.05 # in meters
+      consecutive_success_steps: 20
+
+    early_termination_conditions:
+      max_roll: 0.785 # in rad
+      max_pitch: 0.785 # in rad
+      max_yaw: 0.52 # in rad
+      max_deviation_distance: 0.2 # in meters
+      baseline_base_height: 0.05
+      baseline_knee_height: 0.01
+      baseline_corner_height: 0.01
+
+sim:
+
+  # Default values: 
+  dt: 0.005 # 1/200 s
+  max_episode_length: 320
+  use_gpu_pipeline: ${eq:${...pipeline},"gpu"}
+  gravity: [0.0, 0.0, -9.81]
+  add_ground_plane: True
+  use_flatcache: True
+  enable_scene_query_support: False
+  disable_contact_processing: True
+
+  # set to True if you use camera sensors in the environment
+  enable_cameras: False
+
+  default_physics_material:
+    static_friction: 1.0
+    dynamic_friction: 1.0
+    restitution: 0.0
+
+  physx:
+    worker_thread_count: ${....num_threads}
+    solver_type: ${....solver_type}
+    # use_gpu: False
+    use_gpu: ${eq:${....sim_device},"gpu"} # set to False to run on CPU
+    solver_position_iteration_count: 8
+    solver_velocity_iteration_count: 1
+    contact_offset: 0.005
+    rest_offset: 0.0
+    bounce_threshold_velocity: 0.2
+    friction_offset_threshold: 0.04
+    friction_correlation_distance: 0.025
+    enable_sleeping: True
+    enable_stabilization: True
+    max_depenetration_velocity: 100.0
+
+    # GPU buffers
+    gpu_max_rigid_contact_count: 2278850  # 2229090 # 1197868 
+    gpu_max_rigid_patch_count: 667648 # 667648 # 393216
+    gpu_found_lost_pairs_capacity: 8192
+    gpu_found_lost_aggregate_pairs_capacity: 989792 # 524288 # 989792 # 524288
+    gpu_total_aggregate_pairs_capacity: 1048576
+    gpu_max_soft_body_contacts: 1048576
+    gpu_max_particle_contacts: 1048576
+    gpu_heap_capacity: 33554432
+    gpu_temp_buffer_capacity: 16777216
+    gpu_max_num_partitions: 8
+
+  # robot_horizontal:
+  Quadruped_IsaacSim_with_foot:
+    # -1 to use default values
+    override_usd_defaults: False
+    make_kinematic: False
+    enable_self_collisions: False
+    enable_gyroscopic_forces: True
+    # also in stage params
+    # per-actor
+    solver_position_iteration_count: 8
+    solver_velocity_iteration_count: 1
+    sleep_threshold: 0.0
+    stabilization_threshold: 0.001
+    # per-body
+    density: -1
+    max_depenetration_velocity: 100.0
+    # per-shape
+    contact_offset: 0.005
+    rest_offset: 0.0
+
+  pose_indicator_loco:
+    # -1 to use default values
+    override_usd_defaults: False
+    make_kinematic: True # True
+    enable_self_collisions: False
+    enable_gyroscopic_forces: False
+    # also in stage params
+    # per-actor
+    solver_position_iteration_count: 8
+    solver_velocity_iteration_count: 1
+    sleep_threshold: 0.005
+    stabilization_threshold: 0.001
+    # per-body
+    density: -1
+    max_depenetration_velocity: 100.0
+    # per-shape
+    contact_offset: 0.001
+    rest_offset: 0.001
+
+domain_randomization:
+  # Randomization parameters:
+    # Observation and actions (not checked)
+    # TODO: Friction coefficient between robot and the ground (not working)
+    # TODO: Stiffness and damping of the actuators
+    # Maximum effort of the actuators (checked; working)
+    # Maximum joint velocities of the actuators (checked; working)
+    # Gravity of the evnvironment (checked; working)
+    # Scale of the robot (checked; but not scaling the entire robot?)
+    # Random forces acting on the baselink (checked; working)
+  min_frequency: 400
+  randomize: False
+  randomization_params:
+    # Observations and actions
+    observations:
+      on_reset:
+        operation: "additive"
+        distribution: "gaussian"
+        distribution_parameters: [0, .001]
+      on_interval:
+        frequency_interval: 1
+        operation: "additive"
+        distribution: "gaussian"
+        distribution_parameters: [0, .02]
+    actions:
+      on_reset:
+        operation: "additive"
+        distribution: "gaussian"
+        distribution_parameters: [0, 0.015]
+      on_interval:
+        frequency_interval: 1
+        operation: "additive"
+        distribution: "gaussian"
+        distribution_parameters: [0., 0.01]
+
+    # Gravity of the environment
+    simulation:
+      gravity:
+        on_interval:
+          frequency_interval: 400
+          operation: "additive"
+          distribution: "gaussian"
+          distribution_parameters: [[0.0, 0.0, 0.0], [0.1, 0.1, 0.5]]        
+    
+    rigid_prim_views:
+      baselink_view:
+        force:
+          on_interval:
+            frequency_interval: 1
+            operation: "direct"
+            distribution: "gaussian"
+            distribution_parameters: [[0, 0, 0], [5, 5, 5]]
+
+    articulation_views:
+      robot_view:
+        joint_max_velocities:
+          on_interval:
+            frequency_interval: 1
+            operation: "scaling"
+            distribution: "uniform"
+            distribution_parameters: [0.95, 1.05]
+        max_efforts:
+          on_interval:
+            frequency_interval: 1
+            operation: "scaling"
+            distribution: "uniform"
+            distribution_parameters: [0.7, 0.9]
+        scale:
+          on_startup:
+            operation: "scaling"
+            distribution: "uniform"
+            distribution_parameters: [0.98, 1.02]
+
+
+

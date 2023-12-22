@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="planar_module">
+    <xacro:include filename="../module/planar_parts_v2.xacro"/>
+
+    <!--Left Module Definition-->
+    <xacro:macro name="module_planar_left" params="module_prefix parent_link *origin *axis">
+        <!--Create all the parts needed to construct the module-->
+        <xacro:two_dof_module module_prefix="${module_prefix}"/>
+        <xacro:link4 module_prefix="${module_prefix}"/>
+        <xacro:link3 module_prefix="${module_prefix}"/>
+
+        <!--Create joints to connect the parts-->
+        <!--Fix the module to module parent link-->
+
+        <!--DoFs, joints corresponding to the degrees of actuation-->
+        <joint name="${module_prefix}-dof1" type="revolute">
+            <parent link="${parent_link}"/>
+            <child link="${module_prefix}-two_dof_module"/>
+            <xacro:insert_block name="origin"/>
+            <xacro:insert_block name="axis"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof2" type="revolute">
+            <parent link="${module_prefix}-two_dof_module"/>
+            <child link="${module_prefix}-link4"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 ${0.0368+0.019}" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof3" type="revolute">
+            <parent link="${module_prefix}-link4"/>
+            <child link="${module_prefix}-link3"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0.0 -0.1 0.003" rpy="0 0 0"/>
+        </joint>
+
+        <!--frames that may be helpful-->
+        <link name="${module_prefix}-fingertip_frame">
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/overconstrained/tip.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.0001"/>
+            </inertial>
+        </link>
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-link3"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <origin xyz="0.0 -0.127 -0.007" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+    <!--Right Module Definition-->
+    <xacro:macro name="module_planar_right" params="module_prefix parent_link *origin *axis">
+        <!--Create all the parts needed to construct the module-->
+        <xacro:two_dof_module module_prefix="${module_prefix}"/>
+        <xacro:link1 module_prefix="${module_prefix}"/>
+        <xacro:link2_right module_prefix="${module_prefix}"/>
+        
+
+        <!--Create joints to connect the parts-->
+        <!--Fix the module to module parent link-->
+
+        <!--DoFs, joints corresponding to the degrees of actuation-->
+        <joint name="${module_prefix}-dof1" type="revolute">
+            <parent link="${parent_link}"/>
+            <child link="${module_prefix}-two_dof_module"/>
+            <xacro:insert_block name="origin"/>
+            <xacro:insert_block name="axis"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof2" type="revolute">
+            <parent link="${module_prefix}-two_dof_module"/>
+            <child link="${module_prefix}-link1"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 ${0.0368+0.019}" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof3" type="revolute">
+            <parent link="${module_prefix}-link1"/>
+            <child link="${module_prefix}-link2_right"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="-0.0 -0.1 0.001" rpy="0 0 0"/>
+        </joint>
+
+        <!--frames that may be helpful-->
+        <link name="${module_prefix}-fingertip_frame">
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/overconstrained/tip.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.0001"/>
+            </inertial>
+        </link>
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-link2_right"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <origin xyz="0.0 -0.127 -0.007" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>

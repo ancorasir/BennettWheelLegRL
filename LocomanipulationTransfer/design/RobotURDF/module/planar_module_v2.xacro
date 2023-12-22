@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="planar_module">
+    <xacro:include filename="../module/planar_parts_v2.xacro"/>
+
+    <!--Left Module Definition-->
+    <xacro:macro name="module_planar_left" params="module_prefix parent_link *origin *axis">
+        <!--Create all the parts needed to construct the module-->
+        <xacro:two_dof_module module_prefix="${module_prefix}"/>
+        <xacro:link1 module_prefix="${module_prefix}"/>
+        <xacro:link2 module_prefix="${module_prefix}"/>
+        <xacro:link4 module_prefix="${module_prefix}"/>
+        <xacro:link3 module_prefix="${module_prefix}"/>
+        <xacro:tip_bearings module_prefix="${module_prefix}"/>
+        <xacro:fingertip_frame module_prefix="${module_prefix}"/>
+
+        <!--Create joints to connect the parts-->
+
+        <!--DoFs, joints corresponding to the degrees of actuation-->
+        <joint name="${module_prefix}-dof1" type="revolute">
+            <parent link="${parent_link}"/>
+            <child link="${module_prefix}-two_dof_module"/>
+            <xacro:insert_block name="origin"/>
+            <xacro:insert_block name="axis"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof2" type="revolute">
+            <parent link="${module_prefix}-two_dof_module"/>
+            <child link="${module_prefix}-link4"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 ${0.0368+0.019}" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof3" type="revolute">
+            <parent link="${module_prefix}-two_dof_module"/>
+            <child link="${module_prefix}-link1"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 ${0.0388+0.019}" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-link4_to_link3" type="revolute">
+            <parent link="${module_prefix}-link4"/>
+            <child link="${module_prefix}-link3"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0.0 -0.1 0.003" rpy="0 0 0"/>    
+        </joint>
+
+        <joint name="${module_prefix}-link1_to_link2" type="revolute">
+            <parent link="${module_prefix}-link1"/>
+            <child link="${module_prefix}-link2"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0.0 -0.1 0.001" rpy="0 0 0"/>   
+        </joint>
+
+        <!--For closed chain construction-->
+        <!--Note: The following joints/links may cause problems-->
+        <!--For current release of Omniverse Isaac Sim (2022.1.0), zero-mass links are not possible.
+            Omniverse will assign 1kg of mass automatically (unreasonable 1kg), so be sure to set the mass
+            to a small value-->
+        <joint name="${module_prefix}-tip_bearings_fixed" type="fixed">
+            <parent link="${module_prefix}-link2"/>
+            <child link="${module_prefix}-tip_bearings"/>
+            <origin xyz="0 -0.1 -0.001" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-closed_chain_revolute" type="revolute">
+            <parent link="${module_prefix}-link3"/>
+            <child link="${module_prefix}-tip_bearings"/>
+            <origin xyz="0 -0.1 -0.001" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+        </joint>
+
+        <!-- frames that may be helpful
+        <link name="${module_prefix}-fingertip_frame">
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/overconstrained/tip.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.0001"/>
+            </inertial>
+        </link>
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-link3"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <origin xyz="0.0 -0.127 -0.007" rpy="0 0 0"/>
+        </joint> -->
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-link3"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <!-- <origin xyz="0.004243 -0.127 -0.005243" rpy="0 0 0"/> -->
+            <origin xyz="0.0 -0.13 -0.007" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+    <!--Right Module Definition-->
+    <xacro:macro name="module_planar_right" params="module_prefix parent_link *origin *axis">
+        <!--Create all the parts needed to construct the module-->
+        <xacro:two_dof_module module_prefix="${module_prefix}"/>
+        <xacro:link1 module_prefix="${module_prefix}"/>
+        <xacro:link2_right module_prefix="${module_prefix}"/>
+        <xacro:link4 module_prefix="${module_prefix}"/>
+        <xacro:link3_right module_prefix="${module_prefix}"/>
+        <xacro:tip_bearings module_prefix="${module_prefix}"/>
+        <xacro:fingertip_frame module_prefix="${module_prefix}"/>
+
+        <!--Create joints to connect the parts-->
+
+
+        <!--DoFs, joints corresponding to the degrees of actuation-->
+        <joint name="${module_prefix}-dof1" type="revolute">
+            <parent link="${parent_link}"/>
+            <child link="${module_prefix}-two_dof_module"/>
+            <xacro:insert_block name="origin"/>
+            <xacro:insert_block name="axis"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof2" type="revolute">
+            <parent link="${module_prefix}-two_dof_module"/>
+            <child link="${module_prefix}-link4"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 ${0.0368+0.019}" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-dof3" type="revolute">
+            <parent link="${module_prefix}-two_dof_module"/>
+            <child link="${module_prefix}-link1"/>
+            <axis xyz="0 0 -1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0 0 ${0.0388+0.019}" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-link4_to_link3_right" type="revolute">
+            <parent link="${module_prefix}-link4"/>
+            <child link="${module_prefix}-link3_right"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="0.0 -0.1 0.003" rpy="0 0 0"/>    
+        </joint>
+
+        <joint name="${module_prefix}-link1_to_link2_right" type="revolute">
+            <parent link="${module_prefix}-link1"/>
+            <child link="${module_prefix}-link2_right"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+            <origin xyz="-0.0 -0.1 0.001" rpy="0 0 0"/>    
+        </joint>
+
+        <!--For closed chain construction-->
+        <!--For closed chain construction-->
+        <!--For closed chain construction-->
+        <!--Note: The following joints/links may cause problems-->
+        <!--For current release of Omniverse Isaac Sim (2022.1.0), zero-mass links are not possible.
+            Omniverse will assign 1kg of mass automatically (unreasonable 1kg), so be sure to set the mass
+            to a small value-->
+        <!--link name="${module_prefix}-link2_intermediate">
+            <geometry>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </geometry>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.0001"/>
+            </inertial>
+        </link>
+        <joint name="${module_prefix}-link2_intermediate_fixed" type="fixed">
+            <parent link="${module_prefix}-link2_right"/>
+            <child link="${module_prefix}-link2_intermediate"/>
+            <origin xyz="0 -0.1 -0.001" rpy="0 ${PI/4.0} 0"/>
+        </joint-->
+
+        <!--link name="${module_prefix}-link3_intermediate">
+            <geometry>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </geometry>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.0001"/>
+            </inertial>        
+        </link>
+        <joint name="${module_prefix}-link3_intermediate_fixed" type="fixed">
+            <parent link="${module_prefix}-link3_right"/>
+            <child link="${module_prefix}-link3_intermediate"/>
+            <origin xyz="0 -0.1 -0.001" rpy="0 ${PI/-4.0} 0"/>
+        </joint-->
+        
+        <joint name="${module_prefix}-tip_bearings_fixed" type="fixed">
+            <parent link="${module_prefix}-link3_right"/>
+            <child link="${module_prefix}-tip_bearings"/>
+            <origin xyz="0 -0.1 -0.001" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="${module_prefix}-closed_chain_revolute" type="revolute">
+            <parent link="${module_prefix}-link2_right"/>
+            <child link="${module_prefix}-tip_bearings"/>
+            <axis xyz="0 0 1"/>
+            <origin xyz="0 -0.1 -0.001" rpy="0 0 0"/>
+            <limit effort="1000" lower="${-1*PI}" upper="${PI}" velocity="1000"/>
+        </joint>
+
+        <!--frames that may be helpful-->
+        <!-- <link name="${module_prefix}-fingertip_frame">
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/overconstrained/tip.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.0001"/>
+            </inertial>
+        </link>
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-link2_right"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <origin xyz="0.0 -0.127 -0.007" rpy="0 0 0"/>
+        </joint> -->
+
+        <joint name="${module_prefix}-fingertip_frame_fix" type="fixed">
+            <parent link="${module_prefix}-link2_right"/>
+            <child link="${module_prefix}-fingertip_frame"/>
+            <!-- <origin xyz="0.004243 -0.127 -0.005243" rpy="0 0 -${PI}"/> -->
+            <origin xyz="0.0 -0.13 -0.007" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>

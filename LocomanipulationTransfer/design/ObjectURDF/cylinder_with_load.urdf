@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cylinder">
+
+    <link name="cylinder">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <mass value="1.0"/>
+            <inertia ixx="0.065" ixy="0.0" ixz="0.0" iyy="0.089" iyz="0.0" izz="0.065"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/cylinder_aligned/cylinder_aligned.obj" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 -1.57"/>
+            <geometry>
+                <mesh filename="./meshes/cylinder_collision/cylinder_collision.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="load">
+        <inertial>
+            <origin xyz="0.0 0.0 -0.2" rpy="0 0 0"/>
+            <mass value="0.505"/>
+            <inertia ixx="1.263e-4" ixy="0.0" ixz="0.0" iyy="1.263e-4" iyz="0.0" izz="1.263e-4"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 -0.2" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/load/load.obj" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 -0.2" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/load/load.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="cylinder_to_load" type="revolute">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="cylinder"/>
+        <child link="load"/>
+        <axis xyz="1.0 0.0 0.0"/>
+        <limit lower="-3.14" upper="3.14" effort="0.0" velocity="0.0"/>
+    </joint>
+
+</robot>

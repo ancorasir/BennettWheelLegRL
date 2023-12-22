@@ -1,0 +1,20 @@
+time_interval_ms: 20 # 33.3
+goal_joints: [0, 0.52, -0.52]
+
+rlgames:
+  train_config: "/home/bionicdl/SHR/OverconstrainedRobot/OmniverseGym/omniisaacgymenvs/cfg/train/SingleModuleIKPPO.yaml"
+  trained_pth: "/home/bionicdl/SHR/OverconstrainedRobot/OmniverseGym/omniisaacgymenvs/runs/1107-lower_max_velocity/nn/1107-lower_max_velocity.pth"
+  task_config: "/home/bionicdl/SHR/OverconstrainedRobot/OmniverseGym/omniisaacgymenvs/cfg/task/SingleModuleIK.yaml"
+  num_actions: 3
+  num_obs: 21
+  device: 'cuda'
+  is_deterministic: True
+
+controller:
+  # Dof order in omniverse:
+  # ['a1_dof1', 'a2_dof1', 'a3_dof1', 'a4_dof1', 
+  #  'a1_dof2', 'a1_dof3', 'a2_dof2', 'a2_dof3', 
+  #  'a3_dof2', 'a3_dof3', 'a4_dof2', 'a4_dof3']
+  port_name: "/dev/ttyUSB0"
+  motor_ids: [10, 11, 12]
+  default_joint_positions: [0.52, 0.52, -0.52]

@@ -1,0 +1,2 @@
+# Training Script
+[OmniIsaacGymEnvs](https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs) originally uses [rl_games](https://github.com/Denys88/rl_games) for training. We instead use [skrl](https://skrl.readthedocs.io/en/latest/) for its modularity. 

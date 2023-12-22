@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="pose_indicator_xyz">
+
+    <link name="pose_indicator_xyz">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <mass value="0.0001"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/pose_indicator_xyz/pose_indicator_xyz.obj" scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/pose_indicator_xyz/pose_indicator_xyz.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+</robot>

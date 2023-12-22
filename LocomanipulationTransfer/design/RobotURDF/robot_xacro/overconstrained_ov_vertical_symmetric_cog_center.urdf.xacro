@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="overconstrained_ov_vertical_symmetric_cog_center">
+    <xacro:include filename="../module/overconstrained_module_v2.xacro"/>
+
+    <link name="base">
+        <visual>
+            <origin xyz="0.0 0.0 0.102"/>
+            <geometry>
+                <mesh filename="./mesh/collision/frames/vertical_frame_inclined.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.102"/>
+            <geometry>
+                <mesh filename="./mesh/collision/frames/vertical_frame_inclined.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="1.1"/>
+            <origin xyz="0 0 0.021"/>
+           <inertia ixx="6.353e-3" iyy="6.353e-3"
+                    izz="3.774e-3"/>
+        </inertial>
+    </link>
+
+    <xacro:module_overconstrained_left module_prefix="a1" parent_link="base">
+        <origin xyz="-0.07158 0.07158 -0.036263" rpy="-2.0071 ${PI} ${PI/4.0}"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_overconstrained_left>
+
+    <xacro:module_overconstrained_right module_prefix="a3" parent_link="base">
+        <origin xyz="-0.07158 -0.07158 -0.036263" rpy="-2.0071 ${PI} ${3*PI/4.0}"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_overconstrained_right>
+
+    <xacro:module_overconstrained_right module_prefix="a2" parent_link="base">
+        <origin xyz="0.07158 0.07158 -0.036263" rpy="-2.0071 ${PI} ${PI/-4.0}"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_overconstrained_right>
+
+    <xacro:module_overconstrained_left module_prefix="a4" parent_link="base">
+        <origin xyz="0.07158 -0.07158 -0.036263" rpy="-2.0071 ${PI} ${3*PI/-4.0}"/>
+        <axis xyz="0 1 0"/>
+    </xacro:module_overconstrained_left>
+
+</robot>

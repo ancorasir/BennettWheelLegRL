@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="overconstrained_parts">
+    <xacro:property name="root_folder" value=".."/>
+    <xacro:property name="scale" value="0.001 0.001 0.001"/>
+    <xacro:property name="PI" value="3.14159265"/>
+    <xacro:property name="link_type" value="planar"/>
+
+    <!--Inertial Information for each part-->
+    <xacro:macro name="two_dof_module_inertia">
+        <inertial>
+            <origin xyz="-0.00028 0.01047 -0.01023" rpy="0 0 0"/>
+            <mass value="0.246"/>
+            <inertia ixx="0.00025"
+                    iyy="0.00010" 
+                    izz="0.00020"/>
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="link1_inertia">
+        <inertial>
+            <origin xyz="-1.34e-08 -0.0610281992 -0.0014557736" rpy="0 0 0"/>
+            <mass value="0.0307613681"/>
+            <inertia ixx="5.25986e-05" iyy="2.0097e-06"
+                izz="5.16836e-05" ixy="0.0"
+                iyz="-5.7613e-06" ixz="0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="link2_inertia">
+        <inertial>
+            <origin xyz="1.036e-07 -0.0449626613 0.0052591076" rpy="0 0 0"/>
+            <mass value="0.0191031691"/>
+            <inertia ixx="2.50756e-05" iyy="5.778e-07"
+                izz="2.53431e-05" ixy="6e-10"
+                iyz="-2.226e-07" ixz="0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="link2_right_inertia">
+        <inertial>
+            <origin xyz="1.805e-07 -0.0533265072 -0.0012913277" rpy="0 0 0"/>
+            <mass value="0.0221050596"/>
+            <inertia ixx="3.59177e-05" iyy="1.3365e-06"
+                izz="3.54627e-05" ixy="-0.0"
+                iyz="-4.9113e-06" ixz="-0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="link3_inertia">
+        <inertial>
+            <origin xyz="1.805e-07 -0.0533265072 -0.0012913277" rpy="0 0 0"/>
+            <mass value="0.0221050596"/>
+            <inertia ixx="3.59177e-05" iyy="1.3365e-06"
+                izz="3.54627e-05" ixy="-0.0"
+                iyz="-4.9113e-06" ixz="-0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="link3_right_inertia">
+        <inertial>
+            <origin xyz="1.036e-07 -0.0449626613 0.0052591076" rpy="0 0 0"/>
+            <mass value="0.0191031691"/>
+            <inertia ixx="2.50756e-05" iyy="5.778e-07"
+                izz="2.53431e-05" ixy="6e-10"
+                iyz="-2.226e-07" ixz="0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="link4_inertia">
+        <inertial>
+            <origin xyz="1.313e-07 -0.067114635 -0.0038354506" rpy="0 0 0"/>
+            <mass value="0.0283751541"/>
+            <inertia ixx="3.90561e-05" iyy="1.3813e-06"
+                izz="3.89017e-05" ixy="-3e-10"
+                iyz="1.888e-07" ixz="-0.0"/>
+        </inertial> 
+    </xacro:macro>
+    
+    <xacro:macro name="tip_bearings_inertia">
+        <inertial>
+            <origin xyz="0.0 -0.0 0.0053378354" rpy="0 0 0"/>
+            <mass value="0.0102057874"/>
+            <inertia ixx="6.785e-07" iyy="6.785e-07"
+                izz="9.84e-08" ixy="0.0"
+                iyz="0.0" ixz="0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <xacro:macro name="fingertip_inertia">
+        <inertial>
+            <origin xyz="0.0 -0.0 0.0053378354" rpy="0 0 0"/>
+            <mass value="0.002"/>
+            <inertia ixx="9.2e-08" iyy="9.2e-08"
+                izz="7.89e-08" ixy="0.0"
+                iyz="0.0" ixz="0.0"/>
+        </inertial> 
+    </xacro:macro>
+
+    <!--Parts-->
+    <xacro:macro name="two_dof_module" params="module_prefix">
+        <link name="${module_prefix}-two_dof_module">
+            <xacro:two_dof_module_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.019" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/overconstrained_v2/two_dof_module_simplified.stl" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.019" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/overconstrained_v2/2dof_module_collision.STL" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+    
+    <xacro:macro name="link1" params="module_prefix">
+        <link name="${module_prefix}-link1">
+            <xacro:link1_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/link1.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/link1.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="link2" params="module_prefix">
+        <link name="${module_prefix}-link2">
+            <xacro:link2_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/link2.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/link2.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="link2_right" params="module_prefix">
+        <link name="${module_prefix}-link2_right">
+            <xacro:link2_right_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/link2_right.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/link2_right.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="link3" params="module_prefix">
+        <link name="${module_prefix}-link3">
+            <xacro:link3_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/link3.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/link3.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="link3_right" params="module_prefix">
+        <link name="${module_prefix}-link3_right">
+            <xacro:link3_right_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/link3_right.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/link3_right.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="link4" params="module_prefix">
+        <link name="${module_prefix}-link4">
+            <xacro:link4_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/link4.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/link4.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link> 
+    </xacro:macro>
+    
+    <xacro:macro name="tip_bearings" params="module_prefix">
+        <link name="${module_prefix}-tip_bearings">
+            <xacro:tip_bearings_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/${link_type}/tip_bearings.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/${link_type}/tip_bearings.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link> 
+    </xacro:macro>
+
+    <xacro:macro name="fingertip_frame" params="module_prefix">
+        <link name="${module_prefix}-fingertip_frame">
+            <xacro:fingertip_inertia/>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/visual/overconstrained_v2/fingertip_visual.obj" scale="${scale}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${root_folder}/mesh/collision/overconstrained_v2/fingertip_tip_only_collision.obj" scale="${scale}"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+</robot>

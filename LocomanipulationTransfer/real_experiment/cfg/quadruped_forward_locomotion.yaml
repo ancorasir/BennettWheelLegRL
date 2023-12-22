@@ -1,0 +1,33 @@
+time_interval_ms: 33.3
+marker_height_offset: -0.0835
+
+rlgames:
+  train_config: "/home/bionicdl/SHR/OverconstrainedRobot/OmniverseGym/omniisaacgymenvs/cfg/train/QuadrupedForwardLocomotionPPO.yaml"
+  trained_pth: "/home/bionicdl/SHR/OverconstrainedRobot/OmniverseGym/omniisaacgymenvs/runs/1101-lower_motor_capacity2/nn/1101-lower_motor_capacity2.pth"
+  task_config: "/home/bionicdl/SHR/OverconstrainedRobot/OmniverseGym/omniisaacgymenvs/cfg/task/QuadrupedForwardLocomotion.yaml"
+  num_actions: 12
+  num_obs: 46
+  device: 'cuda'
+  is_deterministic: True
+
+imu:
+  port_name: "/dev/ttyACM0"
+  baudrate: 921600
+  sampling_freq: 1000
+
+tracker:
+  marker_length: 0.078
+  time_interval_ms: 33.3
+  xyz_offset: [0, 0, 0.227]
+  ip_address: 'LOCALHOST'
+  port: 8081
+  velocity_calculation_interval: 5
+
+controller:
+  # Dof order in omniverse:
+  # ['a1_dof1', 'a2_dof1', 'a3_dof1', 'a4_dof1', 
+  #  'a1_dof2', 'a1_dof3', 'a2_dof2', 'a2_dof3', 
+  #  'a3_dof2', 'a3_dof3', 'a4_dof2', 'a4_dof3']
+  port_name: "/dev/ttyUSB0"
+  motor_ids: [10, 20, 30, 40, 11, 12, 21, 22, 31, 32, 41, 42]
+  default_joint_positions: [-1.57, 1.57, 1.57, -1.57, -1.04, -2.09, 2.09, 1.04, 2.09, 1.04, -1.04, -2.09]

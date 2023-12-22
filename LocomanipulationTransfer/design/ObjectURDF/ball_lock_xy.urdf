@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ball_lock_xy">
+
+    <link name="rack_base">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/rack_base/rack_base.obj" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/rack_base/rack_base.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="rack">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <mass value="0.6"/>
+            <inertia ixx="0.038" ixy="0.0" ixz="0.0" iyy="0.038" iyz="0.0" izz="0.066"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/ball_rack_030r/ball_rack_030r.obj" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/ball_rack_030r/ball_rack_030r.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="ball">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <mass value="2.0"/>
+            <inertia ixx="0.118" ixy="0.0" ixz="0.0" iyy="0.118" iyz="0.0" izz="0.118"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="./meshes/ball_with_frame/ball_with_frame.obj" scale="3 3 3"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <sphere radius="0.3"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rack_joint" type="prismatic">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="rack_base"/>
+        <child link="rack"/>
+        <axis xyz="0.0 0.0 1.0"/>
+        <limit lower="-1.0" upper="1.0" effort="0.0" velocity="0.0"/>
+    </joint>
+
+    <joint name="spherical_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="rack"/>
+        <child link="ball"/>
+    </joint>
+
+</robot>

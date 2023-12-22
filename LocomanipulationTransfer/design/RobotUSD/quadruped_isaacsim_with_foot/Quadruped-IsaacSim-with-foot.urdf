@@ -1,0 +1,738 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="Quadruped-IsaacSim-with-foot">
+    <link name="Body1">
+        <inertial>
+            <origin xyz="3.269975835372973e-11 -0.0012499987421279164 -0.0047500000382037656" rpy="0.0 0.0 0.0" />
+            <mass value="3.578209936079509" />
+            <inertia ixx="0.005306000538019884" iyy="0.07835805606453572" izz="0.08260422228557267" ixy="-7.922195025321794e-10" iyz="2.6465637407296905e-12" ixz="2.0546265881839698e-11" />
+        </inertial>
+        <visual name="Body1_visual">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/Body1.stl" />
+            </geometry>
+        </visual>
+        <collision name="Body1_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/Body1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-Single-Motor1">
+        <inertial>
+            <origin xyz="-0.00805851174354837 -0.024291032753734693 0.01674999999785328" rpy="0.0 -0.0 0.0" />
+            <mass value="0.7011939191100404" />
+            <inertia ixx="0.0002624831375910991" iyy="0.0001999898760019908" izz="0.0003354208086328277" ixy="-6.052823711328627e-07" iyz="1.676610239531584e-14" ixz="-4.048844592929868e-14" />
+        </inertial>
+        <visual name="FR-Single-Motor1_visual">
+            <origin xyz="-0.04174999999999985 -0.03924999999999984 0.016749999999999973" rpy="1.5707963267948966 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FR-Single-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-Single-Motor1_collision">
+            <origin xyz="-0.04174999999999985 -0.03924999999999984 0.016749999999999973" rpy="1.5707963267948966 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FR-Single-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-Double-Motor1">
+        <inertial>
+            <origin xyz="-0.06716414766997802 0.005604654930119253 -0.009346190291435531" rpy="0.0 -0.0 0.0" />
+            <mass value="2.4365544485369104" />
+            <inertia ixx="0.00157767292264821" iyy="0.004124307384401199" izz="0.0036961623139041833" ixy="-2.877570922710237e-06" iyz="0.0003998353455326869" ixz="2.6823552849719482e-06" />
+        </inertial>
+        <visual name="FR-Double-Motor1_visual">
+            <origin xyz="-0.08224999999999989 1.4210854715202004e-16 1.3322676295501878e-16" rpy="3.141592653589793 -0.5376386552081273 1.5707963267948966" />
+            <geometry>
+                <mesh filename="meshes/FR-Double-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-Double-Motor1_collision">
+            <origin xyz="-0.08224999999999989 1.4210854715202004e-16 1.3322676295501878e-16" rpy="3.141592653589793 -0.5376386552081273 1.5707963267948966" />
+            <geometry>
+                <mesh filename="meshes/FR-Double-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-leg-link11">
+        <inertial>
+            <origin xyz="0.014922151459902064 0.03139326448122702 -0.040707060107014005" rpy="0.0 -0.0 0.0" />
+            <mass value="0.2812248770831842" />
+            <inertia ixx="0.0005760576531798067" iyy="0.00046073697489915067" izz="0.00024941504466207906" ixy="-9.169472641929866e-05" iyz="0.0002626969493900559" ixz="0.00013228756240908635" />
+        </inertial>
+        <visual name="FR-leg-link11_visual">
+            <origin xyz="3.552713678800501e-17 0.008589200847576226 0.005121090794503402" rpy="2.0106909806468103 -0.969158118033808 -2.0895406433879504" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link11.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-leg-link11_collision">
+            <origin xyz="3.552713678800501e-17 0.008589200847576226 0.005121090794503402" rpy="2.0106909806468103 -0.969158118033808 -2.0895406433879504" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link11.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-leg-link21">
+        <inertial>
+            <origin xyz="-0.02206417186847599 0.04584909228477068 -0.05298713308660027" rpy="0.0 -0.0 0.0" />
+            <mass value="0.27918764656736367" />
+            <inertia ixx="0.0005827799000239012" iyy="0.00038924180544418565" izz="0.0003358585246426086" ixy="0.0001263419689170164" iyz="0.0002846151189105239" ixz="-0.00013962950086251355" />
+        </inertial>
+        <visual name="FR-leg-link21_visual">
+            <origin xyz="0.0013573870575918257 -0.0007315389685371976 -0.0012737102001040058" rpy="0.7357512702770771 -0.3210365974653949 0.7982255470697911" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link21.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-leg-link21_collision">
+            <origin xyz="0.0013573870575918257 -0.0007315389685371976 -0.0012737102001040058" rpy="0.7357512702770771 -0.3210365974653949 0.7982255470697911" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link21.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-leg-link31">
+        <inertial>
+            <origin xyz="0.004854527079458002 -0.049155535292398016 0.050269048243227275" rpy="0.0 -0.0 0.0" />
+            <mass value="0.24917982527134377" />
+            <inertia ixx="0.00042722222682804734" iyy="0.0003104094315067096" izz="0.00021964065742653016" ixy="6.251598780781354e-05" iyz="0.00019905541198218506" ixz="-8.489080214224017e-05" />
+        </inertial>
+        <visual name="FR-leg-link31_visual">
+            <origin xyz="-0.0013395300171094604 0.0007864508658235892 0.0012598181540643338" rpy="0.7281163361636496 -0.3283645655257985 0.7599458126159446" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link31.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-leg-link31_collision">
+            <origin xyz="-0.0013395300171094604 0.0007864508658235892 0.0012598181540643338" rpy="0.7281163361636496 -0.3283645655257985 0.7599458126159446" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link31.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-leg-link41">
+        <inertial>
+            <origin xyz="-0.01835989913650888 0.02551561190384211 -0.04751068167730466" rpy="0.0 -0.0 0.0" />
+            <mass value="0.30627894117127225" />
+            <inertia ixx="0.0006129666086744645" iyy="0.0005923283064875745" izz="0.00018708691186531887" ixy="8.097884458659402e-05" iyz="0.00022092313037606198" ixz="-0.0001835569630854149" />
+        </inertial>
+        <visual name="FR-leg-link41_visual">
+            <origin xyz="-1.5564438626824995e-13 -0.007902069152423738 -0.004711409205496793" rpy="-1.0773478114505115 0.950253739762634 2.1549175618769296" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link41.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-leg-link41_collision">
+            <origin xyz="-1.5564438626824995e-13 -0.007902069152423738 -0.004711409205496793" rpy="-1.0773478114505115 0.950253739762634 2.1549175618769296" />
+            <geometry>
+                <mesh filename="meshes/FR-leg-link41.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FR-fingertip_frame1">
+        <inertial>
+            <origin xyz="-0.0005950241441510685 8.947976901179545e-05 0.0017758307921689465" rpy="0.0 -0.0 1.5407439555097887e-33" />
+            <mass value="0.0020551252007295867" />
+            <inertia ixx="1.4053816911759574e-08" iyy="1.3342655238928283e-08" izz="1.9807185085428695e-08" ixy="-1.0941584109287917e-10" iyz="3.2655482766659456e-10" ixz="-2.171554025052375e-09" />
+        </inertial>
+        <visual name="FR-fingertip_frame1_visual">
+            <origin xyz="-4.730981650880039e-09 1.8477564722729768e-09 1.2459290132937896e-09" rpy="2.8762538639871744 -0.19287908770000395 0.8072066264791371" />
+            <geometry>
+                <mesh filename="meshes/FR-fingertip_frame1.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR-fingertip_frame1_collision">
+            <origin xyz="-4.730981650880039e-09 1.8477564722729768e-09 1.2459290132937896e-09" rpy="2.8762538639871744 -0.19287908770000395 0.8072066264791371" />
+            <geometry>
+                <mesh filename="meshes/FR-fingertip_frame1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-Single-Motor1">
+        <inertial>
+            <origin xyz="-0.008058511743548404 0.0242910327537348 0.016750000002146947" rpy="0.0 -0.0 0.0" />
+            <mass value="0.7011939191100404" />
+            <inertia ixx="0.0002624831375911685" iyy="0.00019998987600204632" izz="0.00033542080863282423" ixy="6.052823711302606e-07" iyz="1.678865380050354e-14" ixz="4.046936397106293e-14" />
+        </inertial>
+        <visual name="FL-Single-Motor1_visual">
+            <origin xyz="-0.04174999999999992 0.03924999999999998 0.0167499999999999" rpy="-1.5707963267948968 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FL-Single-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-Single-Motor1_collision">
+            <origin xyz="-0.04174999999999992 0.03924999999999998 0.0167499999999999" rpy="-1.5707963267948968 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FL-Single-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-Double-Motor1">
+        <inertial>
+            <origin xyz="-0.06716414766997801 0.0054249409134745005 0.009451637209221877" rpy="0.0 -0.0 0.0" />
+            <mass value="2.4365544485369104" />
+            <inertia ixx="0.001577672922648154" iyy="0.004138553852375493" izz="0.003681915845929861" ixy="-9.379314924728992e-07" iyz="-0.00039187470784970985" ixz="-3.820435682682516e-06" />
+        </inertial>
+        <visual name="FL-Double-Motor1_visual">
+            <origin xyz="-0.08224999999999988 2.842170943040401e-16 -4.4408920985006264e-17" rpy="-7.601905174270248e-16 -0.5235987755982989 -1.5707963267948968" />
+            <geometry>
+                <mesh filename="meshes/FL-Double-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-Double-Motor1_collision">
+            <origin xyz="-0.08224999999999988 2.842170943040401e-16 -4.4408920985006264e-17" rpy="-7.601905174270248e-16 -0.5235987755982989 -1.5707963267948968" />
+            <geometry>
+                <mesh filename="meshes/FL-Double-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-leg-link11">
+        <inertial>
+            <origin xyz="-0.02564465116894148 -0.028590895986492715 -0.03728518097798102" rpy="0.0 -0.0 0.0" />
+            <mass value="0.2812248770831842" />
+            <inertia ixx="0.00048434804844828955" iyy="0.0004937280138168215" izz="0.00030813361047592885" ixy="-0.00014125712644268496" iyz="-0.0002183393766555172" ixz="-0.00020929170898985677" />
+        </inertial>
+        <visual name="FL-leg-link11_visual">
+            <origin xyz="2.1316282072803005e-16 -0.00866024939550705 0.005000000000000285" rpy="2.2666830990568534 -0.8612652500264097 0.7373697106748466" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link11.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-leg-link11_collision">
+            <origin xyz="2.1316282072803005e-16 -0.00866024939550705 0.005000000000000285" rpy="2.2666830990568534 -0.8612652500264097 0.7373697106748466" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link11.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-leg-link31">
+        <inertial>
+            <origin xyz="-0.020289955922759634 0.06155369185359419 -0.02768160232414651" rpy="0.0 -0.0 0.0" />
+            <mass value="0.24917982527134377" />
+            <inertia ixx="0.0003638470283476407" iyy="0.000158063345524456" izz="0.0004353619418891991" ixy="0.00016683175653379973" iyz="0.00010244798422933492" ixz="-5.012395721975088e-05" />
+        </inertial>
+        <visual name="FL-leg-link31_visual">
+            <origin xyz="0.0012100779577137288 0.0011765897816489001 0.0010729981287976999" rpy="2.125389301738269 -0.8878359645555731 -3.044082958077258" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link31.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-leg-link31_collision">
+            <origin xyz="0.0012100779577137288 0.0011765897816489001 0.0010729981287976999" rpy="2.125389301738269 -0.8878359645555731 -3.044082958077258" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link31.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-leg-link21">
+        <inertial>
+            <origin xyz="0.036142058450132526 0.060024858618548865 -0.022076488212723417" rpy="0.0 -6.162975822039155e-33 0.0" />
+            <mass value="0.27918764656736367" />
+            <inertia ixx="0.00047908888498099725" iyy="0.00024131336420428056" izz="0.0005874779809254592" ixy="-0.00025936565798031244" iyz="0.00015748641808121145" ixz="9.959353957929869e-05" />
+        </inertial>
+        <visual name="FL-leg-link21_visual">
+            <origin xyz="-0.0012389013813495708 0.0011895164406465141 0.0010247907563698177" rpy="1.0229307619835852 -0.9269839407288191 -0.11336092610700407" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link21.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-leg-link21_collision">
+            <origin xyz="-0.0012389013813495708 0.0011895164406465141 0.0010247907563698177" rpy="1.0229307619835852 -0.9269839407288191 -0.11336092610700407" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link21.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-leg-link41">
+        <inertial>
+            <origin xyz="0.02955510052400296 -0.022229836548807818 -0.04333275251101697" rpy="0.0 -0.0 0.0" />
+            <mass value="0.30627894117127225" />
+            <inertia ixx="0.0005050925577487139" iyy="0.0006193558381548947" izz="0.0002679334311237267" ixy="0.000110090406135647" iyz="-0.00017193732602444403" ixz="0.00027002293304720024" />
+        </inertial>
+        <visual name="FL-leg-link41_visual">
+            <origin xyz="2.486899575160351e-16 0.007967430604493 -0.004599999999999866" rpy="-0.8399682261522942 0.8345897848217201 -0.6907835738695609" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link41.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-leg-link41_collision">
+            <origin xyz="2.486899575160351e-16 0.007967430604493 -0.004599999999999866" rpy="-0.8399682261522942 0.8345897848217201 -0.6907835738695609" />
+            <geometry>
+                <mesh filename="meshes/FL-leg-link41.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="FL-fingertip_frame1">
+        <inertial>
+            <origin xyz="0.0009571583592109612 -0.0006475091556943546 0.0014765493181214495" rpy="0.0 -0.0 0.0" />
+            <mass value="0.0020551252007295867" />
+            <inertia ixx="1.520900545018682e-08" iyy="1.4187862342832373e-08" izz="1.7806789443192226e-08" ixy="-1.2737105594822246e-09" iyz="-1.9648751898326847e-09" ixz="2.9044906642555082e-09" />
+        </inertial>
+        <visual name="FL-fingertip_frame1_visual">
+            <origin xyz="8.808556550832237e-10 4.048173352089179e-09 -1.1179236736325037e-09" rpy="3.0677748428505933 0.6605677545384829 -0.714726710603249" />
+            <geometry>
+                <mesh filename="meshes/FL-fingertip_frame1.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL-fingertip_frame1_collision">
+            <origin xyz="8.808556550832237e-10 4.048173352089179e-09 -1.1179236736325037e-09" rpy="3.0677748428505933 0.6605677545384829 -0.714726710603249" />
+            <geometry>
+                <mesh filename="meshes/FL-fingertip_frame1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-Single-Motor1">
+        <inertial>
+            <origin xyz="-0.007941488256451539 0.02429103275373476 -0.016750000002146805" rpy="0.0 -0.0 0.0" />
+            <mass value="0.7011939191100404" />
+            <inertia ixx="0.000262483137591224" iyy="0.00019998987600210183" izz="0.0003354208086328277" ixy="-6.05282371132429e-07" iyz="-1.6785154281843655e-14" ixz="4.046242521155871e-14" />
+        </inertial>
+        <visual name="RR-Single-Motor1_visual">
+            <origin xyz="0.025749999999999974 0.039249999999999924 -0.016749999999999758" rpy="-1.5707963267948966 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RR-Single-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-Single-Motor1_collision">
+            <origin xyz="0.025749999999999974 0.039249999999999924 -0.016749999999999758" rpy="-1.5707963267948966 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RR-Single-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-Double-Motor1">
+        <inertial>
+            <origin xyz="0.06716414766997816 0.0054249409134745005 -0.009451637209221753" rpy="0.0 -0.0 0.0" />
+            <mass value="2.4365544485369104" />
+            <inertia ixx="0.00157767292264821" iyy="0.004138553852375491" izz="0.003681915845930083" ixy="9.37931492417387e-07" iyz="0.00039187470784972345" ixz="-3.820435682685986e-06" />
+        </inertial>
+        <visual name="RR-Double-Motor1_visual">
+            <origin xyz="0.08225000000000007 3.552713678800501e-16 1.865174681370263e-16" rpy="3.1415926535897927 0.5235987755982988 -1.5707963267948972" />
+            <geometry>
+                <mesh filename="meshes/RR-Double-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-Double-Motor1_collision">
+            <origin xyz="0.08225000000000007 3.552713678800501e-16 1.865174681370263e-16" rpy="3.1415926535897927 0.5235987755982988 -1.5707963267948972" />
+            <geometry>
+                <mesh filename="meshes/RR-Double-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-leg-link11">
+        <inertial>
+            <origin xyz="0.030501179965266943 0.0270784934537258 -0.03466562294973286" rpy="0.0 -0.0 0.0" />
+            <mass value="0.2812248770831842" />
+            <inertia ixx="0.0004268581106413665" iyy="0.0005098904746392715" izz="0.0003494610874604059" ixy="-0.0001579729583351918" iyz="0.00019241206001464558" ixz="0.00023225972057647906" />
+        </inertial>
+        <visual name="RR-leg-link11_visual">
+            <origin xyz="2.1316282072803005e-16 0.008660249395507087 0.005000000000000285" rpy="2.3529155504512795 -0.7886557401903748 -2.521483368601878" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link11.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-leg-link11_collision">
+            <origin xyz="2.1316282072803005e-16 0.008660249395507087 0.005000000000000285" rpy="2.3529155504512795 -0.7886557401903748 -2.521483368601878" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link11.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-leg-link21">
+        <inertial>
+            <origin xyz="-0.015484005216635063 0.0405322697145763 -0.05927885783007817" rpy="0.0 -0.0 0.0" />
+            <mass value="0.27918764656736367" />
+            <inertia ixx="0.0006141670613966227" iyy="0.0004412491150624554" izz="0.0002524640536516862" ixy="7.977023012972485e-05" iyz="0.0002865038163715309" ixz="-0.00011030853222733703" />
+        </inertial>
+        <visual name="RR-leg-link21_visual">
+            <origin xyz="0.0011584524710401567 -0.0011495472618925718 -0.0011560785367948512" rpy="0.6310751296899837 -0.2017941964340481 0.6438280073162304" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link21.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-leg-link21_collision">
+            <origin xyz="0.0011584524710401567 -0.0011495472618925718 -0.0011560785367948512" rpy="0.6310751296899837 -0.2017941964340481 0.6438280073162304" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link21.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-leg-link31">
+        <inertial>
+            <origin xyz="0.023444271136254358 -0.03615842783585254 0.055765085382231516" rpy="0.0 -0.0 0.0" />
+            <mass value="0.24917982527134377" />
+            <inertia ixx="0.0003561236432571904" iyy="0.00040743454532926214" izz="0.0001937141271748361" ixy="7.009651387929933e-05" iyz="0.00012777138730814638" ixz="-0.00016697328281908727" />
+        </inertial>
+        <visual name="RR-leg-link31_visual">
+            <origin xyz="-0.001392725807370745 0.0006032312896365432 0.0013024655422003662" rpy="0.7162610704245728 -0.12758131596449987 1.051753578319913" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link31.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-leg-link31_collision">
+            <origin xyz="-0.001392725807370745 0.0006032312896365432 0.0013024655422003662" rpy="0.7162610704245728 -0.12758131596449987 1.051753578319913" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link31.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-leg-link41">
+        <inertial>
+            <origin xyz="-0.009996449334230936 0.02592497677775107 -0.04973292312863798" rpy="0.0 -0.0 0.0" />
+            <mass value="0.30627894117127225" />
+            <inertia ixx="0.000660768079321958" iyy="0.0005889743260766302" izz="0.00014263942162871286" ixy="4.523432023344731e-05" iyz="0.00023441775234448608" ixz="-0.00010452524312342537" />
+        </inertial>
+        <visual name="RR-leg-link41_visual">
+            <origin xyz="1.0658141036401502e-16 -0.007967430604492929 -0.004599999999999583" rpy="-1.2786355835490972 1.0214548367816705 1.9098335177672314" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link41.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-leg-link41_collision">
+            <origin xyz="1.0658141036401502e-16 -0.007967430604492929 -0.004599999999999583" rpy="-1.2786355835490972 1.0214548367816705 1.9098335177672314" />
+            <geometry>
+                <mesh filename="meshes/RR-leg-link41.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RR-fingertip_frame1">
+        <inertial>
+            <origin xyz="-0.00042137475347249877 0.00029430465898222735 0.001803181008978001" rpy="0.0 -0.0 -9.87039096498458e-34" />
+            <mass value="0.0020551252007295867" />
+            <inertia ixx="1.3691108333621623e-08" iyy="1.3504209300194714e-08" izz="2.000833960232734e-08" ixy="-2.548655015331702e-10" iyz="1.0906236379160258e-09" ixz="-1.561523390694357e-09" />
+        </inertial>
+        <visual name="RR-fingertip_frame1_visual">
+            <origin xyz="3.080549539902222e-09 -7.677704516595441e-10 3.254424001397638e-09" rpy="-3.139189618088205 -0.27766691957230083 -0.61844188341865" />
+            <geometry>
+                <mesh filename="meshes/RR-fingertip_frame1.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR-fingertip_frame1_collision">
+            <origin xyz="3.080549539902222e-09 -7.677704516595441e-10 3.254424001397638e-09" rpy="-3.139189618088205 -0.27766691957230083 -0.61844188341865" />
+            <geometry>
+                <mesh filename="meshes/RR-fingertip_frame1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-Single-Motor1">
+        <inertial>
+            <origin xyz="-0.007941488256451548 0.02429103275373483 0.01674999999785328" rpy="0.0 -0.0 0.0" />
+            <mass value="0.7011939191100404" />
+            <inertia ixx="0.0002624831375911685" iyy="0.0001999898760019908" izz="0.00033542080863282857" ixy="-6.052823711306943e-07" iyz="-1.676089822488791e-14" ixz="4.048150703539477e-14" />
+        </inertial>
+        <visual name="RL-Single-Motor1_visual">
+            <origin xyz="0.025749999999999957 0.03924999999999999 0.016749999999999973" rpy="-1.5707963267948966 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RL-Single-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-Single-Motor1_collision">
+            <origin xyz="0.025749999999999957 0.03924999999999999 0.016749999999999973" rpy="-1.5707963267948966 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RL-Single-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-Double-Motor1">
+        <inertial>
+            <origin xyz="0.06716414766997812 0.005472887473802999 0.009423955249709284" rpy="0.0 -0.0 0.0" />
+            <mass value="2.4365544485369104" />
+            <inertia ixx="0.001577672922648099" iyy="0.004135448799639618" izz="0.0036850208986659028" ixy="2.839628608475309e-06" iyz="-0.0003936674108825784" ixz="2.72249034081322e-06" />
+        </inertial>
+        <visual name="RL-Double-Motor1_visual">
+            <origin xyz="0.08225000000000003 -2.1316282072803005e-16 -6.217248937900877e-17" rpy="1.5670812769255316e-15 0.5235987755982988 1.5707963267948968" />
+            <geometry>
+                <mesh filename="meshes/RL-Double-Motor1.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-Double-Motor1_collision">
+            <origin xyz="0.08225000000000003 -2.1316282072803005e-16 -6.217248937900877e-17" rpy="1.5670812769255316e-15 0.5235987755982988 1.5707963267948968" />
+            <geometry>
+                <mesh filename="meshes/RL-Double-Motor1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-leg-link11">
+        <inertial>
+            <origin xyz="-0.019110823089581484 -0.030110613669180584 -0.0399174092175577" rpy="0.0 -0.0 0.0" />
+            <mass value="0.2812248770831842" />
+            <inertia ixx="0.0005460021501109275" iyy="0.0004764726848507859" izz="0.000263734837779304" ixy="-0.00011177962799577797" iyz="-0.0002460997515747951" ixz="-0.00016634885767108883" />
+        </inertial>
+        <visual name="RL-leg-link11_visual">
+            <origin xyz="1.0658141036401502e-16 -0.008660249395507033 0.004999999999999858" rpy="2.1275724127607294 -0.9410327853129017 0.9144785579661657" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link11.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-leg-link11_collision">
+            <origin xyz="1.0658141036401502e-16 -0.008660249395507033 0.004999999999999858" rpy="2.1275724127607294 -0.9410327853129017 0.9144785579661657" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link11.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-leg-link21">
+        <inertial>
+            <origin xyz="0.027927776907008487 0.05784305388894488 -0.03564861268217173" rpy="0.0 -0.0 0.0" />
+            <mass value="0.27918764656736367" />
+            <inertia ixx="0.0005429123238746697" iyy="0.0002704206643889199" izz="0.000494547241847142" ixy="-0.00019634397762693248" iyz="0.00024115448732143864" ixz="0.00012449993262215962" />
+        </inertial>
+        <visual name="RL-leg-link21_visual">
+            <origin xyz="-0.0013197348411189225 0.0012344872762499648 0.0008569482602495527" rpy="0.713193877205141 -0.8567359177323273 0.23974611775362004" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link21.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-leg-link21_collision">
+            <origin xyz="-0.0013197348411189225 0.0012344872762499648 0.0008569482602495527" rpy="0.713193877205141 -0.8567359177323273 0.23974611775362004" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link21.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-leg-link31">
+        <inertial>
+            <origin xyz="-0.010864917976788568 -0.056850503703582404 0.04020925300000421" rpy="0.0 -0.0 0.0" />
+            <mass value="0.24917982527134377" />
+            <inertia ixx="0.00040642621636253" iyy="0.00017552087908935014" izz="0.00037532522030941755" ixy="-0.00011976843920480894" iyz="0.0001660222842672944" ixz="6.291163496735365e-05" />
+        </inertial>
+        <visual name="RL-leg-link31_visual">
+            <origin xyz="0.0012925760832577992 -0.0012175145218447626 -0.0009202839723548984" rpy="-0.7303199438324095 0.8096456624604397 -2.9015328245545233" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link31.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-leg-link31_collision">
+            <origin xyz="0.0012925760832577992 -0.0012175145218447626 -0.0009202839723548984" rpy="-0.7303199438324095 0.8096456624604397 -2.9015328245545233" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link31.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-leg-link41">
+        <inertial>
+            <origin xyz="0.023198552192259216 -0.02389620895982507 -0.046218994191230676" rpy="0.0 -0.0 0.0" />
+            <mass value="0.30627894117127225" />
+            <inertia ixx="0.0005725049703694945" iyy="0.0006063705200654232" izz="0.00021350633659240892" ixy="9.4388066205639e-05" iyz="-0.00019889469020557826" ixz="0.00022553204592476106" />
+        </inertial>
+        <visual name="RL-leg-link41_visual">
+            <origin xyz="0.0 0.007967430604493089 -0.004600000000000293" rpy="-0.958214066706684 0.9133178380829666 -0.8447314430802677" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link41.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-leg-link41_collision">
+            <origin xyz="0.0 0.007967430604493089 -0.004600000000000293" rpy="-0.958214066706684 0.9133178380829666 -0.8447314430802677" />
+            <geometry>
+                <mesh filename="meshes/RL-leg-link41.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="RL-fingertip_frame1">
+        <inertial>
+            <origin xyz="0.0007496651713799807 -0.00036587961655534687 0.0016792161305109233" rpy="0.0 -0.0 0.0" />
+            <mass value="0.0020551252007295867" />
+            <inertia ixx="1.4481179813242311e-08" iyy="1.3601313004585169e-08" izz="1.9121164418397505e-08" ixy="-5.63690415437306e-10" iyz="-1.2626347770333765e-09" ixz="2.5870942464727895e-09" />
+        </inertial>
+        <visual name="RL-fingertip_frame1_visual">
+            <origin xyz="-7.704113258455436e-10 -3.897153888487992e-09 1.7572368804508188e-09" rpy="2.993641146453212 0.43830299275401713 -0.7917659873933455" />
+            <geometry>
+                <mesh filename="meshes/RL-fingertip_frame1.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL-fingertip_frame1_collision">
+            <origin xyz="-7.704113258455436e-10 -3.897153888487992e-09 1.7572368804508188e-09" rpy="2.993641146453212 0.43830299275401713 -0.7917659873933455" />
+            <geometry>
+                <mesh filename="meshes/RL-fingertip_frame1.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="Body1_FR-Body-Single_Motor" type="fixed">
+        <origin xyz="-0.044000000000000004 0.029500000000000002 0.012000000000000028" rpy="3.141592653589793 -0.0 0.0" />
+        <parent link="Body1" />
+        <child link="FR-Single-Motor1" />
+    </joint>
+    <joint name="FR-Single-Motor1_FR-Single-Double_Motor" type="continuous">
+        <origin xyz="-0.034499999999999996 -0.03925 0.016750000000000043" rpy="-1.5707963267948966 -0.0 -1.5407439555097887e-33" />
+        <parent link="FR-Single-Motor1" />
+        <child link="FR-Double-Motor1" />
+        <axis xyz="-1.0 0.0 7.806255641895643e-18" />
+    </joint>
+    <joint name="FR-Double-Motor1_FR-Double_Motor-Link1" type="continuous">
+        <origin xyz="-0.08225 0.03216045999999999 -0.053940199999999994" rpy="-1.5707963267948968 -7.703719777548943e-33 9.621952956331906e-49" />
+        <parent link="FR-Double-Motor1" />
+        <child link="FR-leg-link11" />
+        <axis xyz="-5.293503193065871e-33 0.8589199999999999 0.5121090000000001" />
+    </joint>
+    <joint name="FR-leg-link11_FR-Link1-Link2" type="continuous">
+        <origin xyz="0.0362449 0.07587255000000002 -0.10496640999999997" rpy="-0.7853981633974451 -2.7755575615628914e-17 2.7638981384219264e-33" />
+        <parent link="FR-leg-link11" />
+        <child link="FR-leg-link21" />
+        <axis xyz="-0.678696 0.365770781558617 0.6368543082621005" />
+    </joint>
+    <joint name="FR-Double-Motor1_FR-Double_Motor-Link4" type="continuous">
+        <origin xyz="-0.08225 0.04199296000000004 -0.07043147" rpy="-1.5707963267948968 -7.703719777548943e-33 9.621952956331906e-49" />
+        <parent link="FR-Double-Motor1" />
+        <child link="FR-leg-link41" />
+        <axis xyz="-5.293503193065871e-33 0.85892 0.512109" />
+    </joint>
+    <joint name="FR-leg-link41_FR-Link4-Link3" type="continuous">
+        <origin xyz="-0.041629570000000025 0.05854372 -0.11339414000000005" rpy="2.35619449019234 8.326672684688674e-17 5.551115123125783e-17" />
+        <parent link="FR-leg-link41" />
+        <child link="FR-leg-link31" />
+        <axis xyz="0.669766 -0.39322561655174176 -0.6299098125640699" />
+    </joint>
+    <joint name="FR-leg-link21_FR-Link2-Link3" type="continuous">
+        <origin xyz="-0.04118983000000002 0.08596578567383739 -0.09418931025981692" rpy="0.9553166181245095 -0.5235987755982939 2.5261129449194093" />
+        <parent link="FR-leg-link21" />
+        <child link="FR-leg-link31" />
+        <axis xyz="0.7144854404482255 -0.046447999999999975 0.6981074331823902" />
+    </joint>
+    <joint name="FR-leg-link21_FR-Link2-Fingertip" type="fixed">
+        <origin xyz="-0.05290837999999999 0.10801814101093907 -0.1215639169175536" rpy="-2.356194490192348 -4.906538933386794e-17 9.813077866773741e-18" />
+        <parent link="FR-leg-link21" />
+        <child link="FR-fingertip_frame1" />
+    </joint>
+    <joint name="Body1_FL-Body-Single_Motor" type="fixed">
+        <origin xyz="-0.044000000000000004 -0.032 0.012000000000000028" rpy="3.141592653589793 -0.0 0.0" />
+        <parent link="Body1" />
+        <child link="FL-Single-Motor1" />
+    </joint>
+    <joint name="FL-Single-Motor1_FL-Single-Double_Motor" type="continuous">
+        <origin xyz="-0.034499999999999996 0.03925 0.016750000000000043" rpy="-1.5707963267948966 -0.0 -3.8518598887744726e-34" />
+        <parent link="FL-Single-Motor1" />
+        <child link="FL-Double-Motor1" />
+        <axis xyz="-0.9999999999999999 -1.539512473013105e-48 7.806255641895629e-18" />
+    </joint>
+    <joint name="FL-Double-Motor1_FL-Double_Motor-Link1" type="continuous">
+        <origin xyz="-0.08224999999999998 0.031400000000000004 0.05438639999999999" rpy="-1.5707963267948968 -3.8518598887744726e-34 4.810976478165954e-50" />
+        <parent link="FL-Double-Motor1" />
+        <child link="FL-leg-link11" />
+        <axis xyz="0.0 -0.8660250000000002 0.4999999999999999" />
+    </joint>
+    <joint name="FL-leg-link11_FL-Link1-Link2" type="continuous">
+        <origin xyz="-0.06338258 -0.06892026 -0.09654496000000001" rpy="-0.7853981633974451 5.551115123125784e-17 -5.551115123125782e-17" />
+        <parent link="FL-leg-link11" />
+        <child link="FL-leg-link21" />
+        <axis xyz="0.619449 -0.5947552918305997 -0.5123957365986744" />
+    </joint>
+    <joint name="FL-Double-Motor1_FL-Double_Motor-Link4" type="continuous">
+        <origin xyz="-0.08224999999999998 0.041000000000000016 0.07101407999999998" rpy="-1.5707963267948968 -3.8518598887744726e-34 4.810976478165954e-50" />
+        <parent link="FL-Double-Motor1" />
+        <child link="FL-leg-link41" />
+        <axis xyz="0.0 -0.866025 0.5" />
+    </joint>
+    <joint name="FL-leg-link41_FL-Link4-Link3" type="continuous">
+        <origin xyz="0.06814062 -0.050952319999999995 -0.10382358000000004" rpy="-0.7853981633974534 2.0526832973508063e-48 5.551115123125783e-17" />
+        <parent link="FL-leg-link41" />
+        <child link="FL-leg-link31" />
+        <axis xyz="0.605041 0.5882958713844564 0.5365002996625475" />
+    </joint>
+    <joint name="FL-leg-link21_FL-Link2-Link3" type="continuous">
+        <origin xyz="0.06719855999999999 0.10778306336153386 -0.04272598680117847" rpy="-2.1862760354652835 -0.5235987755982939 2.5261129449194093" />
+        <parent link="FL-leg-link21" />
+        <child link="FL-leg-link31" />
+        <axis xyz="-0.661733860358147 0.3926760000000001 0.63868076507791" />
+    </joint>
+    <joint name="FL-leg-link21_FL-Link2-Fingertip" type="fixed">
+        <origin xyz="0.08605386 0.13816643058642264 -0.052438275217471075" rpy="-2.356194490192348 -2.453269466693416e-17 -5.397192826725469e-17" />
+        <parent link="FL-leg-link21" />
+        <child link="FL-fingertip_frame1" />
+    </joint>
+    <joint name="Body1_RR-Body-Single_Motor" type="fixed">
+        <origin xyz="0.06 0.029500000000000002 0.012000000000000028" rpy="2.2204460492503126e-16 -0.0 0.0" />
+        <parent link="Body1" />
+        <child link="RR-Single-Motor1" />
+    </joint>
+    <joint name="RR-Single-Motor1_RR-Single-Double_Motor" type="continuous">
+        <origin xyz="0.018499999999999996 0.03924999999999999 -0.016750000000000043" rpy="1.5707963267948966 -1.3684555315672039e-48 -6.162975822039155e-33" />
+        <parent link="RR-Single-Motor1" />
+        <child link="RR-Double-Motor1" />
+        <axis xyz="1.0 0.0 -7.806255641895643e-18" />
+    </joint>
+    <joint name="RR-Double-Motor1_RR-Double_Motor-Link1" type="continuous">
+        <origin xyz="0.08225 0.031400000000000004 -0.05438639999999999" rpy="-1.5707963267948968 6.162975822039155e-33 -7.697562365065525e-49" />
+        <parent link="RR-Double-Motor1" />
+        <child link="RR-leg-link11" />
+        <axis xyz="0.0 0.8660250000000002 0.5000000000000002" />
+    </joint>
+    <joint name="RR-leg-link11_RR-Link1-Link2" type="continuous">
+        <origin xyz="0.07570079 0.06517376000000004 -0.09005584999999997" rpy="-0.7853981633974451 -5.551115123125784e-17 5.551115123125782e-17" />
+        <parent link="RR-leg-link11" />
+        <child link="RR-leg-link21" />
+        <axis xyz="-0.579228 0.574772454194268 0.5780407017369087" />
+    </joint>
+    <joint name="RR-Double-Motor1_RR-Double_Motor-Link4" type="continuous">
+        <origin xyz="0.08225 0.041000000000000016 -0.07101407999999998" rpy="-1.5707963267948968 6.162975822039155e-33 -7.697562365065525e-49" />
+        <parent link="RR-Double-Motor1" />
+        <child link="RR-leg-link41" />
+        <axis xyz="0.0 0.8660250000000003 0.5000000000000001" />
+    </joint>
+    <joint name="RR-leg-link41_RR-Link4-Link3" type="continuous">
+        <origin xyz="-0.02187612999999999 0.05936222000000001 -0.11838995000000001" rpy="2.35619449019234 2.7755575615628914e-17 -2.7369110631344077e-48" />
+        <parent link="RR-leg-link41" />
+        <child link="RR-leg-link31" />
+        <axis xyz="0.696364 -0.3016163975151185 -0.6512326175507497" />
+    </joint>
+    <joint name="RR-leg-link21_RR-Link2-Link3" type="continuous">
+        <origin xyz="-0.028667029999999975 0.07674518395784295 -0.10605055982374566" rpy="0.9553166181245094 -0.5235987755982943 2.5261129449194093" />
+        <parent link="RR-leg-link21" />
+        <child link="RR-leg-link31" />
+        <axis xyz="0.5841875809857613 -0.192193 0.7885343696808691" />
+    </joint>
+    <joint name="RR-leg-link21_RR-Link2-Fingertip" type="fixed">
+        <origin xyz="-0.03727120999999997 0.09615481962414142 -0.13641886567419534" rpy="-2.3561944901923475 7.459472472164641e-17 8.241452114673111e-17" />
+        <parent link="RR-leg-link21" />
+        <child link="RR-fingertip_frame1" />
+    </joint>
+    <joint name="Body1_RL-Body-Single_Motor" type="fixed">
+        <origin xyz="0.06 -0.032 0.012000000000000028" rpy="3.141592653589793 -0.0 0.0" />
+        <parent link="Body1" />
+        <child link="RL-Single-Motor1" />
+    </joint>
+    <joint name="RL-Single-Motor1_RL-Single-Double_Motor" type="continuous">
+        <origin xyz="0.018499999999999996 0.03925 0.016750000000000043" rpy="-1.5707963267948966 -5.473822126268817e-48 0.0" />
+        <parent link="RL-Single-Motor1" />
+        <child link="RL-Double-Motor1" />
+        <axis xyz="1.0 4.930380657631325e-32 -7.806255641895544e-18" />
+    </joint>
+    <joint name="RL-Double-Motor1_RL-Double_Motor-Link1" type="continuous">
+        <origin xyz="0.08225 0.031400000000000004 0.054386399999999994" rpy="-1.5707963267948968 -9.860761315262648e-32 1.7789921910373654e-47" />
+        <parent link="RL-Double-Motor1" />
+        <child link="RL-leg-link11" />
+        <axis xyz="8.539665818050335e-32 -0.8660250000000002 0.4999999999999999" />
+    </joint>
+    <joint name="RL-leg-link11_RL-Link1-Link2" type="continuous">
+        <origin xyz="-0.04683741999999997 -0.07266289 -0.10302739000000002" rpy="-0.7853981633974451 -1.2075949781892453e-47 9.860761315262648e-32" />
+        <parent link="RL-leg-link11" />
+        <child link="RL-leg-link21" />
+        <axis xyz="0.659865 -0.6172412874723316 -0.4284748895938925" />
+    </joint>
+    <joint name="RL-Double-Motor1_RL-Double_Motor-Link4" type="continuous">
+        <origin xyz="0.08225 0.041000000000000016 0.07101408" rpy="-1.5707963267948968 -9.860761315262648e-32 1.7789921910373654e-47" />
+        <parent link="RL-Double-Motor1" />
+        <child link="RL-leg-link41" />
+        <axis xyz="8.539665818050335e-32 -0.866025 0.5" />
+    </joint>
+    <joint name="RL-leg-link41_RL-Link4-Link3" type="continuous">
+        <origin xyz="0.05307714000000001 -0.054781329999999996 -0.11045561" rpy="2.35619449019234 -2.736911063134413e-48 5.551115123125793e-17" />
+        <parent link="RL-leg-link41" />
+        <child link="RL-leg-link31" />
+        <axis xyz="-0.646286 0.6087567132048706 0.46014125257577393" />
+    </joint>
+    <joint name="RL-leg-link21_RL-Link2-Link3" type="continuous">
+        <origin xyz="0.052289890000000006 0.10348939077801628 -0.06718674076393379" rpy="-2.1862760354652835 -0.523598775598294 2.5261129449194093" />
+        <parent link="RL-leg-link21" />
+        <child link="RL-leg-link31" />
+        <axis xyz="-0.7037261036656912 0.20571500000000004 0.6800366122823868" />
+    </joint>
+    <joint name="RL-leg-link21_RL-Link2-Fingertip" type="fixed">
+        <origin xyz="0.0670498 0.13311853669688808 -0.08383781852653531" rpy="-2.356194490192348 -9.813077866773564e-18 9.813077866773624e-18" />
+        <parent link="RL-leg-link21" />
+        <child link="RL-fingertip_frame1" />
+    </joint>
+</robot>
