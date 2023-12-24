@@ -205,6 +205,8 @@ class env:
         self.queue = queue.Queue()
         self.commands = None
         self.reset_time = reset_time
+        self.shared_torques = [] # To store torques
+
     
     def keyboard_test_env(self):
         sim_params = get_sim_params(dt=0.005, use_gpu_pipeline=True)
@@ -255,42 +257,56 @@ class env:
         if flag is True:
             self.env.reset()
       
-def flatten_list(nested_list):
-    return [item for sublist in nested_list for item in sublist]
+    def flatten_list(self, nested_list):
+        return [item for sublist in nested_list for item in sublist]
 
 
-def save_to_csv(filename, data):
-    flattened_data = [flatten_list(row) for row in data]
-    
-    with open(filename, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        # Write header
-        writer.writerow([f'Torque_{i+1}' for i in range(len(flattened_data[0]))])
-        # Write torques data
-        writer.writerows(flattened_data)
+    def save_to_csv(self, filename, data):
+        flattened_data = [self.flatten_list(row) for row in data]
 
+        with open(filename, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            # Write header
+            writer.writerow([f'Torque_{i+1}' for i in range(len(flattened_data[0]))])
+            # Write torques data
+            writer.writerows(flattened_data)
+
+    def save_torques_periodically(self, save_interval_seconds=0.1):
+        while True:
+            time.sleep(save_interval_seconds)
+
+            if test_env.env:
+                torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
+                
+                self.shared_torques.append(torques)
+                # print("#"*20)
+                # print("append torque")
 
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
     num_envs = 1
 
-    shared_torques = [] # To store torques
     
     test_env = env(num_envs)
     keyboard_controller = keyboard_commands(num_envs)
 
     t1 = Thread(target=test_env.keyboard_test_env)
     t2 = Thread(target=keyboard_controller.keyboard_control_on)
+    
+    # thread to save torques periodically
+    t3 = Thread(target=test_env.save_torques_periodically)  # Change 60 to your desired interval in seconds
+
 
     t1.start()
     t2.start()
+    t3.start()
 
     
     while True:
         try:
             # fix the task to move forward
-            keyboard_controller.move_forward(1)
+            # keyboard_controller.move_forward(1)
 
 
             commands = keyboard_controller.queue.get(timeout=0.1)
@@ -304,16 +320,18 @@ if __name__ == '__main__':
 
             # print("torques are {}".format(test_env.env.torques))
 
-            torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
-            shared_torques.append(torques)
+            # torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
+            # shared_torques.append(torques)
 
-            print("*"*10)
-            print(shared_torques)
+            # print("*"*10)
+            # print(shared_torques)
 
             shared_commands.put(commands)
             print(shared_commands.get(timeout=0.1))
             
-            save_to_csv('torques.csv', shared_torques)
+            test_env.save_to_csv('torques.csv', test_env.shared_torques)
+            print("#"*20)
+            print("save file")
 
         except:
             pass
