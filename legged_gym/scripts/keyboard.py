@@ -191,7 +191,8 @@ class env:
         train_runner = OnPolicyRunner(self.env, train_cfg_dict, './log', device='cuda:0')
 
         cur_path = os.path.dirname(__file__)
-        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec20_17-47-57_/model_1400.pt')
+        # model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec20_17-47-57_/model_1400.pt')
+        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt')
         train_runner.load(model_path)
         print('[Info] Successfully load pre-trained model from {}.'.format(model_path))
         policy = train_runner.get_inference_policy(device='cuda:0')
