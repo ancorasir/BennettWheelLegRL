@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 
@@ -20,6 +21,7 @@ from rsl_rl.runners import OnPolicyRunner
 import torch
 import queue
 import time
+import csv
 
 
 
@@ -102,9 +104,10 @@ class keyboard_control_legged_robot(LeggedRobot):
         if self.cfg.domain_rand.push_robots and  (self.common_step_counter % self.cfg.domain_rand.push_interval == 0):
             self._push_robots()
 
+    def close(self):
+        # sys.exit()
+        os._exit(0)
 
-
-    
 
 
 
@@ -117,6 +120,7 @@ class keyboard_commands:
         self.num_commands = class_to_dict(LeggedRobotCfg.commands.num_commands)
         self.command = torch.ones((self.env_num, self.num_commands))
         self.commands = torch.zeros((self.env_num, self.num_commands))
+        self.reset = False
 
     def key_press(self,
                   key):#定义按键按下时触发的函数
@@ -124,6 +128,15 @@ class keyboard_commands:
         lin_vel = 0.1
         ang_vel = 0.1
         
+        # set velocity limit
+        lin_max = 1.0
+        lin_min = -1.0
+
+        ang_max = 1.0
+        ang_min = -1.0
+
+        self.reset = False
+
         try:
             if key.char == 'w':
                 self.commands[:,0] += lin_vel
@@ -139,6 +152,14 @@ class keyboard_commands:
                 self.commands[:,2] -= ang_vel
             elif key.char == 'r':
                 self.commands = torch.zeros((self.env_num, self.num_commands))
+            elif key.char == '0':
+                self.reset = True
+
+
+            # Check velocity limits
+            self.commands[:, 0] = torch.clamp(self.commands[:, 0], lin_min, lin_max)
+            self.commands[:, 1] = torch.clamp(self.commands[:, 1], lin_min, lin_max)
+            self.commands[:, 2] = torch.clamp(self.commands[:, 2], ang_min, ang_max)
 
             self.command[self.command<1e-5]=0
             self.queue.put(self.commands)
@@ -163,20 +184,39 @@ class keyboard_commands:
                 #print(self.commands)
 
                 time.sleep(0.1)
+    
+    def get_reset_flag(self):
+        return self.reset
+    
+    def move_forward(self, vel):
+        self.commands[:, 0] = np.ones(self.commands[:, 0]) * vel
+        self.commands[:, 1] = np.ones(self.commands[:, 1]) * vel
+        self.commands[:, 2] = np.ones(self.commands[:, 2]) * vel
+
+        self.queue.put(self.commands)
 
 
 
 class env:
-    def __init__(self) -> None:
+    def __init__(self, num_envs, reset_time=1e6) -> None:
         self.env = None
+        self.num_envs = num_envs
         self.queue = queue.Queue()
         self.commands = None
+        self.reset_time = reset_time
+        self.shared_torques = [] # To store torques
+
     
     def keyboard_test_env(self):
         sim_params = get_sim_params(dt=0.005, use_gpu_pipeline=True)
 
-        BennettRoughCfg.env.num_envs = 60
+        BennettRoughCfg.env.num_envs = self.num_envs
+        BennettRoughCfg.env.episode_length_s = self.reset_time
+        BennettRoughCfg.commands.resampling_time = self.reset_time
         BennettRoughCfg.commands.heading_command = False
+        BennettRoughCfg.terrain.num_rows = 10
+        BennettRoughCfg.terrain.num_cols = 2
+        BennettRoughCfg.terrain.mesh_type = "plane"
 
         self.env = keyboard_control_legged_robot(
             cfg=BennettRoughCfg,
@@ -191,7 +231,6 @@ class env:
         train_runner = OnPolicyRunner(self.env, train_cfg_dict, './log', device='cuda:0')
 
         cur_path = os.path.dirname(__file__)
-        # model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec20_17-47-57_/model_1400.pt')
         model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt')
         train_runner.load(model_path)
         print('[Info] Successfully load pre-trained model from {}.'.format(model_path))
@@ -213,32 +252,90 @@ class env:
         self.queue.put(commands.to(self.env.device))
         self.env.commands=self.queue.get(timeout=0.1)
 
+    def restart_env(self, flag=False):
+        if flag is True:
+            self.env.reset()
+      
+    def flatten_list(self, nested_list):
+        return [item for sublist in nested_list for item in sublist]
 
 
+    def save_to_csv(self, filename, data):
+        flattened_data = [self.flatten_list(row) for row in data]
 
+        with open(filename, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            # Write header
+            writer.writerow([f'Torque_{i+1}' for i in range(len(flattened_data[0]))])
+            # Write torques data
+            writer.writerows(flattened_data)
 
+    def save_torques_periodically(self, save_interval_seconds=0.1):
+        while True:
+            time.sleep(save_interval_seconds)
+
+            if test_env.env:
+                torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
+                
+                self.shared_torques.append(torques)
+                # print("#"*20)
+                # print("append torque")
 
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 60
+    num_envs = 1
+
     
-    test_env = env()
+    test_env = env(num_envs)
     keyboard_controller = keyboard_commands(num_envs)
 
     t1 = Thread(target=test_env.keyboard_test_env)
     t2 = Thread(target=keyboard_controller.keyboard_control_on)
+    
+    # thread to save torques periodically
+    t3 = Thread(target=test_env.save_torques_periodically)  # Change 60 to your desired interval in seconds
+
 
     t1.start()
     t2.start()
+    t3.start()
 
     
     while True:
         try:
+            # fix the task to move forward
+            # keyboard_controller.move_forward(1)
+
+
             commands = keyboard_controller.queue.get(timeout=0.1)
+
+            reset_flag = keyboard_controller.get_reset_flag()
+            test_env.restart_env(reset_flag)
+            
+
             test_env.put_commands(commands)
+
+
+            # print("torques are {}".format(test_env.env.torques))
+
+            # torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
+            # shared_torques.append(torques)
+
+            # print("*"*10)
+            # print(shared_torques)
 
             shared_commands.put(commands)
             print(shared_commands.get(timeout=0.1))
+            
+            folder_name = 'data_result'
+            # current_time = datetime.now().strftime("%Y-%m-%d_%H-%M")  # 获取当前时间并格式化为字符串
+            # file_name = f'torques_{current_time}.csv'
+            file_name = 'torques.csv'
+            file_path = os.path.join(folder_name, file_name)
+            test_env.save_to_csv(file_path, test_env.shared_torques)
+            print("#"*20)
+            print("save file")
+
         except:
             pass
