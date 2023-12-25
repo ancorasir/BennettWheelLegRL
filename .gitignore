@@ -62,3 +62,6 @@ __pycache__
 resources/robots/Quadruped-IsaacSim-with-foot
 resources/robots/bennett_foot
 torques.csv
+pos.csv
+
+experiment_data

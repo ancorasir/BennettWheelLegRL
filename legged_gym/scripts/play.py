@@ -103,6 +103,7 @@ def play(args):
                     'contact_forces_z': env.contact_forces[robot_index, env.feet_indices, 2].cpu().numpy()
                 }
             )
+            print(env.contact_forces[robot_index, env.feet_indices, 2].shape)
         elif i==stop_state_log:
             logger.plot_states()
         if  0 < i < stop_rew_log:

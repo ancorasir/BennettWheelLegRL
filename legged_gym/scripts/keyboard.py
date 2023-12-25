@@ -20,6 +20,7 @@ from rsl_rl.runners import OnPolicyRunner
 import torch
 import queue
 import time
+from datetime import datetime
 import csv
 
 
@@ -205,7 +206,16 @@ class env:
         self.queue = queue.Queue()
         self.commands = None
         self.reset_time = reset_time
+
+        
+        self.positions = []
+        self.velocities = []     
         self.shared_torques = [] # To store torques
+
+        self.exp_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+
+
 
     
     def keyboard_test_env(self):
@@ -262,30 +272,192 @@ class env:
 
 
     def save_to_csv(self, filename, data):
+        # print("data: {}".format(data))
         flattened_data = [self.flatten_list(row) for row in data]
+        # print("flattened data: {}".format(flattened_data))
+
+
 
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
+            
+
             # Write header
             writer.writerow([f'Torque_{i+1}' for i in range(len(flattened_data[0]))])
             # Write torques data
             writer.writerows(flattened_data)
 
-    def save_torques_periodically(self, save_interval_seconds=0.1):
+
+    def save_to_incremental_csv(self, data, experiment_time, base_filename='data', env_ids=None):
+        """
+        Save NumPy array data to incremental CSV files for each environment.
+
+        Parameters:
+        - data (np.ndarray): NumPy array with shape (N, M), where N is the number of environments and M is the number of joints.
+        - experiment_time (str): Experiment time to use for creating subfolders. If None, current time will be used.
+        - base_filename (str): Base filename for CSV files. The actual filenames will be of the form 'base_filename_envID.csv'.
+        - env_ids (list): List of environment IDs to save. If None, save all environments in data.
+
+        Returns:
+        - None
+        """
+        if env_ids is None:
+            env_ids = range(data.shape[0])
+
+        # if experiment_time is None:
+        #     experiment_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+        # Create the experiment_data directory
+        experiment_dir = os.path.join(os.getcwd(), 'experiment_data', experiment_time)
+        os.makedirs(experiment_dir, exist_ok=True)
+
+        for env_id in env_ids:
+            filename = os.path.join(experiment_dir, f'{base_filename}_env{env_id}.csv')
+            write_header = not os.path.exists(filename)
+
+            with open(filename, 'a', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+
+                if write_header:
+                    # Write header only if the file is created
+                    writer.writerow([f'Joint_{i+1}' for i in range(data.shape[1])])
+
+                # Write the data for the current environment
+                writer.writerows(data[env_id:env_id+1, :])
+
+    def save_contact_forces_z_to_incremental_csv(self, data, experiment_time, base_filename='contact_forces_z'):
+        """
+        Save NumPy array data to incremental CSV files for each environment.
+
+        Parameters:
+        - data (np.ndarray): NumPy array with shape (N, M), where N is the number of environments and M is the number of joints.
+        - experiment_time (str): Experiment time to use for creating subfolders. If None, current time will be used.
+        - base_filename (str): Base filename for CSV files. The actual filenames will be of the form 'base_filename_envID.csv'.
+        - env_ids (list): List of environment IDs to save. If None, save all environments in data.
+
+        Returns:
+        - None
+        """
+        
+        # if experiment_time is None:
+        #     experiment_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+        # Create the experiment_data directory
+        experiment_dir = os.path.join(os.getcwd(), 'experiment_data', experiment_time)
+        os.makedirs(experiment_dir, exist_ok=True)
+
+        for env_id in range(data.shape[0]):
+            filename = os.path.join(experiment_dir, f'{base_filename}_env{env_id}.csv')
+            write_header = not os.path.exists(filename)
+
+            with open(filename, 'a', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+
+                if write_header:
+                    # Write header only if the file is created
+                    writer.writerow([f'feet_{i+1}' for i in range(data.shape[1])])
+
+                # Write the data for the current environment
+                writer.writerows(data[env_id:env_id+1, :, 2])
+
+            
+
+    def save_data_periodically(self, save_interval_seconds=0.1):
         while True:
             time.sleep(save_interval_seconds)
 
             if test_env.env:
-                torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
                 
-                self.shared_torques.append(torques)
-                # print("#"*20)
-                # print("append torque")
+                # incrementally save data to database
+                pos = test_env.env.dof_pos.cpu().numpy()
+                vel = test_env.env.dof_vel.cpu().numpy()
+                torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
+                commands = test_env.env.commands.cpu().numpy()
+                base_lin_vel = test_env.env.base_lin_vel.cpu().numpy()
+                base_ang_vel = test_env.env.base_ang_vel.cpu().numpy()
+                contact_forces_z = test_env.env.contact_forces[:, test_env.env.feet_indices, :].cpu().numpy()
+                print("force: ",contact_forces_z.shape)
+
+
+
+                self.save_to_incremental_csv(data=torques, experiment_time=self.exp_time, base_filename="joint_torque")
+                self.save_to_incremental_csv(data=pos, experiment_time=self.exp_time, base_filename="joint_position")
+                self.save_to_incremental_csv(data=vel, experiment_time=self.exp_time, base_filename="joint_vel")
+                self.save_command_to_incremental_csv(data=commands, experiment_time=self.exp_time)
+                self.save_base_vel_to_incremental_csv(data1=base_lin_vel, data2=base_ang_vel, experiment_time=self.exp_time)
+                self.save_contact_forces_z_to_incremental_csv(data=contact_forces_z, experiment_time=self.exp_time)
+
+    def save_command_to_incremental_csv(self, data, experiment_time, base_filename='command'):
+        """
+        Save NumPy array data with shape (N, 3) to incremental CSV files for each environment.
+
+        Parameters:
+        - data (np.ndarray): NumPy array with shape (N, 3), where N is the number of environments, and columns are x, y, yaw.
+        - experiment_time (str): Experiment time to use for creating subfolders. If None, current time will be used.
+        - base_filename (str): Base filename for CSV files. The actual filenames will be of the form 'base_filename_envID.csv'.
+
+        Returns:
+        - None
+        """
+        
+
+        # Create the experiment_data directory
+        experiment_dir = os.path.join(os.getcwd(), 'experiment_data', experiment_time)
+        os.makedirs(experiment_dir, exist_ok=True)
+
+        for env_id in range(data.shape[0]):
+            filename = os.path.join(experiment_dir, f'{base_filename}_env{env_id}.csv')
+            write_header = not os.path.exists(filename)
+
+            with open(filename, 'a', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+
+                if write_header:
+                    # Write header only if the file is created
+                    writer.writerow(['command_x', 'command_y', 'command_yaw'])
+
+                # Write the data for the current environment
+                writer.writerow(data[env_id, 0:3])
+
+    def save_base_vel_to_incremental_csv(self, data1, data2, experiment_time, base_filename='base_vel'):
+        """
+        Save NumPy array data with shape (N, 3) to incremental CSV files for each environment.
+
+        Parameters:
+        - data (np.ndarray): NumPy array with shape (N, 3), where N is the number of environments, and columns are x, y, yaw.
+        - experiment_time (str): Experiment time to use for creating subfolders. If None, current time will be used.
+        - base_filename (str): Base filename for CSV files. The actual filenames will be of the form 'base_filename_envID.csv'.
+
+        Returns:
+        - None
+        """
+        
+
+        # Create the experiment_data directory
+        experiment_dir = os.path.join(os.getcwd(), 'experiment_data', experiment_time)
+        os.makedirs(experiment_dir, exist_ok=True)
+
+        for env_id in range(data1.shape[0]):
+            filename = os.path.join(experiment_dir, f'{base_filename}_env{env_id}.csv')
+            write_header = not os.path.exists(filename)
+
+            with open(filename, 'a', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+
+                if write_header:
+                    # Write header only if the file is created
+                    writer.writerow(['base_vel_x', 'base_vel_y', 'base_vel_z', 'base_vel_yaw'])
+
+                # Write the data for the current environment
+                writer.writerow([data1[env_id, 0], data1[env_id, 1], data1[env_id, 2], data2[env_id,2]])
+
+
+
 
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 1
+    num_envs = 2
 
     
     test_env = env(num_envs)
@@ -295,7 +467,7 @@ if __name__ == '__main__':
     t2 = Thread(target=keyboard_controller.keyboard_control_on)
     
     # thread to save torques periodically
-    t3 = Thread(target=test_env.save_torques_periodically)  # Change 60 to your desired interval in seconds
+    t3 = Thread(target=test_env.save_data_periodically)  # Change 60 to your desired interval in seconds
 
 
     t1.start()
@@ -328,10 +500,16 @@ if __name__ == '__main__':
 
             shared_commands.put(commands)
             print(shared_commands.get(timeout=0.1))
-            
+         
             test_env.save_to_csv('torques.csv', test_env.shared_torques)
+            # print("Size of shared_torques: {}".format(len(test_env.shared_torques)))s
+
+            test_env.save_to_csv('pos.csv', test_env.positions)
+            # print("Size of positions: {}".format(len(test_env.positions)))
             print("#"*20)
             print("save file")
+        
+
 
         except:
             pass
