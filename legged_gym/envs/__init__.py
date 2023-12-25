@@ -39,6 +39,8 @@ from .cassie.cassie import Cassie
 from .cassie.cassie_config import CassieRoughCfg, CassieRoughCfgPPO
 from .a1.a1_config import A1RoughCfg, A1RoughCfgPPO
 from .bennett.bennett_config import BennettRoughCfg, BennettRoughCfgPPO
+from .bennett.bennett_wheel_config import BennettWheelRoughCfg, BennettWheelRoughCfgPPO
+from .bennett.bennett_foot_config import BennettFootRoughCfg, BennettFootRoughCfgPPO
 
 import os
 
@@ -50,3 +52,5 @@ task_registry.register( "anymal_b", Anymal, AnymalBRoughCfg(), AnymalBRoughCfgPP
 task_registry.register( "a1", LeggedRobot, A1RoughCfg(), A1RoughCfgPPO() )
 task_registry.register( "cassie", Cassie, CassieRoughCfg(), CassieRoughCfgPPO() )
 task_registry.register( "bennett", LeggedRobot, BennettRoughCfg(), BennettRoughCfgPPO() )
+task_registry.register( "bennett_wheel", LeggedRobot, BennettWheelRoughCfg(), BennettWheelRoughCfgPPO() )
+task_registry.register( "bennett_foot", LeggedRobot, BennettFootRoughCfg(), BennettFootRoughCfgPPO() )

@@ -59,6 +59,4 @@ runs
 __pycache__
 
 data_result
-resources/robots/Quadruped-IsaacSim-with-foot
-resources/robots/bennett_foot
 torques.csv
