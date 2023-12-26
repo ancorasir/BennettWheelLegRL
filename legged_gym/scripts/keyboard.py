@@ -293,7 +293,7 @@ if __name__ == '__main__':
     cfg = BennettRoughCfg()
     cfgPPO = BennettRoughCfgPPO()
     load_path = '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt'
-    num_envs = 2
+    num_envs = 1
     terrain = 'plane' # trimesh
     log_folder_name = 'data_result'
     log_file_name = 'torques.csv'

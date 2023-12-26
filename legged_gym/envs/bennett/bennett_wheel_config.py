@@ -57,8 +57,8 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
                 'RR-Double-Motor1_RR-Double_Motor-Link1': 0.,
 
                 'FL-leg-link11_FL-Link1-Link2': -0.,   # [rad]
-                'RL-leg-link11_RL-Link1-Link2': -0.,    # [rad]               
-                'FR-leg-link11_FR-Link1-Link2': 0.,     # [rad]               
+                'RL-leg-link11_RL-Link1-Link2': -0.,   # [rad]               
+                'FR-leg-link11_FR-Link1-Link2': 0.,    # [rad]               
                 'RR-leg-link11_RR-Link1-Link2': 0.,
 
                 'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.,
@@ -135,7 +135,7 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
         added_mass_range = [-1., 1.]
         push_robots = True
         push_interval_s = 15
-        max_push_vel_xy = 0.5
+        max_push_vel_xy = 0.05
 
     class rewards( LeggedRobotCfg.rewards ):
         soft_dof_pos_limit = 1
