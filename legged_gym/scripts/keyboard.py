@@ -86,13 +86,12 @@ class keyboard_control_legged_robot(LeggedRobot):
 
     def _post_physics_step_callback(self):
         """ Callback called before computing terminations, rewards, and observations
-            Default behaviour: Compute ang vel command based on target and heading, compute measured terrain heights and randomly push robots
+            Default behaviour: Compute ang vel command based on target and heading, 
+            compute measured terrain heights and randomly push robots
         """
-        # 
+         
         env_ids = (self.episode_length_buf % int(self.cfg.commands.resampling_time / self.dt)==0).nonzero(as_tuple=False).flatten()
-        #self._resample_commands(env_ids)
         self._keyboard_commands(env_ids)
-
 
         if self.cfg.commands.heading_command:
             forward = quat_apply(self.base_quat, self.forward_vec)
@@ -122,39 +121,27 @@ class keyboard_commands:
         self.commands = torch.zeros((self.env_num, self.num_commands))
         self.reset = False
 
-    def key_press(self,
-                  key):#定义按键按下时触发的函数
+    def key_press(self, key):
         
         lin_vel = 0.1
         ang_vel = 0.1
-        
         # set velocity limit
         lin_max = 1.0
         lin_min = -1.0
-
         ang_max = 1.0
         ang_min = -1.0
 
         self.reset = False
 
         try:
-            if key.char == 'w':
-                self.commands[:,0] += lin_vel
-            elif key.char == 's':
-                self.commands[:,0] -= lin_vel
-            elif key.char == 'a':
-                self.commands[:,1] += lin_vel
-            elif key.char == 'd':
-                self.commands[:,1] -= lin_vel
-            elif key.char == 'q':
-                self.commands[:,2] += ang_vel
-            elif key.char == 'e':
-                self.commands[:,2] -= ang_vel
-            elif key.char == 'r':
-                self.commands = torch.zeros((self.env_num, self.num_commands))
-            elif key.char == '0':
-                self.reset = True
-
+            if key.char == 'w': self.commands[:,0] += lin_vel
+            elif key.char == 's': self.commands[:,0] -= lin_vel
+            elif key.char == 'a': self.commands[:,1] += lin_vel
+            elif key.char == 'd': self.commands[:,1] -= lin_vel
+            elif key.char == 'q': self.commands[:,2] += ang_vel
+            elif key.char == 'e': self.commands[:,2] -= ang_vel
+            elif key.char == 'r': self.commands = torch.zeros((self.env_num, self.num_commands))
+            elif key.char == '0': self.reset = True
 
             # Check velocity limits
             self.commands[:, 0] = torch.clamp(self.commands[:, 0], lin_min, lin_max)
@@ -165,7 +152,7 @@ class keyboard_commands:
             self.queue.put(self.commands)
         
         except:
-            pass
+            print("error in key_press")
 
     def key_release(self,key):
         try:
@@ -174,18 +161,17 @@ class keyboard_commands:
             pass
 
     def keyboard_control_on(self):
-        
+
         with keyboard.Listener(on_press = self.key_press, 
-                            on_release = self.key_release) as listener:
+                               on_release = self.key_release) as listener:
             while True:
                 if not listener.running:
                     break
-            
-                #print(self.commands)
 
                 time.sleep(0.1)
     
     def get_reset_flag(self):
+
         return self.reset
     
     def move_forward(self, vel):
@@ -198,40 +184,51 @@ class keyboard_commands:
 
 
 class env:
-    def __init__(self, num_envs, reset_time=1e6) -> None:
+    def __init__(self, 
+                 num_envs=1, 
+                 reset_time=1e6, 
+                 cfg = None, 
+                 cfgPPO = None, 
+                 load_path = None,
+                 terrain = 'plane') -> None:
+        
         self.env = None
         self.num_envs = num_envs
         self.queue = queue.Queue()
         self.commands = None
         self.reset_time = reset_time
         self.shared_torques = [] # To store torques
+        self.cfg = cfg
+        self.cfgPPO = cfgPPO
+        self.load_path = load_path
+        self.terrain = terrain
 
     
     def keyboard_test_env(self):
         sim_params = get_sim_params(dt=0.005, use_gpu_pipeline=True)
 
-        BennettRoughCfg.env.num_envs = self.num_envs
-        BennettRoughCfg.env.episode_length_s = self.reset_time
-        BennettRoughCfg.commands.resampling_time = self.reset_time
-        BennettRoughCfg.commands.heading_command = False
-        BennettRoughCfg.terrain.num_rows = 10
-        BennettRoughCfg.terrain.num_cols = 2
-        BennettRoughCfg.terrain.mesh_type = "plane"
+        self.cfg.env.num_envs = self.num_envs
+        self.cfg.env.episode_length_s = self.reset_time
+        self.cfg.commands.resampling_time = self.reset_time
+        self.cfg.commands.heading_command = False
+        self.cfg.terrain.num_rows = 10
+        self.cfg.terrain.num_cols = 2
+        self.cfg.terrain.mesh_type = self.terrain
 
         self.env = keyboard_control_legged_robot(
-            cfg=BennettRoughCfg,
+            cfg=self.cfg,
             sim_params=sim_params,
             physics_engine=gymapi.SIM_PHYSX,
             sim_device='cuda:0',
             headless=False
         )
 
-        train_cfg_dict = class_to_dict(BennettRoughCfgPPO)
-
+        train_cfg_dict = class_to_dict(self.cfgPPO)
         train_runner = OnPolicyRunner(self.env, train_cfg_dict, './log', device='cuda:0')
 
         cur_path = os.path.dirname(__file__)
-        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt')
+        model_path = os.path.join(cur_path, self.load_path)
+
         train_runner.load(model_path)
         print('[Info] Successfully load pre-trained model from {}.'.format(model_path))
         policy = train_runner.get_inference_policy(device='cuda:0')
@@ -278,44 +275,47 @@ class env:
                 torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
                 
                 self.shared_torques.append(torques)
-                # print("#"*20)
-                # print("append torque")
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 1
 
-    
-    test_env = env(num_envs)
+    cfg = BennettRoughCfg()
+    cfgPPO = BennettRoughCfgPPO()
+    load_path = '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt'
+    num_envs = 2
+    terrain = 'plane' # trimesh
+    log_folder_name = 'data_result'
+    log_file_name = 'torques.csv'
+
+    test_env = env(num_envs=num_envs, cfg=cfg, cfgPPO=cfgPPO, load_path=load_path, terrain=terrain)
     keyboard_controller = keyboard_commands(num_envs)
 
     t1 = Thread(target=test_env.keyboard_test_env)
     t2 = Thread(target=keyboard_controller.keyboard_control_on)
-    
-    # thread to save torques periodically
     t3 = Thread(target=test_env.save_torques_periodically)  # Change 60 to your desired interval in seconds
-
 
     t1.start()
     t2.start()
     t3.start()
-
-    
+ 
     while True:
         try:
-            # fix the task to move forward
-            # keyboard_controller.move_forward(1)
-
 
             commands = keyboard_controller.queue.get(timeout=0.1)
-
             reset_flag = keyboard_controller.get_reset_flag()
             test_env.restart_env(reset_flag)
-            
-
             test_env.put_commands(commands)
-
 
             # print("torques are {}".format(test_env.env.torques))
 
@@ -328,13 +328,9 @@ if __name__ == '__main__':
             shared_commands.put(commands)
             print(shared_commands.get(timeout=0.1))
             
-            folder_name = 'data_result'
-            # current_time = datetime.now().strftime("%Y-%m-%d_%H-%M")  # 获取当前时间并格式化为字符串
-            # file_name = f'torques_{current_time}.csv'
-            file_name = 'torques.csv'
-            file_path = os.path.join(folder_name, file_name)
+            file_path = os.path.join(log_folder_name, log_file_name)
             test_env.save_to_csv(file_path, test_env.shared_torques)
-            print("#"*20)
+            print("-"*50)
             print("save file")
 
         except:
