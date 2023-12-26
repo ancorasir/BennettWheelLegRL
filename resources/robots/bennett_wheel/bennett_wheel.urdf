@@ -627,6 +627,15 @@
             </geometry>
         </collision>
     </link>
+
+
+
+
+
+
+
+
+
     <joint name="Basic_Body_FR-Body-Single_Motor" type="fixed">
         <origin xyz="-0.044000000000000004 0.029500000000000002 0.012000000000000028" rpy="3.141592653589793 -0.0 0.0" />
         <parent link="Basic_Body" />
@@ -699,6 +708,8 @@
         <parent link="Basic_Body" />
         <child link="RR-Single-Motor1" />
     </joint>
+
+
     <joint name="RR-Single-Motor1_RR-Single-Double_Motor" type="revolute">
         <origin xyz="0.018499999999999996 0.03924999999999999 -0.016750000000000043" rpy="1.5707963267948966 -1.3684555315672039e-48 -6.162975822039155e-33" />
         <parent link="RR-Single-Motor1" />
@@ -707,11 +718,13 @@
         <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
+
     <joint name="Basic_Body_RL-Body-Single_Motor" type="fixed">
         <origin xyz="0.06 -0.032 0.012000000000000028" rpy="3.141592653589793 -0.0 0.0" />
         <parent link="Basic_Body" />
         <child link="RL-Single-Motor1" />
     </joint>
+    
     <joint name="RL-Single-Motor1_RL-Single-Double_Motor" type="revolute">
         <origin xyz="0.018499999999999996 0.03925 0.016750000000000043" rpy="-1.5707963267948966 -5.473822126268817e-48 0.0" />
         <parent link="RL-Single-Motor1" />
@@ -720,6 +733,7 @@
         <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
+
     <joint name="RL-Double-Motor1_RL-Double_Motor-Link1" type="revolute">
         <origin xyz="0.08225 0.031400000000000004 0.054386399999999994" rpy="-1.5707963267948968 -9.860761315262648e-32 1.7789921910373654e-47" />
         <parent link="RL-Double-Motor1" />
@@ -728,6 +742,7 @@
         <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
         <dynamics damping="0" friction="0"/>
     </joint>
+
     <joint name="RL-leg-link11_RL-Link1-Link2" type="revolute">
         <origin xyz="-0.04683741999999997 -0.07266289 -0.10302739000000002" rpy="-0.7853981633974451 -1.2075949781892453e-47 9.860761315262648e-32" />
         <parent link="RL-leg-link11" />
@@ -844,23 +859,31 @@
         <parent link="RR-leg-link21" />
         <child link="RR-Single-Wheel1" />
         <axis xyz="0.7064336155308545 -0.21922100000000008 0.6729733226451146" />
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
+        <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="FR-leg-link21_FR-leg-link21_FR-Leg-Wheel" type="continuous">
         <origin xyz="0.04776162 -0.10223346306861171 -0.07237405489751485" rpy="-0.9553166181245094 -0.523598775598294 -2.5261129449194093" />
         <parent link="FR-leg-link21" />
         <child link="FR-Single-Wheel1" />
         <axis xyz="0.675081915066605 -0.20550500000000005 0.7085422079523601" />
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
+        <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="FL-leg-link21_FL-leg-link21_FL-Leg-Wheel" type="continuous">
         <origin xyz="0.045782989999999975 0.10272316986992251 -0.07295701494112841" rpy="-2.1862760354652835 -0.5235987755982939 2.5261129449194097" />
         <parent link="FL-leg-link21" />
         <child link="FL-Single-Wheel1" />
         <axis xyz="-0.6711405018682711 0.20534700000000003 0.7123224008045834" />
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
+        <dynamics damping="0" friction="0"/>
     </joint>
     <joint name="RL-leg-link21_RL-leg-link21_RL-Leg-Wheel" type="continuous">
         <origin xyz="0.052340150000000016 0.10185012634039495 -0.06969877295943802" rpy="-2.1862760354652835 -0.5235987755982939 2.5261129449194097" />
         <parent link="RL-leg-link21" />
         <child link="RL-Single-Wheel1" />
         <axis xyz="-0.7037261036656911 0.20571500000000004 0.6800366122823869" />
+        <limit effort="20" lower="-1.570795" upper="1.570795" velocity="50"/>
+        <dynamics damping="0" friction="0"/>
     </joint>
 </robot>

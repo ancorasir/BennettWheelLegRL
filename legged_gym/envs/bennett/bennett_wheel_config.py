@@ -43,28 +43,28 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
         episode_length_s = 20 # episode length in seconds
 
     class init_state( LeggedRobotCfg.init_state ):
-            pos = [0.0, 0.0, 0.4] # x,y,z [m]
+            pos = [0.0, 0.0, 0.25] # x,y,z [m]
             default_joint_angles = { # = target angles [rad] when action = 0.0
+ 
+                'FL-Single-Motor1_FL-Single-Double_Motor': -0.2,     # [rad]
+                'RL-Single-Motor1_RL-Single-Double_Motor': 0.2,   # [rad]
+                'FR-Single-Motor1_FR-Single-Double_Motor': 0.2,     # [rad]
+                'RR-Single-Motor1_RR-Single-Double_Motor': -0.2,
 
-                'FL-Single-Motor1_FL-Single-Double_Motor': 0.,     # [rad]
-                'RL-Single-Motor1_RL-Single-Double_Motor': -0.,   # [rad]
-                'FR-Single-Motor1_FR-Single-Double_Motor': -0.,     # [rad]
-                'RR-Single-Motor1_RR-Single-Double_Motor': 0.,
+                'FL-Double-Motor1_FL-Double_Motor-Link1': -0.,   # [rad]
+                'RL-Double-Motor1_RL-Double_Motor-Link1': -0.,   # [rad]
+                'FR-Double-Motor1_FR-Double_Motor-Link1': 0.,     # [rad]
+                'RR-Double-Motor1_RR-Double_Motor-Link1': 0.,
 
-                'FL-Double-Motor1_FL-Double_Motor-Link1': -0.1,   # [rad]
-                'RL-Double-Motor1_RL-Double_Motor-Link1': -0.1,   # [rad]
-                'FR-Double-Motor1_FR-Double_Motor-Link1': 0.1,     # [rad]
-                'RR-Double-Motor1_RR-Double_Motor-Link1': 0.1,
+                'FL-leg-link11_FL-Link1-Link2': -0.,   # [rad]
+                'RL-leg-link11_RL-Link1-Link2': -0.,    # [rad]               
+                'FR-leg-link11_FR-Link1-Link2': 0.,     # [rad]               
+                'RR-leg-link11_RR-Link1-Link2': 0.,
 
-                'FL-leg-link11_FL-Link1-Link2': -0.1,   # [rad]
-                'RL-leg-link11_RL-Link1-Link2': -0.1,    # [rad]               
-                'FR-leg-link11_FR-Link1-Link2': 0.1,     # [rad]               
-                'RR-leg-link11_RR-Link1-Link2': 0.1,
-
-                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.1,
-                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0.1,
-                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0.1,
-                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.1
+                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.,
+                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0.,
+                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0.,
+                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.
 
         }
             
@@ -72,49 +72,49 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
     class control( LeggedRobotCfg.control ):
         # PD Drive parameters:
         control_type = 'P'
-        # stiffness = {                
-        #         'FL-Single-Motor1_FL-Single-Double_Motor': 20.,    
-        #         'RL-Single-Motor1_RL-Single-Double_Motor': 20.,   
-        #         'FR-Single-Motor1_FR-Single-Double_Motor': 20.,   
-        #         'RR-Single-Motor1_RR-Single-Double_Motor': 20.,
+        stiffness = {                
+                'FL-Single-Motor1_FL-Single-Double_Motor': 20.,    
+                'RL-Single-Motor1_RL-Single-Double_Motor': 20.,   
+                'FR-Single-Motor1_FR-Single-Double_Motor': 20.,   
+                'RR-Single-Motor1_RR-Single-Double_Motor': 20.,
 
-        #         'FL-Double-Motor1_FL-Double_Motor-Link1': 20., 
-        #         'RL-Double-Motor1_RL-Double_Motor-Link1': 20.,   
-        #         'FR-Double-Motor1_FR-Double_Motor-Link1': 20.,    
-        #         'RR-Double-Motor1_RR-Double_Motor-Link1': 20.,
+                'FL-Double-Motor1_FL-Double_Motor-Link1': 20., 
+                'RL-Double-Motor1_RL-Double_Motor-Link1': 20.,   
+                'FR-Double-Motor1_FR-Double_Motor-Link1': 20.,    
+                'RR-Double-Motor1_RR-Double_Motor-Link1': 20.,
 
-        #         'FL-leg-link11_FL-Link1-Link2': 20.,   
-        #         'RL-leg-link11_RL-Link1-Link2': 20.,                
-        #         'FR-leg-link11_FR-Link1-Link2': 20.,                 
-        #         'RR-leg-link11_RR-Link1-Link2': 20.,
+                'FL-leg-link11_FL-Link1-Link2': 20.,   
+                'RL-leg-link11_RL-Link1-Link2': 20.,                
+                'FR-leg-link11_FR-Link1-Link2': 20.,                 
+                'RR-leg-link11_RR-Link1-Link2': 20.,
 
-        #         'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 20.,
-        #         'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 20.,
-        #         'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 20.,
-        #         'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 20.
-        #               }
+                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 20.,
+                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 20.,
+                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 20.,
+                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 20.
+                      }
         
-        # damping = {
-        #         'FL-Single-Motor1_FL-Single-Double_Motor': 0.5,     
-        #         'RL-Single-Motor1_RL-Single-Double_Motor': 0.5,  
-        #         'FR-Single-Motor1_FR-Single-Double_Motor': 0.5,     
-        #         'RR-Single-Motor1_RR-Single-Double_Motor': 0.5,
+        damping = {
+                'FL-Single-Motor1_FL-Single-Double_Motor': 0.5,     
+                'RL-Single-Motor1_RL-Single-Double_Motor': 0.5,  
+                'FR-Single-Motor1_FR-Single-Double_Motor': 0.5,     
+                'RR-Single-Motor1_RR-Single-Double_Motor': 0.5,
 
-        #         'FL-Double-Motor1_FL-Double_Motor-Link1': 0.5,  
-        #         'RL-Double-Motor1_RL-Double_Motor-Link1': 0.5,   
-        #         'FR-Double-Motor1_FR-Double_Motor-Link1': 0.5,    
-        #         'RR-Double-Motor1_RR-Double_Motor-Link1': 0.5,
+                'FL-Double-Motor1_FL-Double_Motor-Link1': 0.5,  
+                'RL-Double-Motor1_RL-Double_Motor-Link1': 0.5,   
+                'FR-Double-Motor1_FR-Double_Motor-Link1': 0.5,    
+                'RR-Double-Motor1_RR-Double_Motor-Link1': 0.5,
 
-        #         'FL-leg-link11_FL-Link1-Link2': 0.5,   
-        #         'RL-leg-link11_RL-Link1-Link2': 0.5,                
-        #         'FR-leg-link11_FR-Link1-Link2': 0.5,                  
-        #         'RR-leg-link11_RR-Link1-Link2': 0.5,
+                'FL-leg-link11_FL-Link1-Link2': 0.5,   
+                'RL-leg-link11_RL-Link1-Link2': 0.5,                
+                'FR-leg-link11_FR-Link1-Link2': 0.5,                  
+                'RR-leg-link11_RR-Link1-Link2': 0.5,
 
-        #         'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.5,
-        #         'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0.5,
-        #         'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0.5,
-        #         'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.5
-        # }     # [N*m*s/rad]
+                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.5,
+                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0.5,
+                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0.5,
+                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.5
+        }     # [N*m*s/rad]
         
         action_scale = 0.25 # action scale: target angle = actionScale * action + defaultAngle
         decimation = 4 # decimation: Number of control action updates @ sim DT per policy DT

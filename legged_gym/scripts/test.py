@@ -82,9 +82,9 @@ asset_root = "resources/robots"
 # asset_file = "a1/urdf/a1.urdf"
 # asset_file = "bennett/bennett.urdf"
 
-asset_file = "bennett_foot/bennett_foot.urdf"
+# asset_file = "bennett_foot/bennett_foot.urdf"
 # asset_file = "bennett_wheel/bennett_wheel.urdf"
-
+asset_file = "bennett_real/bennett_real.urdf"
 
 assert_options = gymapi.AssetOptions()
 # assert_options.flip_visual_attachments = True  ### change the z axis of the visual attachment

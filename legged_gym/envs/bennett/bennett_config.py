@@ -102,7 +102,8 @@ class BennettRoughCfg( LeggedRobotCfg ):
         decimation = 4 # decimation: Number of control action updates @ sim DT per policy DT
 
     class asset( LeggedRobotCfg.asset ):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bennett/bennett.urdf'
+        # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bennett/bennett.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/bennett_real/bennett_real.urdf'
         name = "bennett"
         foot_name = "link21"
         penalize_contacts_on = ["link11", "link21"]
