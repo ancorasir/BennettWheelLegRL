@@ -13,7 +13,7 @@ def read_and_plot_data(experiment_dir, data_type, env_ids, target_env):
             plt.plot(df, label=df.columns)
 
     plt.title(f'{data_type} - Environment {target_env if target_env is not None else "All"}')
-    plt.xlabel('Time Steps')
+    plt.xlabel('Time Steps(frequency: 20Hz)')
     plt.ylabel('Values')
     plt.legend()
     figures_dir = os.path.join(experiment_dir, 'figures')
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     env_ids = [0, 1]
     target_env = 0
     experiment_data_dir = "experiment_data"
-    experiment_folder = "2023-12-26_01-24-23"
+    experiment_folder = "2023-12-27_23-58-20"
     experiment_dir = os.path.join(experiment_data_dir, experiment_folder)
     data_types = ['base_vel', 'command', 'contact_forces_z', 'joint_position', 'joint_torque', 'joint_vel']
     for data_type in data_types:
