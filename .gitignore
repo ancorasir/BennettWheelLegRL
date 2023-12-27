@@ -64,4 +64,4 @@ resources/robots/bennett_foot
 torques.csv
 pos.csv
 
-experiment_data/2023-12-25*
+experiment_data/*/*.csv

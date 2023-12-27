@@ -377,7 +377,7 @@ class env:
 
             
 
-    def save_data_periodically(self, save_interval_seconds=0.01):
+    def save_data_periodically(self, save_interval_seconds=0.05):
         while True:
             time.sleep(save_interval_seconds)
 
@@ -472,7 +472,7 @@ class env:
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 2
+    num_envs = 50
 
     
     test_env = env(num_envs)
