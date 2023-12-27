@@ -190,8 +190,8 @@ class keyboard_commands:
     
     def move_forward(self, vel):
         self.commands[:, 0] = np.ones(self.commands[:, 0]) * vel
-        self.commands[:, 1] = np.ones(self.commands[:, 1]) * vel
-        self.commands[:, 2] = np.ones(self.commands[:, 2]) * vel
+        self.commands[:, 1] = np.zeros(self.commands[:, 1])
+        self.commands[:, 2] = np.zeros(self.commands[:, 2]) 
 
         self.queue.put(self.commands)
 
@@ -225,9 +225,24 @@ class env:
         BennettRoughCfg.env.episode_length_s = self.reset_time
         BennettRoughCfg.commands.resampling_time = self.reset_time
         BennettRoughCfg.commands.heading_command = False
-        BennettRoughCfg.terrain.num_rows = 10
-        BennettRoughCfg.terrain.num_cols = 2
-        BennettRoughCfg.terrain.mesh_type = "plane"
+        BennettRoughCfg.terrain.num_rows = 2
+        # terrain types: [smooth slope, rough slope, stairs up, stairs down, discrete]
+        BennettRoughCfg.terrain.num_cols = 1
+        # BennettRoughCfg.terrain.curriculum = False
+
+        # mesh_type = 'trimesh' # "heightfield" # none, plane, heightfield or trimesh
+        # BennettRoughCfg.terrain.mesh_type = "trimesh"
+        # BennettRoughCfg.terrain.vertical_scale = 0.0025
+        # BennettRoughCfg.terrain.selected = True
+        # BennettRoughCfg.terrain.terrain_kwargs = {
+        #     'type': 'rough_slope',
+        #     'slope': 0.2,
+        #     'step_height': 0.1
+        # }
+        
+        # BennettRoughCfg.terrain.horizontal_scale = 0.01
+
+        # BennettRoughCfg.terrain.border_size = 25
 
         self.env = keyboard_control_legged_robot(
             cfg=BennettRoughCfg,
@@ -242,7 +257,7 @@ class env:
         train_runner = OnPolicyRunner(self.env, train_cfg_dict, './log', device='cuda:0')
 
         cur_path = os.path.dirname(__file__)
-        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec24_09-47-06_/model_2000.pt')
+        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec22_13_terrain/model_5000.pt')
         train_runner.load(model_path)
         print('[Info] Successfully load pre-trained model from {}.'.format(model_path))
         policy = train_runner.get_inference_policy(device='cuda:0')
@@ -362,7 +377,7 @@ class env:
 
             
 
-    def save_data_periodically(self, save_interval_seconds=0.1):
+    def save_data_periodically(self, save_interval_seconds=0.01):
         while True:
             time.sleep(save_interval_seconds)
 
@@ -376,7 +391,7 @@ class env:
                 base_lin_vel = test_env.env.base_lin_vel.cpu().numpy()
                 base_ang_vel = test_env.env.base_ang_vel.cpu().numpy()
                 contact_forces_z = test_env.env.contact_forces[:, test_env.env.feet_indices, :].cpu().numpy()
-                print("force: ",contact_forces_z.shape)
+                # print("force: ",contact_forces_z.shape)
 
 
 
@@ -478,7 +493,7 @@ if __name__ == '__main__':
     while True:
         try:
             # fix the task to move forward
-            # keyboard_controller.move_forward(1)
+            # keyboard_controller.move_forward(0)
 
 
             commands = keyboard_controller.queue.get(timeout=0.1)
