@@ -98,26 +98,30 @@ class DataAnalyser:
         return energy
 
     def cal_CoT(self):
-        # env_ids = list(range(50))
-        # print(env_ids)
-        # experiment_data_dir = "experiment_data"
-        # experiment_folder = "2023-12-27_23-35-27"
-        # experiment_dir = os.path.join(experiment_data_dir, experiment_folder)
-    
         total_COT = 0
+        cot_values = []
+
         for target_env in self.env_ids:
-            total_COT = total_COT + self.read_and_calculate_data(self.experiment_dir, self.env_ids, target_env)
-    
-        average_COT = total_COT/len(self.env_ids)
-    
-        print("average_COT: ", average_COT)
+            cot_value = self.read_and_calculate_data(self.experiment_dir, self.env_ids, target_env)
+            cot_values.append(cot_value)
+
+        cot_values = np.array(cot_values)
+        filtered_values = self.exclude_outliers(cot_values)
+
+        average_COT = np.mean(cot_values)
+        average_COT_process = np.mean(filtered_values)
+
+        print("average_COT (before excluding outliers): ", average_COT)
+        print("average_COT (after excluding outliers): ", average_COT_process)
         return average_COT
+
+    def exclude_outliers(self, data, sigma_threshold=3):
+        z_scores = (data - np.mean(data)) / np.std(data)
+        filtered_data = data[abs(z_scores) < sigma_threshold]
+        return filtered_data
+
 
 if __name__ == '__main__':
     d = DataAnalyser()
     d.cal_CoT()
-    
-
-
-    
     
