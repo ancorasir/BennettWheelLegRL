@@ -225,14 +225,15 @@ class env:
         BennettRoughCfg.env.episode_length_s = self.reset_time
         BennettRoughCfg.commands.resampling_time = self.reset_time
         BennettRoughCfg.commands.heading_command = False
-        BennettRoughCfg.terrain.num_rows = 2
+        BennettRoughCfg.terrain.num_rows = 10
         # terrain types: [smooth slope, rough slope, stairs up, stairs down, discrete]
-        BennettRoughCfg.terrain.num_cols = 1
+        BennettRoughCfg.terrain.num_cols = 5
         # BennettRoughCfg.terrain.curriculum = False
 
-        # mesh_type = 'trimesh' # "heightfield" # none, plane, heightfield or trimesh
-        # BennettRoughCfg.terrain.mesh_type = "trimesh"
-        # BennettRoughCfg.terrain.vertical_scale = 0.0025
+        # # mesh_type = 'trimesh' # "heightfield" # none, plane, heightfield or trimesh
+        BennettRoughCfg.terrain.mesh_type = "trimesh"
+        BennettRoughCfg.terrain.terrain_proportions = [0.0001, 0.0001, 0.9996, 0.0001, 0.0001]
+        BennettRoughCfg.terrain.vertical_scale = 0.0025
         # BennettRoughCfg.terrain.selected = True
         # BennettRoughCfg.terrain.terrain_kwargs = {
         #     'type': 'rough_slope',
@@ -378,22 +379,26 @@ class env:
             
 
     def save_data_periodically(self, save_interval_seconds=0.05):
+        last_save_time = time.time()
+
         while True:
-            time.sleep(save_interval_seconds)
+            # Sleep until the next save interval
+            elapsed_time = time.time() - last_save_time
+            time_to_sleep = max(0, save_interval_seconds - elapsed_time)
+            time.sleep(time_to_sleep)
+
+            # Update the last save time
+            last_save_time = time.time()
 
             if test_env.env:
-                
-                # incrementally save data to database
+                # Your existing data saving code here
                 pos = test_env.env.dof_pos.cpu().numpy()
                 vel = test_env.env.dof_vel.cpu().numpy()
-                torques = test_env.env.torques.cpu().numpy()  # Convert torch tensor to numpy array
+                torques = test_env.env.torques.cpu().numpy()
                 commands = test_env.env.commands.cpu().numpy()
                 base_lin_vel = test_env.env.base_lin_vel.cpu().numpy()
                 base_ang_vel = test_env.env.base_ang_vel.cpu().numpy()
                 contact_forces_z = test_env.env.contact_forces[:, test_env.env.feet_indices, :].cpu().numpy()
-                # print("force: ",contact_forces_z.shape)
-
-
 
                 self.save_to_incremental_csv(data=torques, experiment_time=self.exp_time, base_filename="joint_torque")
                 self.save_to_incremental_csv(data=pos, experiment_time=self.exp_time, base_filename="joint_position")
@@ -472,7 +477,7 @@ class env:
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 50
+    num_envs = 2
 
     
     test_env = env(num_envs)
