@@ -472,7 +472,7 @@ class env:
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 2
+    num_envs = 50
 
     
     test_env = env(num_envs)
