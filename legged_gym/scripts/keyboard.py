@@ -377,7 +377,7 @@ class env:
 
             
 
-    def save_data_periodically(self, save_interval_seconds=0.01):
+    def save_data_periodically(self, save_interval_seconds=0.05):
         while True:
             time.sleep(save_interval_seconds)
 
