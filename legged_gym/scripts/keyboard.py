@@ -225,15 +225,18 @@ class env:
         BennettRoughCfg.env.episode_length_s = self.reset_time
         BennettRoughCfg.commands.resampling_time = self.reset_time
         BennettRoughCfg.commands.heading_command = False
+
+        # MUTS BE 10N
         BennettRoughCfg.terrain.num_rows = 10
         # terrain types: [smooth slope, rough slope, stairs up, stairs down, discrete]
-        BennettRoughCfg.terrain.num_cols = 5
+        BennettRoughCfg.terrain.num_cols = 1
         # BennettRoughCfg.terrain.curriculum = False
 
         # # mesh_type = 'trimesh' # "heightfield" # none, plane, heightfield or trimesh
-        BennettRoughCfg.terrain.mesh_type = "trimesh"
-        BennettRoughCfg.terrain.terrain_proportions = [0.0001, 0.0001, 0.9996, 0.0001, 0.0001]
-        BennettRoughCfg.terrain.vertical_scale = 0.0025
+        # BennettRoughCfg.terrain.mesh_type = "trimesh"
+        # BennettRoughCfg.terrain.terrain_proportions = [0.0001, 0.0001, 0.0001, 0.0001, 0.9996 ]
+        # BennettRoughCfg.terrain.vertical_scale = 0.00025
+
         # BennettRoughCfg.terrain.selected = True
         # BennettRoughCfg.terrain.terrain_kwargs = {
         #     'type': 'rough_slope',
@@ -258,7 +261,7 @@ class env:
         train_runner = OnPolicyRunner(self.env, train_cfg_dict, './log', device='cuda:0')
 
         cur_path = os.path.dirname(__file__)
-        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec22_13_terrain/model_5000.pt')
+        model_path = os.path.join(cur_path, '../../logs/rough_bennett/Dec22_13_1/model_1400.pt')
         train_runner.load(model_path)
         print('[Info] Successfully load pre-trained model from {}.'.format(model_path))
         policy = train_runner.get_inference_policy(device='cuda:0')
@@ -477,7 +480,7 @@ class env:
 if __name__ == '__main__':
     
     shared_commands = queue.Queue()
-    num_envs = 2
+    num_envs = 50
 
     
     test_env = env(num_envs)
@@ -487,7 +490,7 @@ if __name__ == '__main__':
     t2 = Thread(target=keyboard_controller.keyboard_control_on)
     
     # thread to save torques periodically
-    t3 = Thread(target=test_env.save_data_periodically)  # Change 60 to your desired interval in seconds
+    t3 = Thread(target=test_env.save_data_periodically) 
 
 
     t1.start()
@@ -497,8 +500,6 @@ if __name__ == '__main__':
     
     while True:
         try:
-            # fix the task to move forward
-            # keyboard_controller.move_forward(0)
 
 
             commands = keyboard_controller.queue.get(timeout=0.1)

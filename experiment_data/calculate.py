@@ -5,7 +5,7 @@ import numpy as np
 
 class DataAnalyser:
     def __init__(self) -> None:
-        self.experiment_folder = "2023-12-27_23-58-20"
+        self.experiment_folder = "2023-12-28_01-38-55"
         self.experiment_data_dir = "experiment_data"
         self.experiment_dir = os.path.join(self.experiment_data_dir, self.experiment_folder)
         self.env_ids = list(range(50))
@@ -13,14 +13,18 @@ class DataAnalyser:
         
 
     def read_and_calculate_data(self, experiment_dir, env_ids, target_env):
+
+        # Calculate COT of the target robot
         for env_id in env_ids:
             if target_env is not None and env_id != target_env:
                 continue
 
+            # find the data file path
             filename_joint_torque = os.path.join(experiment_dir, f'joint_torque_env{env_id}.csv')
             filename_joint_vel = os.path.join(experiment_dir, f'joint_vel_env{env_id}.csv')
             filename_base_vel = os.path.join(experiment_dir, f'base_vel_env{env_id}.csv')
 
+            # Confirm the existence of data files and read data
             if os.path.exists(filename_joint_torque):
                 df_joint_torques = pd.read_csv(filename_joint_torque)
             if os.path.exists(filename_joint_vel):
@@ -28,6 +32,7 @@ class DataAnalyser:
             if os.path.exists(filename_base_vel):
                 df_base_vel = pd.read_csv(filename_base_vel)
 
+            # Calculate COT
             distance = self.calculate_distance(df_base_vel)
             E_m = self.calculate_mechanical_energy_consumption(df_joint_torques, df_joint_vel)
             m = 3.578209936079509+0.7011939191100404+2.4365544485369104+0.2812248770831842+0.2812427717615869+0.7011939191100404+2.4365544485369104+0.2812248770831842+0.2812427717615869+0.7011939191100404+2.4365544485369104+0.28122487708301536+0.2812427717616486+0.7011939191100404+2.4365544485369104+0.28122487708301536+0.2812427717616486
@@ -51,13 +56,20 @@ class DataAnalyser:
 
     def calculate_distance(self, df):
         total_distance = 0
+
         for index, row in df.iterrows():
         # Calculate the distance for each time step
-            if index < df.shape[0]-130 or index > df.shape[0]-30:
+            
+            # Select a suitable piece of data to calculate
+            # if index < df.shape[0]-200 or index > df.shape[0]-100:
+            if index < 230 or index > 330:
+                
                 continue
             vel_x = row['base_vel_x']
             vel_y = row['base_vel_y']
             vel_z = row['base_vel_z']
+
+            # Distance = time_step * velocity
             distance = self.time_step*math.sqrt(vel_x**2 + vel_y**2 + vel_z**2)
 
 
@@ -71,13 +83,21 @@ class DataAnalyser:
             total_distance += distance
         return total_distance
 
+    # Calculate mechanical energy consumption with torques and velocities of all joints
     def calculate_mechanical_energy_consumption(self, df_joint_torques, df_joint_vel):
         energy = 0
+
+        
         for index, row in df_joint_torques.iterrows():
         # Calculate the energy consumption for each time stepc
-            if index < df_joint_torques.shape[0]-130 or index > df_joint_torques.shape[0]-30:
+            
+            # Select a suitable piece of data to calculate
+            # if index < df_joint_torques.shape[0]-200 or index > df_joint_torques.shape[0]-100:
+            if index < 230 or index > 330:
                 continue
             power = 0
+
+            # Set the absolute value of the product of torque and velocity for every joint and sum them up
             for column in df_joint_torques.columns:
                 if column.startswith('Joint_'):
                     torque = df_joint_torques.loc[index,column]
@@ -89,25 +109,32 @@ class DataAnalyser:
                     # print("Power: ",abs(torque*vel))
                     # print("Total power: ",power)
                     # print("*"*20)
-
+            
+            # Get the mechanical energy consumption
             energy = energy+power*self.time_step
             # print("*"*20)
             # print("energy: ", energy)
             # print("*"*20)
 
         return energy
-
+    
+    # Calculate COT
     def cal_CoT(self):
         total_COT = 0
         cot_values = []
 
+
+        # Calculate CoT for all robots and get the average value
         for target_env in self.env_ids:
             cot_value = self.read_and_calculate_data(self.experiment_dir, self.env_ids, target_env)
             cot_values.append(cot_value)
 
         cot_values = np.array(cot_values)
+
+        # Exclude the outliers of COT data
         filtered_values = self.exclude_outliers(cot_values)
 
+        # Get the average value of COT
         average_COT = np.mean(cot_values)
         average_COT_process = np.mean(filtered_values)
 
@@ -115,6 +142,7 @@ class DataAnalyser:
         print("average_COT (after excluding outliers): ", average_COT_process)
         return average_COT
 
+    # Exclude the outliers of data
     def exclude_outliers(self, data, sigma_threshold=3):
         z_scores = (data - np.mean(data)) / np.std(data)
         filtered_data = data[abs(z_scores) < sigma_threshold]
