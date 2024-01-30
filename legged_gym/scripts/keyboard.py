@@ -122,7 +122,6 @@ class keyboard_commands:
         self.reset = False
 
     def key_press(self, key):
-        
         lin_vel = 0.1
         ang_vel = 0.1
         # set velocity limit
@@ -161,7 +160,6 @@ class keyboard_commands:
             pass
 
     def keyboard_control_on(self):
-
         with keyboard.Listener(on_press = self.key_press, 
                                on_release = self.key_release) as listener:
             while True:
@@ -171,7 +169,6 @@ class keyboard_commands:
                 time.sleep(0.1)
     
     def get_reset_flag(self):
-
         return self.reset
     
     def move_forward(self, vel):
@@ -256,7 +253,6 @@ class env:
     def flatten_list(self, nested_list):
         return [item for sublist in nested_list for item in sublist]
 
-
     def save_to_csv(self, filename, data):
         flattened_data = [self.flatten_list(row) for row in data]
 
@@ -290,11 +286,18 @@ if __name__ == '__main__':
     
     shared_commands = queue.Queue()
 
-    cfg = BennettRoughCfg()
-    cfgPPO = BennettRoughCfgPPO()
-    load_path = '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt'
+    # cfg = BennettRoughCfg()
+    # cfgPPO = BennettRoughCfgPPO()
+    # load_path = '../../logs/rough_bennett/Dec22_13-48-55_/model_1400.pt'
+    # load_path = '../../logs_result/real_mass/model_7550.pt'
+
+    cfg = BennettWheelRoughCfg()
+    cfgPPO = BennettWheelRoughCfgPPO()
+    load_path = '../../logs/rough_bennett_wheel/Jan29_15-06-52_/model_2000.pt'
+
     num_envs = 1
     terrain = 'plane' # trimesh
+    
     log_folder_name = 'data_result'
     log_file_name = 'torques.csv'
 

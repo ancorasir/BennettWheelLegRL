@@ -84,10 +84,14 @@ asset_root = "resources/robots"
 
 # asset_file = "bennett_foot/bennett_foot.urdf"
 # asset_file = "bennett_wheel/bennett_wheel.urdf"
-asset_file = "bennett_real/bennett_real.urdf"
+# asset_file = "bennett_real/bennett_real.urdf"
+asset_file = "bennett_parallel/bennett_parallel.urdf"
+
 
 assert_options = gymapi.AssetOptions()
 # assert_options.flip_visual_attachments = True  ### change the z axis of the visual attachment
+
+
 asset = gym.load_asset(sim, asset_root, asset_file, assert_options)
 
 # set up the env grid
@@ -113,7 +117,7 @@ for i in range(1):
     # create ball pyramid
     pose = gymapi.Transform()
     pose.r = gymapi.Quat(0, 0, 0, 1)
-    pose.p = gymapi.Vec3(0, 1, 0)
+    pose.p = gymapi.Vec3(0, 0.1, 0)
 
     collision_group = 0
     collision_filter = 0
@@ -121,7 +125,7 @@ for i in range(1):
     ahandle = gym.create_actor(env, asset, pose, None, collision_group, collision_filter)
     props = gym.get_actor_dof_properties(env, ahandle)
     props["driveMode"].fill(gymapi.DOF_MODE_POS)
-    # props["stiffness"].fill(1e6)
+    props["stiffness"].fill(1e6)
     # props["damping"].fill(0.0)
     gym.set_actor_dof_properties(env, ahandle, props)
 

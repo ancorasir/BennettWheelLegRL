@@ -899,6 +899,11 @@ class LeggedRobot(BaseTask):
         # Penalize feet hitting vertical surfaces
         return torch.any(torch.norm(self.contact_forces[:, self.feet_indices, :2], dim=2) >\
              5 *torch.abs(self.contact_forces[:, self.feet_indices, 2]), dim=1)
+    
+    def _reward_vertical_impact(self):
+        # Encourage feet to hit the ground surface vertically
+        return torch.any(torch.norm(self.contact_forces[:, self.feet_indices, :2], dim=2) <\
+               1/5*torch.abs(self.contact_forces[:, self.feet_indices, 2]), dim=1)
         
     def _reward_stand_still(self):
         # Penalize motion at zero commands

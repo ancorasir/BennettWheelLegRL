@@ -852,36 +852,36 @@
         <parent link="RR-leg-link21" />
         <child link="RR-fingertip_frame1" />
     </joint>
-    <joint name="RR-leg-link21_RR-leg-link21_RR-Leg-Wheel" type="continuous">
+    <joint name="RR-leg-link21_RR-leg-link21_RR-Leg-Wheel" type="revolute">
         <origin xyz="0.05428853000000002 -0.10231713501402957 -0.06748938246628164" rpy="-0.9553166181245095 -0.523598775598294 -2.5261129449194097" />
         <parent link="RR-leg-link21" />
         <child link="RR-Single-Wheel1" />
         <axis xyz="0.7064336155308545 -0.21922100000000008 0.6729733226451146" />
-        <limit effort="5" lower="-1000" upper="1000" velocity="50"/>
+        <limit effort="5" lower="-1e6" upper="1e6" velocity="50"/>
         <dynamics damping="0" friction="0.1"/>
     </joint>
-    <joint name="FR-leg-link21_FR-leg-link21_FR-Leg-Wheel" type="continuous">
+    <joint name="FR-leg-link21_FR-leg-link21_FR-Leg-Wheel" type="revolute">
         <origin xyz="0.04776162 -0.10223346306861171 -0.07237405489751485" rpy="-0.9553166181245094 -0.523598775598294 -2.5261129449194093" />
         <parent link="FR-leg-link21" />
         <child link="FR-Single-Wheel1" />
         <axis xyz="0.675081915066605 -0.20550500000000005 0.7085422079523601" />
-        <limit effort="5" lower="-1000" upper="1000" velocity="50"/>
+        <limit effort="5" lower="-1e6" upper="1e6" velocity="50"/>
         <dynamics damping="0" friction="0.1"/>
     </joint>
-    <joint name="FL-leg-link21_FL-leg-link21_FL-Leg-Wheel" type="continuous">
+    <joint name="FL-leg-link21_FL-leg-link21_FL-Leg-Wheel" type="revolute">
         <origin xyz="0.045782989999999975 0.10272316986992251 -0.07295701494112841" rpy="-2.1862760354652835 -0.5235987755982939 2.5261129449194097" />
         <parent link="FL-leg-link21" />
         <child link="FL-Single-Wheel1" />
         <axis xyz="-0.6711405018682711 0.20534700000000003 0.7123224008045834" />
-        <limit effort="10" lower="-1000" upper="1000" velocity="50"/>
+        <limit effort="10" lower="-1e6" upper="1e6" velocity="50"/>
         <dynamics damping="0" friction="0.1"/>
     </joint>
-    <joint name="RL-leg-link21_RL-leg-link21_RL-Leg-Wheel" type="continuous">
+    <joint name="RL-leg-link21_RL-leg-link21_RL-Leg-Wheel" type="revolute">
         <origin xyz="0.052340150000000016 0.10185012634039495 -0.06969877295943802" rpy="-2.1862760354652835 -0.5235987755982939 2.5261129449194097" />
         <parent link="RL-leg-link21" />
         <child link="RL-Single-Wheel1" />
         <axis xyz="-0.7037261036656911 0.20571500000000004 0.6800366122823869" />
-        <limit effort="10" lower="-1000" upper="1000" velocity="50"/>
+        <limit effort="10" lower="-1e6" upper="1e6" velocity="50"/>
         <dynamics damping="0" friction="0.1"/>
     </joint>
 </robot>

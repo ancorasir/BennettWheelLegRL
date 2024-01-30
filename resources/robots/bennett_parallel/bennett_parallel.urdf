@@ -1,0 +1,682 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="Quadruped-IsaacSim-parallel">
+    <link name="Body">
+        <inertial>
+            <origin xyz="3.269975835372979e-11 -0.0012499987421279186 -0.0047500000382036936" rpy="0.0 0.0 0.0" />
+            <mass value="0.5223502772293392" />
+            <inertia ixx="0.0007745746900055402" iyy="0.011438778897726716" izz="0.012058638029063942" ixy="-1.1564890941742092e-10" iyz="3.8634769211965447e-13" ixz="2.999362214941944e-12" />
+        </inertial>
+        <visual name="Body_visual">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/Body1.stl" />
+            </geometry>
+        </visual>
+        <collision name="Body_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/Body1.stl" />
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- *********************************************************************** -->
+    <!-- ******************************* LEGS ********************************** -->
+    <!-- *********************************************************************** -->
+
+    <link name="RL_SingleMotor">
+        <inertial>
+            <origin xyz="-0.008058511743548795 -0.024291032753734596 0.01674999999785598" rpy="0.0 -0.0 0.0" />
+            <mass value="0.1850511492896363" />
+            <inertia ixx="6.927157375089671e-05" iyy="5.277906067528704e-05" izz="8.852045695359727e-05" ixy="-1.5973926095096732e-07" iyz="4.4330858428587305e-15" ixz="-1.0709749059811813e-14" />
+        </inertial>
+        <visual name="RL_SingleMotor_visual">
+            <origin xyz="-0.04175000000000047 -0.0392499999999995 0.016750000000000043" rpy="1.570796326794904 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RL_SingleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="RL_SingleMotor_collision">
+            <origin xyz="-0.04175000000000047 -0.0392499999999995 0.016750000000000043" rpy="1.570796326794904 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RL_SingleMotor1.stl" />
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="RL_DoubleMotor">
+        <inertial>
+            <origin xyz="-0.06716414766997872 2.7681959497698472e-05 -0.010897828387276647" rpy="0.0 -0.0 0.0" />
+            <mass value="0.4782524941626557" />
+            <inertia ixx="0.00030966925885417274" iyy="0.0008565303504366375" izz="0.000678489374234828" ixy="-2.155072291940007e-07" iyz="3.51875862190909e-07" ixz="7.414681585373912e-07" />
+        </inertial>
+        <visual name="RL_DoubleMotor_visual">
+            <origin xyz="-0.0822500000000006 0.0 1.1013412404281553e-15" rpy="-3.1415926535897856 1.1102230246251188e-16 1.5707963267948972" />
+            <geometry>
+                <mesh filename="meshes/RL_DoubleMotor1.stl"/>
+            </geometry>
+        </visual>
+        <!-- <collision name="RL_DoubleMotor_collision">
+            <origin xyz="-0.0822500000000006 0.0 1.1013412404281553e-15" rpy="-3.1415926535897856 1.1102230246251188e-16 1.5707963267948972" />
+            <geometry>
+                <mesh filename="meshes/RL_DoubleMotor1.stl" scale="0.5 0.5 0.5"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="RL_Leg_link12">
+        <inertial>
+            <origin xyz="-0.023144663751233238 0.00602095789582501 -0.04008771754434285" rpy="0.0 -0.0 0.0" />
+            <mass value="0.027421425885614935" />
+            <inertia ixx="7.038795235670033e-05" iyy="9.502396938712403e-05" izz="2.5801800242593537e-05" ixy="2.3596353949618653e-06" iyz="4.087006880413406e-06" ixz="-3.861276650915578e-05" />
+        </inertial>
+        <visual name="RL_Leg_link12_visual">
+            <origin xyz="-1.2079226507921704e-15 0.009999999999999804 -7.105427357601002e-17" rpy="4.1146281352324545e-16 -1.0471975511965983 6.712901068354442e-15" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link121.stl"/>
+            </geometry>
+        </visual>
+        <!-- <collision name="RL_Leg_link12_collision">
+            <origin xyz="-1.2079226507921704e-15 0.009999999999999804 -7.105427357601002e-17" rpy="4.1146281352324545e-16 -1.0471975511965983 6.712901068354442e-15" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link121.stl" scale="0.5 1 1"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="RL_Leg_link23">
+        <inertial>
+            <origin xyz="0.037234880590788715 -0.06415464336020833 0.001999999610248384" rpy="0.0 -0.0 0.0" />
+            <mass value="0.039514981778356544" />
+            <inertia ixx="6.832971831527207e-05" iyy="2.3735787879306483e-05" izz="9.055178965229008e-05" ixy="3.786772965047265e-05" iyz="-1.230201293142719e-12" ixz="9.848960770578345e-13" />
+        </inertial>
+        <visual name="RL_Leg_link23_visual">
+            <origin xyz="-2.486899575160351e-16 -4.107115323392918e-09 0.002000000000000597" rpy="1.5707963267948934 -5.051514741105692e-15 -2.617993886209462" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link231.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL_Leg_link23_collision">
+            <origin xyz="-2.486899575160351e-16 -4.107115323392918e-09 0.002000000000000597" rpy="1.5707963267948934 -5.051514741105692e-15 -2.617993886209462" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link231.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <!-- <link name="RL_Leg_link34">
+        <inertial>
+            <origin xyz="-0.03405195867572241 -0.058979715416095785 0.002000000952184067" rpy="0.0 -4.3790577010150533e-47 0.0" />
+            <mass value="0.03058221823359434" />
+            <inertia ixx="3.771356239333546e-05" iyy="1.3701061501554358e-05" izz="5.014057279693852e-05" ixy="-2.079542365031491e-05" iyz="-8.532720894808818e-13" ixz="-6.68297083995692e-13" />
+        </inertial>
+        <visual name="RL_Leg_link34_visual">
+            <origin xyz="-1.652011860642233e-15 -4.107113653617489e-09 0.0020000000000006146" rpy="1.5707963267948997 2.803313155549262e-15 -0.5235987797072682" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link341.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL_Leg_link34_collision">
+            <origin xyz="-1.652011860642233e-15 -4.107113653617489e-09 0.0020000000000006146" rpy="1.5707963267948997 2.803313155549262e-15 -0.5235987797072682" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link341.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <!-- <link name="RL_Leg_link41">
+        <inertial>
+            <origin xyz="0.027610272556342023 -0.0021874187776876573 -0.04833930178304868" rpy="0.0 -0.0 0.0" />
+            <mass value="0.030687608818051437" />
+            <inertia ixx="7.692930817829614e-05" iyy="0.00010042506131672548" izz="2.770604730771911e-05" ixy="5.599095953138893e-06" iyz="-9.80949429918985e-06" ixz="4.166770444109379e-05" />
+        </inertial>
+        <visual name="RL_Leg_link41_visual">
+            <origin xyz="-1.0658141036401502e-15 -0.009200000000000621 -4.973799150320702e-16" rpy="3.141592653589793 1.047197551196596 8.035239140724572e-15" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link411.stl" />
+            </geometry>
+        </visual>
+        <collision name="RL_Leg_link41_collision">
+            <origin xyz="-1.0658141036401502e-15 -0.009200000000000621 -4.973799150320702e-16" rpy="3.141592653589793 1.047197551196596 8.035239140724572e-15" />
+            <geometry>
+                <mesh filename="meshes/RL_Leg_link411.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <link name="FL_SingleMotor">
+        <inertial>
+            <origin xyz="0.008058511743548094 -0.024291032753735297 0.016750000002170324" rpy="0.0 -0.0 0.0" />
+            <mass value="0.18505114928963637" />
+            <inertia ixx="6.927157374956444e-05" iyy="5.2779060673299044e-05" izz="8.852045695425127e-05" ixy="1.5973926095183468e-07" iyz="-4.3619621803436814e-15" ixz="-1.0601328842563262e-14" />
+        </inertial>
+        <visual name="FL_SingleMotor_visual">
+            <origin xyz="0.041749999999999565 -0.03925000000000073 0.016749999999999973" rpy="1.5707963267948892 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FL-SingleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="FL_SingleMotor_collision">
+            <origin xyz="0.041749999999999565 -0.03925000000000073 0.016749999999999973" rpy="1.5707963267948892 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FL-SingleMotor1.stl" />
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="FL_DoubleMotor">
+        <inertial>
+            <origin xyz="0.06716414766997746 -2.7681959512406708e-05 -0.010897828387278815" rpy="0.0 -0.0 0.0" />
+            <mass value="0.4782524941626558" />
+            <inertia ixx="0.0003096692588512723" iyy="0.0008565303504376297" izz="0.0006784893742329268" ixy="-2.1550722928073704e-07" iyz="-3.5187586196023527e-07" ixz="-7.414681585304572e-07" />
+        </inertial>
+        <visual name="FL_DoubleMotor_visual">
+            <origin xyz="0.08224999999999946 2.1316282072803005e-16 -1.2789769243681803e-15" rpy="3.141592653589786 -1.2490009027033014e-16 -1.5707963267948966" />
+            <geometry>
+                <mesh filename="meshes/FL-DoubleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="FL_DoubleMotor_collision">
+            <origin xyz="0.08224999999999946 2.1316282072803005e-16 -1.2789769243681803e-15" rpy="3.141592653589786 -1.2490009027033014e-16 -1.5707963267948966" />
+            <geometry>
+                <mesh filename="meshes/FL-DoubleMotor1.stl" scale="0.5 0.5 0.5"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="FL_Leg_link12">
+        <inertial>
+            <origin xyz="-0.023144663751233027 0.0060209578958258445 -0.04008771754434292" rpy="0.0 -0.0 0.0" />
+            <mass value="0.027421425885614935" />
+            <inertia ixx="7.038795235669946e-05" iyy="9.502396938712403e-05" izz="2.5801800242594404e-05" ixy="2.359635394960998e-06" iyz="4.087006880412755e-06" ixz="-3.861276650915751e-05" />
+        </inertial>
+        <visual name="FL_Leg_link12_visual">
+            <origin xyz="-1.3145040611561853e-15 0.010000000000001421 7.105427357601002e-17" rpy="-4.9592410681009265e-15 -1.0471975511966054 3.929794684110325e-14" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link121.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="FL_Leg_link12_collision">
+            <origin xyz="-1.3145040611561853e-15 0.010000000000001421 7.105427357601002e-17" rpy="-4.9592410681009265e-15 -1.0471975511966054 3.929794684110325e-14" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link121.stl" scale="0.5 1 1"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="FL_Leg_link23">
+        <inertial>
+            <origin xyz="0.03723488059078859 -0.06415464336020907 0.0019999996102482067" rpy="0.0 -4.3790577010150533e-47 0.0" />
+            <mass value="0.039514981778356544" />
+            <inertia ixx="6.832971831527207e-05" iyy="2.3735787879306273e-05" izz="9.055178965229138e-05" ixy="3.7867729650472226e-05" iyz="-1.2302023773448913e-12" ixz="9.848965107387034e-13" />
+        </inertial>
+        <visual name="FL_Leg_link23_visual">
+            <origin xyz="5.329070518200751e-17 -4.107115714191423e-09 0.002000000000001183" rpy="1.5707963267948832 -2.368938376700051e-14 -2.6179938862094683" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link231.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL_Leg_link23_collision">
+            <origin xyz="5.329070518200751e-17 -4.107115714191423e-09 0.002000000000001183" rpy="1.5707963267948832 -2.368938376700051e-14 -2.6179938862094683" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link231.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <!-- <link name="FL_Leg_link34">
+        <inertial>
+            <origin xyz="-0.03405195867572239 -0.058979715416096534 0.002000000952182468" rpy="-7.888609052210118e-31 -2.189528850507527e-47 0.0" />
+            <mass value="0.03058221823359434" />
+            <inertia ixx="3.771356239333456e-05" iyy="1.3701061501555225e-05" izz="5.014057279693722e-05" ixy="-2.0795423650314577e-05" iyz="-8.532720894808817e-13" ixz="-6.682970839956918e-13" />
+        </inertial>
+        <visual name="FL_Leg_link34_visual">
+            <origin xyz="-1.2789769243681803e-15 -4.107113831253173e-09 0.0019999999999984297" rpy="1.5707963267948912 7.951972432248415e-15 -0.5235987797072705" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link341.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL_Leg_link34_collision">
+            <origin xyz="-1.2789769243681803e-15 -4.107113831253173e-09 0.0019999999999984297" rpy="1.5707963267948912 7.951972432248415e-15 -0.5235987797072705" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link341.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <!-- <link name="FL_Leg_link41">
+        <inertial>
+            <origin xyz="0.027610272556342182 -0.002187418777685526 -0.04833930178304826" rpy="0.0 -0.0 0.0" />
+            <mass value="0.030687608818051437" />
+            <inertia ixx="7.692930817829787e-05" iyy="0.00010042506131672634" izz="2.7706047307719545e-05" ixy="5.599095953139435e-06" iyz="-9.8094942991905e-06" ixz="4.166770444109487e-05" />
+        </inertial>
+        <visual name="FL_Leg_link41_visual">
+            <origin xyz="-9.947598300641404e-16 -0.009199999999998489 2.1316282072803005e-16" rpy="3.1415926535897927 1.0471975511965974 7.549516567451052e-15" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link411.stl" />
+            </geometry>
+        </visual>
+        <collision name="FL_Leg_link41_collision">
+            <origin xyz="-9.947598300641404e-16 -0.009199999999998489 2.1316282072803005e-16" rpy="3.1415926535897927 1.0471975511965974 7.549516567451052e-15" />
+            <geometry>
+                <mesh filename="meshes/FL_Leg_link411.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <link name="FR_SingleMotor">
+        <inertial>
+            <origin xyz="0.008058511743548857 0.024291032753734346 0.016749999997829692" rpy="0.0 -0.0 0.0" />
+            <mass value="0.18505114928963637" />
+            <inertia ixx="6.927157374959567e-05" iyy="5.277906067331292e-05" izz="8.852045695425105e-05" ixy="-1.597392609519431e-07" iyz="-4.361094818605693e-15" ixz="1.0603497246908233e-14" />
+        </inertial>
+        <visual name="FR_SingleMotor_visual">
+            <origin xyz="0.0417500000000005 0.039249999999999265 0.016749999999999973" rpy="-1.5707963267948892 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FR_SingleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="FR_SingleMotor_collision">
+            <origin xyz="0.0417500000000005 0.039249999999999265 0.016749999999999973" rpy="-1.5707963267948892 1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/FR_SingleMotor1.stl" />
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="FR_DoubleMotor">
+        <inertial>
+            <origin xyz="0.06716414766997879 2.768195951247776e-05 0.010897828387276433" rpy="0.0 -0.0 0.0" />
+            <mass value="0.4782524941626558" />
+            <inertia ixx="0.00030966925885128616" iyy="0.0008565303504376384" izz="0.0006784893742329268" ixy="2.1550722928073704e-07" iyz="-3.518758619637047e-07" ixz="7.414681585356565e-07" />
+        </inertial>
+        <visual name="FR_DoubleMotor_visual">
+            <origin xyz="0.08225000000000064 -2.1316282072803005e-16 -1.2878587085651815e-15" rpy="7.18869408444789e-15 3.8163916471493534e-17 1.5707963267948961" />
+            <geometry>
+                <mesh filename="meshes/FR_DoubleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="FR_DoubleMotor_collision">
+            <origin xyz="0.08225000000000064 -2.1316282072803005e-16 -1.2878587085651815e-15" rpy="7.18869408444789e-15 3.8163916471493534e-17 1.5707963267948961" />
+            <geometry>
+                <mesh filename="meshes/FR_DoubleMotor1.stl" scale="0.5 0.5 0.5"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="FR_Leg_link12">
+        <inertial>
+            <origin xyz="-0.023144650374356195 -0.006020957895824086 -0.04008772636869317" rpy="0.0 -0.0 0.0" />
+            <mass value="0.027421425885614935" />
+            <inertia ixx="7.038797497844595e-05" iyy="9.502396938712142e-05" izz="2.5801777620845746e-05" ixy="-2.3596340863996564e-06" iyz="-4.087007635913218e-06" ixz="-3.8612753448483876e-05" />
+        </inertial>
+        <visual name="FR_Leg_link12_visual">
+            <origin xyz="-4.768360994944487e-10 -0.00999999999999858 -8.259060990667422e-10" rpy="-3.1415926535897927 -1.0471975511965936 6.934945673279423e-15" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg_link121.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="FR_Leg_link12_collision">
+            <origin xyz="-4.768360994944487e-10 -0.00999999999999858 -8.259060990667422e-10" rpy="-3.1415926535897927 -1.0471975511965936 6.934945673279423e-15" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg_link121.stl" scale="0.5 1 1"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="FR_Leg_link23">
+        <inertial>
+            <origin xyz="0.03694210606296362 -0.06432367736165912 -0.0019999996102490593" rpy="0.0 2.1895288505075267e-47 0.0" />
+            <mass value="0.039514981778356544" />
+            <inertia ixx="6.767868697781735e-05" iyy="2.4386819216760333e-05" izz="9.055178965229095e-05" ixy="3.824360277553616e-05" iyz="1.468045495850707e-12" ixz="-5.729372134613326e-13" />
+        </inertial>
+        <visual name="FR_Leg_link23_visual">
+            <origin xyz="-4.76837058727142e-10 -4.933020036901325e-09 -0.002000000000000934" rpy="-1.5707963267948952 5.648259637780481e-15 0.5235987755982983" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg_link231.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR_Leg_link23_collision">
+            <origin xyz="-4.76837058727142e-10 -4.933020036901325e-09 -0.002000000000000934" rpy="-1.5707963267948952 5.648259637780481e-15 0.5235987755982983" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg_link231.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <!-- <link name="FR_Leg_link34">
+        <inertial>
+            <origin xyz="-0.034051949205935655 -0.05897972088347899 -0.002000000952185541" rpy="0.0 -0.0 0.0" />
+            <mass value="0.03058221823359434" />
+            <inertia ixx="3.771355171723525e-05" iyy="1.3701072177653689e-05" izz="5.014057279693807e-05" ixy="-2.079542981416288e-05" iyz="1.0053982462162549e-12" ixz="4.048067613713393e-13" />
+        </inertial>
+        <visual name="FR_Leg_link34_visual">
+            <origin xyz="1.2434497875801754e-15 -4.10711397336172e-09 -0.0020000000000017517" rpy="-1.5707963267948986 -6.217248937900896e-15 2.6179938779914904" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg_link341.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR_Leg_link34_collision">
+            <origin xyz="1.2434497875801754e-15 -4.10711397336172e-09 -0.0020000000000017517" rpy="-1.5707963267948986 -6.217248937900896e-15 2.6179938779914904" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg_link341.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <!-- <link name="FR_Leg_link41">
+        <inertial>
+            <origin xyz="0.02805792706715174 0.0021874187776885277 -0.04808084833072933" rpy="0.0 -0.0 0.0" />
+            <mass value="0.030687608818051437" />
+            <inertia ixx="7.60971530887342e-05" iyy="0.00010042506131672548" izz="2.8538202397281488e-05" ixy="-5.695723284807595e-06" iyz="9.753706483240547e-06" ixz="4.214814940605967e-05" />
+        </inertial>
+        <visual name="FR_Leg_link41_visual">
+            <origin xyz="1.2789769243681803e-15 0.009200000000001173 7.105427357601002e-17" rpy="8.604228440845158e-16 1.0471975511965994 2.026157019940928e-15" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg-link411.stl" />
+            </geometry>
+        </visual>
+        <collision name="FR_Leg_link41_collision">
+            <origin xyz="1.2789769243681803e-15 0.009200000000001173 7.105427357601002e-17" rpy="8.604228440845158e-16 1.0471975511965994 2.026157019940928e-15" />
+            <geometry>
+                <mesh filename="meshes/FR_Leg-link411.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <link name="RR_SingleMotor">
+        <inertial>
+            <origin xyz="-0.008058511743547934 0.024291032753735176 0.016750000002170466" rpy="0.0 -0.0 0.0" />
+            <mass value="0.18505114928963637" />
+            <inertia ixx="6.927157374957138e-05" iyy="5.277906067330945e-05" izz="8.85204569542517e-05" ixy="1.5973926095183468e-07" iyz="4.36282954208167e-15" ixz="1.0603497246908233e-14" />
+        </inertial>
+        <visual name="RR_SingleMotor_visual">
+            <origin xyz="-0.04174999999999935 0.03925000000000061 0.016750000000000115" rpy="-1.5707963267949039 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RR_SingleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="RR_SingleMotor_collision">
+            <origin xyz="-0.04174999999999935 0.03925000000000061 0.016750000000000115" rpy="-1.5707963267949039 -1.5707963267948966 0" />
+            <geometry>
+                <mesh filename="meshes/RR_SingleMotor1.stl" />
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="RR_DoubleMotor">
+        <inertial>
+            <origin xyz="-0.0671641476699775 -2.7681959512690925e-05 0.010897828387278716" rpy="0.0 -0.0 0.0" />
+            <mass value="0.4782524941626558" />
+            <inertia ixx="0.0003096692588512584" iyy="0.0008565303504376402" izz="0.000678489374232899" ixy="2.1550722928420632e-07" iyz="3.5187586195498663e-07" ixz="-7.414681585287224e-07" />
+        </inertial>
+        <visual name="RR_DoubleMotor_visual">
+            <origin xyz="-0.0822499999999995 -1.4210854715202004e-16 1.2079226507921704e-15" rpy="-7.188694084447884e-15 -1.249000902703285e-16 -1.5707963267948963" />
+            <geometry>
+                <mesh filename="meshes/RR_DoubleMotor1.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="RR_DoubleMotor_collision">
+            <origin xyz="-0.0822499999999995 -1.4210854715202004e-16 1.2079226507921704e-15" rpy="-7.188694084447884e-15 -1.249000902703285e-16 -1.5707963267948963" />
+            <geometry>
+                <mesh filename="meshes/RR_DoubleMotor1.stl" scale="0.5 0.5 0.5"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="RR_Leg_link12">
+        <inertial>
+            <origin xyz="-0.02314464989751908 -0.006020957895824797 -0.04008772554278792" rpy="0.0 -0.0 0.0" />
+            <mass value="0.027421425885614935" />
+            <inertia ixx="7.038797497844768e-05" iyy="9.502396938712403e-05" izz="2.5801777620845963e-05" ixy="-2.35963408639803e-06" iyz="-4.087007635909966e-06" ixz="-3.861275344848453e-05" />
+        </inertial>
+        <visual name="RR_Leg_link12_visual">
+            <origin xyz="3.907985046680551e-16 -0.010000000000001119 -4.263256414560601e-16" rpy="-3.141592653589781 -1.0471975511966036 -7.040596577967102e-14" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link121.stl" />
+            </geometry>
+        </visual>
+        <!-- <collision name="RR_Leg_link12_collision">
+            <origin xyz="3.907985046680551e-16 -0.010000000000001119 -4.263256414560601e-16" rpy="-3.141592653589781 -1.0471975511966036 -7.040596577967102e-14" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link121.stl" scale="0.5 1 1"/>
+            </geometry>
+        </collision> -->
+    </link>
+    <link name="RR_Leg_link23">
+        <inertial>
+            <origin xyz="0.03694210601119103 -0.0643236768393432 -0.0019999996102461636" rpy="0.0 -0.0 0.0" />
+            <mass value="0.039514981778356544" />
+            <inertia ixx="6.767868760638833e-05" iyy="2.4386818588190667e-05" izz="9.055178965229182e-05" ixy="3.8243602419765425e-05" iyz="1.4680504831807026e-12" ixz="-5.729406829082836e-13" />
+        </inertial>
+        <visual name="RR_Leg_link23_visual">
+            <origin xyz="3.1974423109204507e-16 -4.107115145757235e-09 -0.0020000000000032613" rpy="-1.570796326794966 -1.1500522758429704e-13 0.5235987673803318" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link231.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR_Leg_link23_collision">
+            <origin xyz="3.1974423109204507e-16 -4.107115145757235e-09 -0.0020000000000032613" rpy="-1.570796326794966 -1.1500522758429704e-13 0.5235987673803318" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link231.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <!-- <link name="RR_Leg_link34">
+        <inertial>
+            <origin xyz="-0.03405194944815987 -0.058979720743560976 -0.0020000009542710017" rpy="0.0 8.758115402030107e-47 0.0" />
+            <mass value="0.03058221823359434" />
+            <inertia ixx="3.771355154633853e-05" iyy="1.3701072348548888e-05" izz="5.0140572796935904e-05" ixy="-2.0795429912828637e-05" iyz="1.0041239834029329e-12" ixz="4.0404543460581926e-13" />
+        </inertial>
+        <visual name="RR_Leg_link34_visual">
+            <origin xyz="1.2375878100101545e-13 -4.107114826013003e-09 -0.0019999999999999753" rpy="-1.5707963268255465 5.305797468045226e-11 2.617993873882508" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link341.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR_Leg_link34_collision">
+            <origin xyz="1.2375878100101545e-13 -4.107114826013003e-09 -0.0019999999999999753" rpy="-1.5707963268255465 5.305797468045226e-11 2.617993873882508" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link341.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+    <!-- <link name="RR_Leg_link41">
+        <inertial>
+            <origin xyz="0.028057927067151826 0.0021874187776864495 -0.04808084833072975" rpy="0.0 -0.0 0.0" />
+            <mass value="0.030687608818051437" />
+            <inertia ixx="7.609715308873072e-05" iyy="0.00010042506131672461" izz="2.853820239728127e-05" ixy="-5.695723284807812e-06" iyz="9.753706483240547e-06" ixz="4.214814940605902e-05" />
+        </inertial>
+        <visual name="RR_Leg_link41_visual">
+            <origin xyz="1.2434497875801754e-15 0.009199999999998898 -4.263256414560601e-16" rpy="1.1185496973098678e-14 1.0471975511965972 1.0644263248593742e-14" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link411.stl" />
+            </geometry>
+        </visual>
+        <collision name="RR_Leg_link41_collision">
+            <origin xyz="1.2434497875801754e-15 0.009199999999998898 -4.263256414560601e-16" rpy="1.1185496973098678e-14 1.0471975511965972 1.0644263248593742e-14" />
+            <geometry>
+                <mesh filename="meshes/RR_Leg_link411.stl" />
+            </geometry>
+        </collision>
+    </link> -->
+
+
+
+
+    <!-- *********************************************************************** -->
+    <!-- ****************************** JOINTS ********************************* -->
+    <!-- *********************************************************************** -->
+
+
+    <joint name="Body_FL_Rigid" type="fixed">
+        <origin xyz="-0.04400000000000006 -0.03199999999999958 0.012000000000000028" rpy="-3.141592653589793 2.901125726922471e-45 3.141592653589786" />
+        <parent link="Body" />
+        <child link="FL_SingleMotor" />
+    </joint>
+    <joint name="Body_RL_Rigid" type="fixed">
+        <origin xyz="0.04399999999999988 -0.03200000000000023 0.012000000000000028" rpy="-3.141592653589793 2.901125726922471e-45 3.141592653589786" />
+        <parent link="Body" />
+        <child link="RL_SingleMotor" />
+    </joint>
+    <joint name="Body_FR_Rigid" type="fixed">
+        <origin xyz="-0.043999999999999616 0.02950000000000037 0.012000000000000028" rpy="-3.141592653589793 2.901125726922471e-45 3.141592653589786" />
+        <parent link="Body" />
+        <child link="FR_SingleMotor" />
+    </joint>
+    <joint name="Body_RR_Rigid" type="fixed">
+        <origin xyz="0.044000000000000324 0.02949999999999972 0.012000000000000028" rpy="-3.141592653589793 2.901125726922471e-45 3.141592653589786" />
+        <parent link="Body" />
+        <child link="RR_SingleMotor" />
+    </joint>
+
+
+    <joint name="RL_SingleMotor_doubleMotor_joint" type="revolute">
+        <origin xyz="-0.034499999999999996 -0.03925 0.016750000000000043" rpy="-1.5707963267948966 -0.0 0.0" />
+        <parent link="RL_SingleMotor" />
+        <child link="RL_DoubleMotor" />
+        <axis xyz="1.0 -4.930380657631324e-32 7.806255641895643e-18" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="RL_DoubleMotor_link12_joint" type="revolute">
+        <origin xyz="-0.08225 0.0 -0.0628" rpy="-1.5707963267948968 -0.0 0.0" />
+        <parent link="RL_DoubleMotor" />
+        <child link="RL_Leg_link12" />
+        <axis xyz="0.0 -1.0 1.2246467991473535e-16" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="RL_Leg_link12_link23_joint" type="revolute">
+        <origin xyz="-0.06699999999999999 0.012000000000000028 -0.11604739999999997" rpy="1.5707963267948997 6.037974890946224e-48 -4.930380657631324e-32" />
+        <parent link="RL_Leg_link12" />
+        <child link="RL_Leg_link23" />
+        <axis xyz="4.930380657631324e-32 2.942091015256664e-15 1.0" />
+        <limit effort="5" lower="-0.3" upper="1.2" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <!-- <joint name="RL_DoubleMotor_link41_joint" type="revolute">
+        <origin xyz="-0.08225 0.0 -0.08199999999999999" rpy="-1.5707963267948968 -0.0 0.0" />
+        <parent link="RL_DoubleMotor" />
+        <child link="RL_Leg_link41" />
+        <axis xyz="0.0 1.0 7.703719777548734e-33" />
+    </joint>
+    <joint name="RL_Leg_link41_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 -0.0071999999999999885 -0.1160474" rpy="1.5707963267948915 5.5511151231257815e-17 5.916456789157588e-31" />
+        <parent link="RL_Leg_link41" />
+        <child link="RL_Leg_link34" />
+        <axis xyz="5.9164567891575885e-31 5.162537064506977e-15 -1.0" />
+    </joint>
+    <joint name="RL_Leg_link23_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 -0.11604741 3.375077994860476e-16" rpy="3.1415926535897905 4.930380657631324e-32 -1.450562863461236e-46" />
+        <parent link="RL_Leg_link23" />
+        <child link="RL_Leg_link34" />
+        <axis xyz="0.0 -7.888609052210118e-31 -1.0" />
+    </joint> -->
+    <joint name="FL_SingleMotor_doubleMotor_joint" type="revolute">
+        <origin xyz="0.034499999999999996 -0.03925 0.016750000000000043" rpy="-1.5707963267948966 -0.0 0.0" />
+        <parent link="FL_SingleMotor" />
+        <child link="FL_DoubleMotor" />
+        <axis xyz="1.0 0.0 -7.806255641895643e-18" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="FL_DoubleMotor_link12_joint" type="revolute">
+        <origin xyz="0.08225 0.0 -0.0628" rpy="-1.5707963267948968 -0.0 0.0" />
+        <parent link="FL_DoubleMotor" />
+        <child link="FL_Leg_link12" />
+        <axis xyz="0.0 -1.0 1.2246467991473535e-16" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="FL_Leg_link12_link23_joint" type="revolute">
+        <origin xyz="-0.06699999999999999 0.012000000000000028 -0.11604739999999997" rpy="1.5707963267948997 -5.551115123125783e-17 -3.5566722288617876e-30" />
+        <parent link="FL_Leg_link12" />
+        <child link="FL_Leg_link23" />
+        <axis xyz="3.549874073494553e-30 2.942091015256664e-15 1.0" />
+        <limit effort="5" lower="-0.3" upper="1.2" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <!-- <joint name="FL_DoubleMotor_link41_joint" type="revolute">
+        <origin xyz="0.08225 0.0 -0.08199999999999999" rpy="-1.5707963267948968 -0.0 0.0" />
+        <parent link="FL_DoubleMotor" />
+        <child link="FL_Leg_link41" />
+        <axis xyz="0.0 1.0 0.0" />
+    </joint>
+    <joint name="FL_Leg_link41_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 -0.0071999999999999885 -0.1160474" rpy="1.5707963267948915 -0.0 -1.4791141972893974e-31" />
+        <parent link="FL_Leg_link41" />
+        <child link="FL_Leg_link34" />
+        <axis xyz="-1.4791141972893971e-31 5.162537064506979e-15 -1.0" />
+    </joint>
+    <joint name="FL_Leg_link23_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 -0.11604741 3.375077994860476e-16" rpy="3.1415926535897905 9.860761315262642e-31 6.162975822039156e-33" />
+        <parent link="FL_Leg_link23" />
+        <child link="FL_Leg_link34" />
+        <axis xyz="2.5637979419682884e-30 -7.888609052210118e-31 -1.0" />
+    </joint> -->
+    <joint name="FR_SingleMotor_doubleMotor_joint" type="revolute">
+        <origin xyz="0.034499999999999996 0.03925 0.016750000000000043" rpy="-1.5707963267948966 -0.0 -2.7369110631344083e-48" />
+        <parent link="FR_SingleMotor" />
+        <child link="FR_DoubleMotor" />
+        <axis xyz="-1.0 0.0 -7.806255641895643e-18" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="FR_DoubleMotor_link12_joint" type="revolute">
+        <origin xyz="0.08225 0.0 0.0628" rpy="-1.5707963267948968 -2.7369110631344083e-48 3.418404388473527e-64" />
+        <parent link="FR_DoubleMotor" />
+        <child link="FR_Leg_link12" />
+        <axis xyz="0.0 -1.0 -1.224646799147353e-16" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="FR_Leg_link12_link23_joint" type="revolute">
+        <origin xyz="-0.06699999999999999 -0.011999999999999993 -0.1160474" rpy="1.5707963267948997 -5.551115123125783e-17 1.6576516764986189e-31" />
+        <parent link="FR_Leg_link12" />
+        <child link="FR_Leg_link23" />
+        <axis xyz="1.7256332301709633e-31 -2.9420910152566652e-15 1.0" />
+        <limit effort="5" lower="-0.3" upper="1.2" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <!-- <joint name="FR_DoubleMotor_link41_joint" type="revolute">
+        <origin xyz="0.08225 0.0 0.08199999999999999" rpy="-1.5707963267948968 -2.7369110631344083e-48 3.418404388473527e-64" />
+        <parent link="FR_DoubleMotor" />
+        <child link="FR_Leg_link41" />
+        <axis xyz="0.0 -1.0 4.333342374871284e-32" />
+    </joint>
+    <joint name="FR_Leg-link41_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 0.0071999999999999885 -0.1160474" rpy="1.5707963267948915 -5.551115123125783e-17 -1.9721522630525295e-31" />
+        <parent link="FR_Leg_link41" />
+        <child link="FR_Leg_link34" />
+        <axis xyz="1.9721522630525295e-31 -5.162537064506976e-15 0.9999999999999999" />
+    </joint>
+    <joint name="FR_Leg_link23_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999998 -0.11604741 3.375077994860476e-16" rpy="3.1415926535897905 -1.2911434347172026e-30 5.55111512312578e-17" />
+        <parent link="FR_Leg_link23" />
+        <child link="FR_Leg_link34" />
+        <axis xyz="-1.2818989709841442e-30 -5.9164567891575885e-31 1.0" />
+    </joint> -->
+    <joint name="RR_SingleMotor_doubleMotor_joint" type="revolute">
+        <origin xyz="-0.034499999999999996 0.03925 0.016750000000000043" rpy="-1.5707963267948966 -0.0 0.0" />
+        <parent link="RR_SingleMotor" />
+        <child link="RR_DoubleMotor" />
+        <axis xyz="-1.0 3.851859888774472e-34 7.806255641895643e-18" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="RR_DoubleMotor_link12_joint" type="revolute">
+        <origin xyz="-0.08225 0.0 0.0628" rpy="-1.5707963267948968 -6.836808776947056e-63 -5.473822126268817e-47" />
+        <parent link="RR_DoubleMotor" />
+        <child link="RR_Leg_link12" />
+        <axis xyz="0.0 -1.0 -1.2246467991473535e-16" />
+        <limit effort="5" lower="-1.57" upper="1.57" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <joint name="RR_Leg_link12_link23_joint" type="revolute">
+        <origin xyz="-0.06699999999999999 -0.011999999999999993 -0.1160474" rpy="1.5707963267948997 -6.343838107935257e-46 4.733165431326071e-30" />
+        <parent link="RR_Leg_link12" />
+        <child link="RR_Leg_link23" />
+        <axis xyz="4.733165431326071e-30 -2.942091015256653e-15 1.0" />
+        <limit effort="5" lower="-0.3" upper="1.2" velocity="3.25"/>
+        <dynamics damping="0" friction="0"/>
+    </joint>
+    <!-- <joint name="RR_DoubleMotor_link41_joint" type="revolute">
+        <origin xyz="-0.08225 0.0 0.08199999999999999" rpy="-1.5707963267948968 -6.836808776947056e-63 -5.473822126268817e-47" />
+        <parent link="RR_DoubleMotor" />
+        <child link="RR_Leg_link41" />
+        <axis xyz="0.0 -1.0 -8.758115402030113e-47" />
+    </joint>
+    <joint name="RR_Leg_link411_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 0.0071999999999999885 -0.1160474" rpy="1.5707963267948915 -5.551115123125783e-17 -3.944304526105059e-31" />
+        <parent link="RR_Leg_link41" />
+        <child link="RR_Leg_link34" />
+        <axis xyz="3.944304526105059e-31 -5.162537064506977e-15 0.9999999999999999" />
+    </joint>
+    <joint name="RR_Leg_link23_link34_joint" type="revolute">
+        <origin xyz="0.06699999999999999 -0.11604741 3.375077994860476e-16" rpy="3.1415926535897905 -7.4448747930233e-30 2.1903499238264732e-44" />
+        <parent link="RR_Leg_link23" />
+        <child link="RR_Leg_link34" />
+        <axis xyz="-2.711709361697228e-30 7.888609052210118e-31 0.9999999999999998" />
+    </joint> -->
+</robot>

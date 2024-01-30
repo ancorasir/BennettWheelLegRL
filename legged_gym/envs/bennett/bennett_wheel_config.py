@@ -46,25 +46,30 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
             pos = [0.0, 0.0, 0.25] # x,y,z [m]
             default_joint_angles = { # = target angles [rad] when action = 0.0
  
-                'FL-Single-Motor1_FL-Single-Double_Motor': -0.2,     # [rad]
-                'RL-Single-Motor1_RL-Single-Double_Motor': 0.2,   # [rad]
-                'FR-Single-Motor1_FR-Single-Double_Motor': 0.2,     # [rad]
-                'RR-Single-Motor1_RR-Single-Double_Motor': -0.2,
+                # 'FL-Single-Motor1_FL-Single-Double_Motor': -0.2,  # [rad]
+                # 'RL-Single-Motor1_RL-Single-Double_Motor': 0.2,   # [rad]
+                # 'FR-Single-Motor1_FR-Single-Double_Motor': 0.2,   # [rad]
+                # 'RR-Single-Motor1_RR-Single-Double_Motor': -0.2,  # [rad]
+
+                'FL-Single-Motor1_FL-Single-Double_Motor': 0.2,  # [rad]
+                'RL-Single-Motor1_RL-Single-Double_Motor': -0.2,   # [rad]
+                'FR-Single-Motor1_FR-Single-Double_Motor': -0.2,   # [rad]
+                'RR-Single-Motor1_RR-Single-Double_Motor': 0.2,  # [rad]
 
                 'FL-Double-Motor1_FL-Double_Motor-Link1': -0.,   # [rad]
                 'RL-Double-Motor1_RL-Double_Motor-Link1': -0.,   # [rad]
-                'FR-Double-Motor1_FR-Double_Motor-Link1': 0.,     # [rad]
-                'RR-Double-Motor1_RR-Double_Motor-Link1': 0.,
+                'FR-Double-Motor1_FR-Double_Motor-Link1': 0.,    # [rad]
+                'RR-Double-Motor1_RR-Double_Motor-Link1': 0.,    # [rad] 
 
                 'FL-leg-link11_FL-Link1-Link2': -0.,   # [rad]
                 'RL-leg-link11_RL-Link1-Link2': -0.,   # [rad]               
                 'FR-leg-link11_FR-Link1-Link2': 0.,    # [rad]               
-                'RR-leg-link11_RR-Link1-Link2': 0.,
+                'RR-leg-link11_RR-Link1-Link2': 0.,    # [rad]
 
-                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.,
-                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0.,
-                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0.,
-                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.
+                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0., # [rad]
+                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0., # [rad]
+                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0., # [rad]
+                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.  # [rad]
 
         }
             
@@ -92,7 +97,7 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
                 'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 20.,
                 'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 20.,
                 'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 20.
-                      }
+            }
         
         damping = {
                 'FL-Single-Motor1_FL-Single-Double_Motor': 0.5,     
@@ -150,22 +155,23 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
         max_contact_force = 100. # forces above this value are penalized
         class scales( LeggedRobotCfg.rewards.scales ):
             # torques = -0.0002
-            dof_pos_limits = -1.0 # Penalize dof positions too close to the limit
-            termination = -1.05     # Terminal reward / penalty
+            dof_pos_limits = -1.0  # Penalize dof positions too close to the limit
+            termination = -1.05    # Terminal reward / penalty
             tracking_lin_vel = 1.0 # Tracking of linear velocity commands (xy axes)
             tracking_ang_vel = 0.5 # Tracking of angular velocity commands (yaw) 
             lin_vel_z = -1.0       # Penalize z axis base linear velocity
-            ang_vel_xy = -0.05      # Penalize xy axes base angular velocity
-            orientation = -0.      # Penalize non flat base orientation
-            torques = -0.00001     # Penalize torques
-            dof_vel = -0.          # Penalize dof velocities
-            dof_acc = -2.5e-7      # Penalize dof accelerations
-            base_height = -0.      # Penalize base height away from target
-            feet_air_time =  0.5   # Reward long steps
+            ang_vel_xy = -0.05     # Penalize xy axes base angular velocity
+            orientation = -0.01     # Penalize non flat base orientation
+            torques = -0.0001     # Penalize torques
+            dof_vel = -0.1          # Penalize dof velocities
+            dof_acc = -3e-7#-2.5e-7      # Penalize dof accelerations
+            base_height = -0.01      # Penalize base height away from target
+            feet_air_time =  -0.1   # Reward long steps
             collision = -0.1       # Penalize collisions on selected bodies
-            feet_stumble = -0.0    # Penalize feet hitting vertical surfaces
-            action_rate = -0.01    # Penalize changes in actions
+            stumble = -0.2    # Penalize feet hitting vertical surfaces
+            action_rate = -0.05    # Penalize changes in actions
             stand_still = -0.1     # Penalize motion at zero commands
+            #vertical_impact = 1  # reward vertical base velocity at impact
 
     
     class terrain( LeggedRobotCfg.terrain ):
