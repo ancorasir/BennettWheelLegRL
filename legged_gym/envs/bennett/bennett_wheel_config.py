@@ -93,10 +93,10 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
                 'FR-leg-link11_FR-Link1-Link2': 20.,                 
                 'RR-leg-link11_RR-Link1-Link2': 20.,
 
-                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 20.,
-                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 20.,
-                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 20.,
-                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 20.
+                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 40.,
+                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 40.,
+                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 40.,
+                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 40.
             }
         
         damping = {
@@ -115,10 +115,10 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
                 'FR-leg-link11_FR-Link1-Link2': 0.5,                  
                 'RR-leg-link11_RR-Link1-Link2': 0.5,
 
-                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 0.5,
-                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 0.5,
-                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 0.5,
-                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 0.5
+                'FL-leg-link21_FL-leg-link21_FL-Leg-Wheel': 1,
+                'RL-leg-link21_RL-leg-link21_RL-Leg-Wheel': 1,
+                'FR-leg-link21_FR-leg-link21_FR-Leg-Wheel': 1,
+                'RR-leg-link21_RR-leg-link21_RR-Leg-Wheel': 1
         }     # [N*m*s/rad]
         
         action_scale = 0.25 # action scale: target angle = actionScale * action + defaultAngle
@@ -163,13 +163,13 @@ class BennettWheelRoughCfg( LeggedRobotCfg ):
             ang_vel_xy = -0.05     # Penalize xy axes base angular velocity
             orientation = -0.01     # Penalize non flat base orientation
             torques = -0.0001     # Penalize torques
-            dof_vel = -0.1          # Penalize dof velocities
+            dof_vel = -0.001          # Penalize dof velocities
             dof_acc = -3e-7#-2.5e-7      # Penalize dof accelerations
             base_height = -0.01      # Penalize base height away from target
-            feet_air_time =  -0.1   # Reward long steps
+            feet_air_time =  -1   # Reward long steps
             collision = -0.1       # Penalize collisions on selected bodies
             stumble = -0.2    # Penalize feet hitting vertical surfaces
-            action_rate = -0.05    # Penalize changes in actions
+            action_rate = -0.01    # Penalize changes in actions
             stand_still = -0.1     # Penalize motion at zero commands
             #vertical_impact = 1  # reward vertical base velocity at impact
 

@@ -83,9 +83,9 @@ asset_root = "resources/robots"
 # asset_file = "bennett/bennett.urdf"
 
 # asset_file = "bennett_foot/bennett_foot.urdf"
-# asset_file = "bennett_wheel/bennett_wheel.urdf"
+asset_file = "bennett_wheel/bennett_wheel.urdf"
 # asset_file = "bennett_real/bennett_real.urdf"
-asset_file = "bennett_parallel/bennett_parallel.urdf"
+# asset_file = "bennett_parallel/bennett_parallel.urdf"
 
 
 assert_options = gymapi.AssetOptions()

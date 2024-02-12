@@ -873,7 +873,7 @@
         <parent link="FL-leg-link21" />
         <child link="FL-Single-Wheel1" />
         <axis xyz="-0.6711405018682711 0.20534700000000003 0.7123224008045834" />
-        <limit effort="10" lower="-1e6" upper="1e6" velocity="50"/>
+        <limit effort="10"  lower="-1e6" upper="1e6" velocity="50"/>
         <dynamics damping="0" friction="0.1"/>
     </joint>
     <joint name="RL-leg-link21_RL-leg-link21_RL-Leg-Wheel" type="revolute">

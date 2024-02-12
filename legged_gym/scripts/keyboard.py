@@ -293,7 +293,7 @@ if __name__ == '__main__':
 
     cfg = BennettWheelRoughCfg()
     cfgPPO = BennettWheelRoughCfgPPO()
-    load_path = '../../logs/rough_bennett_wheel/Jan29_15-06-52_/model_2000.pt'
+    load_path = '../../logs/rough_bennett_wheel/Jan31_06-29-47_/model_50.pt'
 
     num_envs = 1
     terrain = 'plane' # trimesh
